@@ -1,0 +1,81 @@
+CREATE DATABASE Nomina;
+
+USE Nomina;
+
+CREATE TABLE Usuario(
+	usu_usuario INT PRIMARY KEY,
+	usu_nombre VARCHAR(50) NOT NULL,
+	usu_clave VARCHAR(50) NOT NULL,
+	usu_estado 	VARCHAR(1) NOT NULL,
+	usu_correo VARCHAR(80) NOT NULL
+);
+
+CREATE TABLE Empleado(
+	emp_cedula INT PRIMARY KEY,
+	emp_nombre VARCHAR(50) NOT NULL,
+	emp_fechaIngreso DATETIME NOT NULL,
+	emp_fechaSalida DATETIME,
+	emp_cuentaPago INT NOT NULL,
+	emp_estado VARCHAR(1) NOT NULL
+);
+
+CREATE TABLE Pago(
+	pag_codigo INT PRIMARY KEY,
+	pag_empleado INT NOT NULL,
+	pag_tipo VARCHAR(20) NOT NULL,
+	pag_valorPago DOUBLE NOT NULL,
+	pag_descripcion TEXT,
+	pag_estado BIT NOT NULL,
+	Foreign Key(pag_empleado)References Empleado(emp_cedula)
+);
+
+CREATE TABLE Concepto(
+	con_codigo INT PRIMARY KEY,
+	con_pago INT NOT NULL,
+	con_nombre VARCHAR(50) NOT NULL,
+	con_descripcion TEXT,
+	con_tipo VARCHAR(20) NOT NULL,
+	con_valor DOUBLE NOT NULL,
+	Foreign Key(con_pago)References Pago(pag_codigo)
+);
+
+CREATE TABLE Cargo(
+	car_cogigo INT PRIMARY KEY,
+	car_nombre VARCHAR(50) NOT NULL,
+	car_salario DOUBLE NOT NULL
+);
+
+CREATE TABLE HistoricoCargo(
+	his_codigo INT PRIMARY KEY,
+	his_empleado INT NOT NULL,
+	his_cargo INT NOT NULL,
+	his_fechaInicio DATETIME NOT NULL,
+	his_fechaFinal DATETIME,
+	his_salario DOUBLE NOT NULL,
+	Foreign Key(his_empleado)References Empleado(emp_cedula),
+	Foreign Key(his_cargo)References Cargo(car_cogigo)
+);
+
+CREATE TABLE Entidad(
+	ent_codigo INT PRIMARY KEY,
+	ent_nombre VARCHAR(50) NOT NULL,
+	ent_cuenta INT NOT NULL,
+	ent_aporteEmpleado DOUBLE NOT NULL,
+	ent_aporteEmpresa DOUBLE NOT NULL
+);
+
+CREATE TABLE Afiliacion(
+	afi_empleado INT NOT NULL,
+	afi_entidad INT NOT NULL,
+	Foreign Key(afi_empleado)References Empleado(emp_cedula),
+	Foreign Key(afi_entidad)References Entidad(ent_codigo)
+);
+
+CREATE TABLE Aporte(
+	apo_codigo INT PRIMARY KEY,
+	apo_entidad INT NOT NULL,
+	apo_tipo VARCHAR(20) NOT NULL,
+	apo_periodo VARCHAR(20) NOT NULL,
+	apo_valor DOUBLE NOT NULL,
+	Foreign Key(apo_entidad)References Entidad(ent_codigo)
+);

@@ -1,12 +1,6 @@
 package co.edu.udistrital.rrhh.web;
-import co.edu.udistrital.rrhh.domain.Cargo;
-import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.domain.Historicocargo;
-import co.edu.udistrital.rrhh.service.CargoService;
-import co.edu.udistrital.rrhh.service.EmpleadoService;
 import co.edu.udistrital.rrhh.service.HistoricocargoService;
-import co.edu.udistrital.rrhh.web.converter.CargoConverter;
-import co.edu.udistrital.rrhh.web.converter.EmpleadoConverter;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,11 +16,11 @@ import javax.faces.component.html.HtmlOutputText;
 import javax.faces.component.html.HtmlPanelGrid;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.DateTimeConverter;
-import org.primefaces.component.autocomplete.AutoComplete;
 import org.primefaces.component.calendar.Calendar;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.message.Message;
 import org.primefaces.component.outputlabel.OutputLabel;
+import org.primefaces.component.spinner.Spinner;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CloseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,23 +28,15 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.roo.addon.jsf.managedbean.RooJsfManagedBean;
 import org.springframework.roo.addon.serializable.RooSerializable;
 
+@Configurable
 @ManagedBean(name = "historicocargoBean")
 @SessionScoped
-@Configurable
 @RooSerializable
 @RooJsfManagedBean(entity = Historicocargo.class, beanName = "historicocargoBean")
-public class HistoricocargoBean implements Serializable{
-
-	private static final long serialVersionUID = 1L;
+public class HistoricocargoBean implements Serializable {
 
 	@Autowired
     HistoricocargoService historicocargoService;
-
-	@Autowired
-    EmpleadoService empleadoService;
-
-	@Autowired
-    CargoService cargoService;
 
 	private String name = "Historicocargoes";
 
@@ -73,6 +59,8 @@ public class HistoricocargoBean implements Serializable{
 	@PostConstruct
     public void init() {
         columns = new ArrayList<String>();
+        columns.add("hisEmpleado");
+        columns.add("hisCargo");
         columns.add("hisFechaInicio");
         columns.add("hisFechaFinal");
         columns.add("hisSalario");
@@ -152,16 +140,11 @@ public class HistoricocargoBean implements Serializable{
         hisEmpleadoCreateOutput.setValue("His Empleado:");
         htmlPanelGrid.getChildren().add(hisEmpleadoCreateOutput);
         
-        AutoComplete hisEmpleadoCreateInput = (AutoComplete) application.createComponent(AutoComplete.COMPONENT_TYPE);
+        Spinner hisEmpleadoCreateInput = (Spinner) application.createComponent(Spinner.COMPONENT_TYPE);
         hisEmpleadoCreateInput.setId("hisEmpleadoCreateInput");
-        hisEmpleadoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{historicocargoBean.historicocargo.hisEmpleado}", Empleado.class));
-        hisEmpleadoCreateInput.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{historicocargoBean.completeHisEmpleado}", List.class, new Class[] { String.class }));
-        hisEmpleadoCreateInput.setDropdown(true);
-        hisEmpleadoCreateInput.setValueExpression("var", expressionFactory.createValueExpression(elContext, "hisEmpleado", String.class));
-        hisEmpleadoCreateInput.setValueExpression("itemLabel", expressionFactory.createValueExpression(elContext, "#{hisEmpleado.empCedula} #{hisEmpleado.empNombre} #{hisEmpleado.empFechaIngreso} #{hisEmpleado.empFechaSalida}", String.class));
-        hisEmpleadoCreateInput.setValueExpression("itemValue", expressionFactory.createValueExpression(elContext, "#{hisEmpleado}", Empleado.class));
-        hisEmpleadoCreateInput.setConverter(new EmpleadoConverter());
-        hisEmpleadoCreateInput.setRequired(false);
+        hisEmpleadoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{historicocargoBean.historicocargo.hisEmpleado}", Integer.class));
+        hisEmpleadoCreateInput.setRequired(true);
+        
         htmlPanelGrid.getChildren().add(hisEmpleadoCreateInput);
         
         Message hisEmpleadoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
@@ -176,16 +159,11 @@ public class HistoricocargoBean implements Serializable{
         hisCargoCreateOutput.setValue("His Cargo:");
         htmlPanelGrid.getChildren().add(hisCargoCreateOutput);
         
-        AutoComplete hisCargoCreateInput = (AutoComplete) application.createComponent(AutoComplete.COMPONENT_TYPE);
+        Spinner hisCargoCreateInput = (Spinner) application.createComponent(Spinner.COMPONENT_TYPE);
         hisCargoCreateInput.setId("hisCargoCreateInput");
-        hisCargoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{historicocargoBean.historicocargo.hisCargo}", Cargo.class));
-        hisCargoCreateInput.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{historicocargoBean.completeHisCargo}", List.class, new Class[] { String.class }));
-        hisCargoCreateInput.setDropdown(true);
-        hisCargoCreateInput.setValueExpression("var", expressionFactory.createValueExpression(elContext, "hisCargo", String.class));
-        hisCargoCreateInput.setValueExpression("itemLabel", expressionFactory.createValueExpression(elContext, "#{hisCargo.carCogigo} #{hisCargo.carNombre} #{hisCargo.carSalario}", String.class));
-        hisCargoCreateInput.setValueExpression("itemValue", expressionFactory.createValueExpression(elContext, "#{hisCargo}", Cargo.class));
-        hisCargoCreateInput.setConverter(new CargoConverter());
-        hisCargoCreateInput.setRequired(false);
+        hisCargoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{historicocargoBean.historicocargo.hisCargo}", Integer.class));
+        hisCargoCreateInput.setRequired(true);
+        
         htmlPanelGrid.getChildren().add(hisCargoCreateInput);
         
         Message hisCargoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
@@ -271,16 +249,11 @@ public class HistoricocargoBean implements Serializable{
         hisEmpleadoEditOutput.setValue("His Empleado:");
         htmlPanelGrid.getChildren().add(hisEmpleadoEditOutput);
         
-        AutoComplete hisEmpleadoEditInput = (AutoComplete) application.createComponent(AutoComplete.COMPONENT_TYPE);
+        Spinner hisEmpleadoEditInput = (Spinner) application.createComponent(Spinner.COMPONENT_TYPE);
         hisEmpleadoEditInput.setId("hisEmpleadoEditInput");
-        hisEmpleadoEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{historicocargoBean.historicocargo.hisEmpleado}", Empleado.class));
-        hisEmpleadoEditInput.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{historicocargoBean.completeHisEmpleado}", List.class, new Class[] { String.class }));
-        hisEmpleadoEditInput.setDropdown(true);
-        hisEmpleadoEditInput.setValueExpression("var", expressionFactory.createValueExpression(elContext, "hisEmpleado", String.class));
-        hisEmpleadoEditInput.setValueExpression("itemLabel", expressionFactory.createValueExpression(elContext, "#{hisEmpleado.empCedula} #{hisEmpleado.empNombre} #{hisEmpleado.empFechaIngreso} #{hisEmpleado.empFechaSalida}", String.class));
-        hisEmpleadoEditInput.setValueExpression("itemValue", expressionFactory.createValueExpression(elContext, "#{hisEmpleado}", Empleado.class));
-        hisEmpleadoEditInput.setConverter(new EmpleadoConverter());
-        hisEmpleadoEditInput.setRequired(false);
+        hisEmpleadoEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{historicocargoBean.historicocargo.hisEmpleado}", Integer.class));
+        hisEmpleadoEditInput.setRequired(true);
+        
         htmlPanelGrid.getChildren().add(hisEmpleadoEditInput);
         
         Message hisEmpleadoEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
@@ -295,16 +268,11 @@ public class HistoricocargoBean implements Serializable{
         hisCargoEditOutput.setValue("His Cargo:");
         htmlPanelGrid.getChildren().add(hisCargoEditOutput);
         
-        AutoComplete hisCargoEditInput = (AutoComplete) application.createComponent(AutoComplete.COMPONENT_TYPE);
+        Spinner hisCargoEditInput = (Spinner) application.createComponent(Spinner.COMPONENT_TYPE);
         hisCargoEditInput.setId("hisCargoEditInput");
-        hisCargoEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{historicocargoBean.historicocargo.hisCargo}", Cargo.class));
-        hisCargoEditInput.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{historicocargoBean.completeHisCargo}", List.class, new Class[] { String.class }));
-        hisCargoEditInput.setDropdown(true);
-        hisCargoEditInput.setValueExpression("var", expressionFactory.createValueExpression(elContext, "hisCargo", String.class));
-        hisCargoEditInput.setValueExpression("itemLabel", expressionFactory.createValueExpression(elContext, "#{hisCargo.carCogigo} #{hisCargo.carNombre} #{hisCargo.carSalario}", String.class));
-        hisCargoEditInput.setValueExpression("itemValue", expressionFactory.createValueExpression(elContext, "#{hisCargo}", Cargo.class));
-        hisCargoEditInput.setConverter(new CargoConverter());
-        hisCargoEditInput.setRequired(false);
+        hisCargoEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{historicocargoBean.historicocargo.hisCargo}", Integer.class));
+        hisCargoEditInput.setRequired(true);
+        
         htmlPanelGrid.getChildren().add(hisCargoEditInput);
         
         Message hisCargoEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
@@ -390,8 +358,7 @@ public class HistoricocargoBean implements Serializable{
         htmlPanelGrid.getChildren().add(hisEmpleadoLabel);
         
         HtmlOutputText hisEmpleadoValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        hisEmpleadoValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{historicocargoBean.historicocargo.hisEmpleado}", Empleado.class));
-        hisEmpleadoValue.setConverter(new EmpleadoConverter());
+        hisEmpleadoValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{historicocargoBean.historicocargo.hisEmpleado}", String.class));
         htmlPanelGrid.getChildren().add(hisEmpleadoValue);
         
         HtmlOutputText hisCargoLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
@@ -400,8 +367,7 @@ public class HistoricocargoBean implements Serializable{
         htmlPanelGrid.getChildren().add(hisCargoLabel);
         
         HtmlOutputText hisCargoValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        hisCargoValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{historicocargoBean.historicocargo.hisCargo}", Cargo.class));
-        hisCargoValue.setConverter(new CargoConverter());
+        hisCargoValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{historicocargoBean.historicocargo.hisCargo}", String.class));
         htmlPanelGrid.getChildren().add(hisCargoValue);
         
         HtmlOutputText hisFechaInicioLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
@@ -449,28 +415,6 @@ public class HistoricocargoBean implements Serializable{
 
 	public void setHistoricocargo(Historicocargo historicocargo) {
         this.historicocargo = historicocargo;
-    }
-
-	public List<Empleado> completeHisEmpleado(String query) {
-        List<Empleado> suggestions = new ArrayList<Empleado>();
-        for (Empleado empleado : empleadoService.findAllEmpleadoes()) {
-            String empleadoStr = String.valueOf(empleado.getEmpCedula() +  " "  + empleado.getEmpNombre() +  " "  + empleado.getEmpFechaIngreso() +  " "  + empleado.getEmpFechaSalida());
-            if (empleadoStr.toLowerCase().startsWith(query.toLowerCase())) {
-                suggestions.add(empleado);
-            }
-        }
-        return suggestions;
-    }
-
-	public List<Cargo> completeHisCargo(String query) {
-        List<Cargo> suggestions = new ArrayList<Cargo>();
-        for (Cargo cargo : cargoService.findAllCargoes()) {
-            String cargoStr = String.valueOf(cargo.getCarCogigo() +  " "  + cargo.getCarNombre() +  " "  + cargo.getCarSalario());
-            if (cargoStr.toLowerCase().startsWith(query.toLowerCase())) {
-                suggestions.add(cargo);
-            }
-        }
-        return suggestions;
     }
 
 	public String onEdit() {
@@ -532,4 +476,6 @@ public class HistoricocargoBean implements Serializable{
 	public void handleDialogClose(CloseEvent event) {
         reset();
     }
+
+	private static final long serialVersionUID = 1L;
 }

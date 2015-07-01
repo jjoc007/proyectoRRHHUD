@@ -22,9 +22,10 @@ public class AfiliacionConverter implements Converter {
         if (value == null || value.length() == 0) {
             return null;
         }
-        String cadena[] = value.toString().split(";");
+        
+        String cadena[] =   value.toString().split(";");
         AfiliacionPK id = new AfiliacionPK(Integer.parseInt(cadena[0]), Integer.parseInt(cadena[1]));
-        		
+        
         return afiliacionService.findAfiliacion(id);
     }
 

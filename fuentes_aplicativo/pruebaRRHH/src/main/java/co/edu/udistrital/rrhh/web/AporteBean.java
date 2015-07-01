@@ -1,9 +1,6 @@
 package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Aporte;
-import co.edu.udistrital.rrhh.domain.Entidad;
 import co.edu.udistrital.rrhh.service.AporteService;
-import co.edu.udistrital.rrhh.service.EntidadService;
-import co.edu.udistrital.rrhh.web.converter.EntidadConverter;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,10 +15,10 @@ import javax.faces.component.html.HtmlOutputText;
 import javax.faces.component.html.HtmlPanelGrid;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.LengthValidator;
-import org.primefaces.component.autocomplete.AutoComplete;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.message.Message;
 import org.primefaces.component.outputlabel.OutputLabel;
+import org.primefaces.component.spinner.Spinner;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CloseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +31,12 @@ import org.springframework.roo.addon.serializable.RooSerializable;
 @SessionScoped
 @RooSerializable
 @RooJsfManagedBean(entity = Aporte.class, beanName = "aporteBean")
-public class AporteBean implements Serializable{
+public class AporteBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
     AporteService aporteService;
-
-	@Autowired
-    EntidadService entidadService;
 
 	private String name = "Aportes";
 
@@ -65,6 +59,7 @@ public class AporteBean implements Serializable{
 	@PostConstruct
     public void init() {
         columns = new ArrayList<String>();
+        columns.add("apoEntidad");
         columns.add("apoTipo");
         columns.add("apoPeriodo");
         columns.add("apoValor");
@@ -144,16 +139,11 @@ public class AporteBean implements Serializable{
         apoEntidadCreateOutput.setValue("Apo Entidad:");
         htmlPanelGrid.getChildren().add(apoEntidadCreateOutput);
         
-        AutoComplete apoEntidadCreateInput = (AutoComplete) application.createComponent(AutoComplete.COMPONENT_TYPE);
+        Spinner apoEntidadCreateInput = (Spinner) application.createComponent(Spinner.COMPONENT_TYPE);
         apoEntidadCreateInput.setId("apoEntidadCreateInput");
-        apoEntidadCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{aporteBean.aporte.apoEntidad}", Entidad.class));
-        apoEntidadCreateInput.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{aporteBean.completeApoEntidad}", List.class, new Class[] { String.class }));
-        apoEntidadCreateInput.setDropdown(true);
-        apoEntidadCreateInput.setValueExpression("var", expressionFactory.createValueExpression(elContext, "apoEntidad", String.class));
-        apoEntidadCreateInput.setValueExpression("itemLabel", expressionFactory.createValueExpression(elContext, "#{apoEntidad.entCodigo} #{apoEntidad.entNombre} #{apoEntidad.entCuenta} #{apoEntidad.entAporteEmpleado}", String.class));
-        apoEntidadCreateInput.setValueExpression("itemValue", expressionFactory.createValueExpression(elContext, "#{apoEntidad}", Entidad.class));
-        apoEntidadCreateInput.setConverter(new EntidadConverter());
-        apoEntidadCreateInput.setRequired(false);
+        apoEntidadCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{aporteBean.aporte.apoEntidad}", Integer.class));
+        apoEntidadCreateInput.setRequired(true);
+        
         htmlPanelGrid.getChildren().add(apoEntidadCreateInput);
         
         Message apoEntidadCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
@@ -239,16 +229,11 @@ public class AporteBean implements Serializable{
         apoEntidadEditOutput.setValue("Apo Entidad:");
         htmlPanelGrid.getChildren().add(apoEntidadEditOutput);
         
-        AutoComplete apoEntidadEditInput = (AutoComplete) application.createComponent(AutoComplete.COMPONENT_TYPE);
+        Spinner apoEntidadEditInput = (Spinner) application.createComponent(Spinner.COMPONENT_TYPE);
         apoEntidadEditInput.setId("apoEntidadEditInput");
-        apoEntidadEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{aporteBean.aporte.apoEntidad}", Entidad.class));
-        apoEntidadEditInput.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{aporteBean.completeApoEntidad}", List.class, new Class[] { String.class }));
-        apoEntidadEditInput.setDropdown(true);
-        apoEntidadEditInput.setValueExpression("var", expressionFactory.createValueExpression(elContext, "apoEntidad", String.class));
-        apoEntidadEditInput.setValueExpression("itemLabel", expressionFactory.createValueExpression(elContext, "#{apoEntidad.entCodigo} #{apoEntidad.entNombre} #{apoEntidad.entCuenta} #{apoEntidad.entAporteEmpleado}", String.class));
-        apoEntidadEditInput.setValueExpression("itemValue", expressionFactory.createValueExpression(elContext, "#{apoEntidad}", Entidad.class));
-        apoEntidadEditInput.setConverter(new EntidadConverter());
-        apoEntidadEditInput.setRequired(false);
+        apoEntidadEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{aporteBean.aporte.apoEntidad}", Integer.class));
+        apoEntidadEditInput.setRequired(true);
+        
         htmlPanelGrid.getChildren().add(apoEntidadEditInput);
         
         Message apoEntidadEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
@@ -334,8 +319,7 @@ public class AporteBean implements Serializable{
         htmlPanelGrid.getChildren().add(apoEntidadLabel);
         
         HtmlOutputText apoEntidadValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        apoEntidadValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{aporteBean.aporte.apoEntidad}", Entidad.class));
-        apoEntidadValue.setConverter(new EntidadConverter());
+        apoEntidadValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{aporteBean.aporte.apoEntidad}", String.class));
         htmlPanelGrid.getChildren().add(apoEntidadValue);
         
         HtmlOutputText apoTipoLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
@@ -379,17 +363,6 @@ public class AporteBean implements Serializable{
 
 	public void setAporte(Aporte aporte) {
         this.aporte = aporte;
-    }
-
-	public List<Entidad> completeApoEntidad(String query) {
-        List<Entidad> suggestions = new ArrayList<Entidad>();
-        for (Entidad entidad : entidadService.findAllEntidads()) {
-            String entidadStr = String.valueOf(entidad.getEntCodigo() +  " "  + entidad.getEntNombre() +  " "  + entidad.getEntCuenta() +  " "  + entidad.getEntAporteEmpleado());
-            if (entidadStr.toLowerCase().startsWith(query.toLowerCase())) {
-                suggestions.add(entidad);
-            }
-        }
-        return suggestions;
     }
 
 	public String onEdit() {

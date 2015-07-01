@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RooJpaRepository(domainType = Entidad.class)
-public interface EntidadReprository extends JpaRepository<Entidad, Integer>, JpaSpecificationExecutor<Entidad> {
+public interface EntidadReprository extends JpaSpecificationExecutor<Entidad>, JpaRepository<Entidad, Integer> {
 }

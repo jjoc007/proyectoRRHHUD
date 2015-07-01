@@ -15,31 +15,7 @@ import org.springframework.roo.addon.jpa.identifier.RooIdentifier;
 @Embeddable
 @Configurable
 @RooIdentifier(dbManaged = true)
-public class AfiliacionPK implements Serializable {
-
-	@Column(name = "afi_empleado", nullable = false)
-    private Integer afiEmpleado;
-
-	@Column(name = "afi_entidad", nullable = false)
-    private Integer afiEntidad;
-
-	public AfiliacionPK(Integer afiEmpleado, Integer afiEntidad) {
-        super();
-        this.afiEmpleado = afiEmpleado;
-        this.afiEntidad = afiEntidad;
-    }
-
-	public AfiliacionPK() {
-        super();
-    }
-
-	public Integer getAfiEmpleado() {
-        return afiEmpleado;
-    }
-
-	public Integer getAfiEntidad() {
-        return afiEntidad;
-    }
+public  class AfiliacionPK implements Serializable{
 
 	public String toJson() {
         return new JSONSerializer()
@@ -71,7 +47,30 @@ public class AfiliacionPK implements Serializable {
         .use("values", AfiliacionPK.class).deserialize(json);
     }
 
-	
+	@Column(name = "afi_empleado", nullable = false)
+    private Integer afiEmpleado;
+
+	@Column(name = "afi_entidad", nullable = false)
+    private Integer afiEntidad;
+
+	public AfiliacionPK(Integer afiEmpleado, Integer afiEntidad) {
+        super();
+        this.afiEmpleado = afiEmpleado;
+        this.afiEntidad = afiEntidad;
+    }
+
+	public AfiliacionPK() {
+        super();
+    }
+
+	public Integer getAfiEmpleado() {
+        return afiEmpleado;
+    }
+
+	public Integer getAfiEntidad() {
+        return afiEntidad;
+    }
+
 	
 	
 	@Override
@@ -106,12 +105,13 @@ public class AfiliacionPK implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
 
 	@Override
 	public String toString() {
-		return afiEmpleado + ";"+ afiEntidad;
+		return  afiEmpleado + ";"+ afiEntidad;
 	}
-
 
 	private static final long serialVersionUID = 1L;
 }

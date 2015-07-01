@@ -1,11 +1,9 @@
 package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Cargo;
-import co.edu.udistrital.rrhh.domain.Historicocargo;
 import co.edu.udistrital.rrhh.service.CargoService;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
@@ -33,7 +31,9 @@ import org.springframework.roo.addon.serializable.RooSerializable;
 @Configurable
 @RooSerializable
 @RooJsfManagedBean(entity = Cargo.class, beanName = "cargoBean")
-public class CargoBean implements Serializable{
+public class CargoBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Autowired
     CargoService cargoService;
@@ -55,8 +55,6 @@ public class CargoBean implements Serializable{
 	private HtmlPanelGrid viewPanelGrid;
 
 	private boolean createDialogVisible = false;
-
-	private List<Historicocargo> selectedHistoricocargoes;
 
 	@PostConstruct
     public void init() {
@@ -133,22 +131,6 @@ public class CargoBean implements Serializable{
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
-        HtmlOutputText historicocargoesCreateOutput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        historicocargoesCreateOutput.setId("historicocargoesCreateOutput");
-        historicocargoesCreateOutput.setValue("Historicocargoes:");
-        htmlPanelGrid.getChildren().add(historicocargoesCreateOutput);
-        
-        HtmlOutputText historicocargoesCreateInput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        historicocargoesCreateInput.setId("historicocargoesCreateInput");
-        historicocargoesCreateInput.setValue("This relationship is managed from the Historicocargo side");
-        htmlPanelGrid.getChildren().add(historicocargoesCreateInput);
-        
-        Message historicocargoesCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        historicocargoesCreateInputMessage.setId("historicocargoesCreateInputMessage");
-        historicocargoesCreateInputMessage.setFor("historicocargoesCreateInput");
-        historicocargoesCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(historicocargoesCreateInputMessage);
-        
         OutputLabel carNombreCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         carNombreCreateOutput.setFor("carNombreCreateInput");
         carNombreCreateOutput.setId("carNombreCreateOutput");
@@ -198,22 +180,6 @@ public class CargoBean implements Serializable{
         ELContext elContext = facesContext.getELContext();
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
-        
-        HtmlOutputText historicocargoesEditOutput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        historicocargoesEditOutput.setId("historicocargoesEditOutput");
-        historicocargoesEditOutput.setValue("Historicocargoes:");
-        htmlPanelGrid.getChildren().add(historicocargoesEditOutput);
-        
-        HtmlOutputText historicocargoesEditInput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        historicocargoesEditInput.setId("historicocargoesEditInput");
-        historicocargoesEditInput.setValue("This relationship is managed from the Historicocargo side");
-        htmlPanelGrid.getChildren().add(historicocargoesEditInput);
-        
-        Message historicocargoesEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        historicocargoesEditInputMessage.setId("historicocargoesEditInputMessage");
-        historicocargoesEditInputMessage.setFor("historicocargoesEditInput");
-        historicocargoesEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(historicocargoesEditInputMessage);
         
         OutputLabel carNombreEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         carNombreEditOutput.setFor("carNombreEditInput");
@@ -265,16 +231,6 @@ public class CargoBean implements Serializable{
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
-        HtmlOutputText historicocargoesLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        historicocargoesLabel.setId("historicocargoesLabel");
-        historicocargoesLabel.setValue("Historicocargoes:");
-        htmlPanelGrid.getChildren().add(historicocargoesLabel);
-        
-        HtmlOutputText historicocargoesValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        historicocargoesValue.setId("historicocargoesValue");
-        historicocargoesValue.setValue("This relationship is managed from the Historicocargo side");
-        htmlPanelGrid.getChildren().add(historicocargoesValue);
-        
         HtmlOutputText carNombreLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
         carNombreLabel.setId("carNombreLabel");
         carNombreLabel.setValue("Car Nombre:");
@@ -310,21 +266,7 @@ public class CargoBean implements Serializable{
         this.cargo = cargo;
     }
 
-	public List<Historicocargo> getSelectedHistoricocargoes() {
-        return selectedHistoricocargoes;
-    }
-
-	public void setSelectedHistoricocargoes(List<Historicocargo> selectedHistoricocargoes) {
-        if (selectedHistoricocargoes != null) {
-            cargo.setHistoricocargoes(new HashSet<Historicocargo>(selectedHistoricocargoes));
-        }
-        this.selectedHistoricocargoes = selectedHistoricocargoes;
-    }
-
 	public String onEdit() {
-        if (cargo != null && cargo.getHistoricocargoes() != null) {
-            selectedHistoricocargoes = new ArrayList<Historicocargo>(cargo.getHistoricocargoes());
-        }
         return null;
     }
 
@@ -377,13 +319,10 @@ public class CargoBean implements Serializable{
 
 	public void reset() {
         cargo = null;
-        selectedHistoricocargoes = null;
         createDialogVisible = false;
     }
 
 	public void handleDialogClose(CloseEvent event) {
         reset();
     }
-
-	private static final long serialVersionUID = 1L;
 }

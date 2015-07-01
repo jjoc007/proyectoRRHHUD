@@ -1,14 +1,10 @@
 package co.edu.udistrital.rrhh.web;
-import co.edu.udistrital.rrhh.domain.Afiliacion;
 import co.edu.udistrital.rrhh.domain.Empleado;
-import co.edu.udistrital.rrhh.domain.Historicocargo;
-import co.edu.udistrital.rrhh.domain.Pago;
 import co.edu.udistrital.rrhh.service.EmpleadoService;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
@@ -61,12 +57,6 @@ public class EmpleadoBean implements Serializable{
 	private HtmlPanelGrid viewPanelGrid;
 
 	private boolean createDialogVisible = false;
-
-	private List<Afiliacion> selectedAfiliacions;
-
-	private List<Historicocargo> selectedHistoricocargoes;
-
-	private List<Pago> selectedPagoes;
 
 	@PostConstruct
     public void init() {
@@ -145,54 +135,6 @@ public class EmpleadoBean implements Serializable{
         ELContext elContext = facesContext.getELContext();
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
-        
-        HtmlOutputText afiliacionsCreateOutput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        afiliacionsCreateOutput.setId("afiliacionsCreateOutput");
-        afiliacionsCreateOutput.setValue("Afiliacions:");
-        htmlPanelGrid.getChildren().add(afiliacionsCreateOutput);
-        
-        HtmlOutputText afiliacionsCreateInput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        afiliacionsCreateInput.setId("afiliacionsCreateInput");
-        afiliacionsCreateInput.setValue("This relationship is managed from the Afiliacion side");
-        htmlPanelGrid.getChildren().add(afiliacionsCreateInput);
-        
-        Message afiliacionsCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        afiliacionsCreateInputMessage.setId("afiliacionsCreateInputMessage");
-        afiliacionsCreateInputMessage.setFor("afiliacionsCreateInput");
-        afiliacionsCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(afiliacionsCreateInputMessage);
-        
-        HtmlOutputText historicocargoesCreateOutput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        historicocargoesCreateOutput.setId("historicocargoesCreateOutput");
-        historicocargoesCreateOutput.setValue("Historicocargoes:");
-        htmlPanelGrid.getChildren().add(historicocargoesCreateOutput);
-        
-        HtmlOutputText historicocargoesCreateInput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        historicocargoesCreateInput.setId("historicocargoesCreateInput");
-        historicocargoesCreateInput.setValue("This relationship is managed from the Historicocargo side");
-        htmlPanelGrid.getChildren().add(historicocargoesCreateInput);
-        
-        Message historicocargoesCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        historicocargoesCreateInputMessage.setId("historicocargoesCreateInputMessage");
-        historicocargoesCreateInputMessage.setFor("historicocargoesCreateInput");
-        historicocargoesCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(historicocargoesCreateInputMessage);
-        
-        HtmlOutputText pagoesCreateOutput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        pagoesCreateOutput.setId("pagoesCreateOutput");
-        pagoesCreateOutput.setValue("Pagoes:");
-        htmlPanelGrid.getChildren().add(pagoesCreateOutput);
-        
-        HtmlOutputText pagoesCreateInput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        pagoesCreateInput.setId("pagoesCreateInput");
-        pagoesCreateInput.setValue("This relationship is managed from the Pago side");
-        htmlPanelGrid.getChildren().add(pagoesCreateInput);
-        
-        Message pagoesCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        pagoesCreateInputMessage.setId("pagoesCreateInputMessage");
-        pagoesCreateInputMessage.setFor("pagoesCreateInput");
-        pagoesCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(pagoesCreateInputMessage);
         
         OutputLabel empNombreCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         empNombreCreateOutput.setFor("empNombreCreateInput");
@@ -308,54 +250,6 @@ public class EmpleadoBean implements Serializable{
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
-        HtmlOutputText afiliacionsEditOutput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        afiliacionsEditOutput.setId("afiliacionsEditOutput");
-        afiliacionsEditOutput.setValue("Afiliacions:");
-        htmlPanelGrid.getChildren().add(afiliacionsEditOutput);
-        
-        HtmlOutputText afiliacionsEditInput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        afiliacionsEditInput.setId("afiliacionsEditInput");
-        afiliacionsEditInput.setValue("This relationship is managed from the Afiliacion side");
-        htmlPanelGrid.getChildren().add(afiliacionsEditInput);
-        
-        Message afiliacionsEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        afiliacionsEditInputMessage.setId("afiliacionsEditInputMessage");
-        afiliacionsEditInputMessage.setFor("afiliacionsEditInput");
-        afiliacionsEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(afiliacionsEditInputMessage);
-        
-        HtmlOutputText historicocargoesEditOutput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        historicocargoesEditOutput.setId("historicocargoesEditOutput");
-        historicocargoesEditOutput.setValue("Historicocargoes:");
-        htmlPanelGrid.getChildren().add(historicocargoesEditOutput);
-        
-        HtmlOutputText historicocargoesEditInput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        historicocargoesEditInput.setId("historicocargoesEditInput");
-        historicocargoesEditInput.setValue("This relationship is managed from the Historicocargo side");
-        htmlPanelGrid.getChildren().add(historicocargoesEditInput);
-        
-        Message historicocargoesEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        historicocargoesEditInputMessage.setId("historicocargoesEditInputMessage");
-        historicocargoesEditInputMessage.setFor("historicocargoesEditInput");
-        historicocargoesEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(historicocargoesEditInputMessage);
-        
-        HtmlOutputText pagoesEditOutput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        pagoesEditOutput.setId("pagoesEditOutput");
-        pagoesEditOutput.setValue("Pagoes:");
-        htmlPanelGrid.getChildren().add(pagoesEditOutput);
-        
-        HtmlOutputText pagoesEditInput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        pagoesEditInput.setId("pagoesEditInput");
-        pagoesEditInput.setValue("This relationship is managed from the Pago side");
-        htmlPanelGrid.getChildren().add(pagoesEditInput);
-        
-        Message pagoesEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        pagoesEditInputMessage.setId("pagoesEditInputMessage");
-        pagoesEditInputMessage.setFor("pagoesEditInput");
-        pagoesEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(pagoesEditInputMessage);
-        
         OutputLabel empNombreEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         empNombreEditOutput.setFor("empNombreEditInput");
         empNombreEditOutput.setId("empNombreEditOutput");
@@ -470,36 +364,6 @@ public class EmpleadoBean implements Serializable{
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
-        HtmlOutputText afiliacionsLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        afiliacionsLabel.setId("afiliacionsLabel");
-        afiliacionsLabel.setValue("Afiliacions:");
-        htmlPanelGrid.getChildren().add(afiliacionsLabel);
-        
-        HtmlOutputText afiliacionsValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        afiliacionsValue.setId("afiliacionsValue");
-        afiliacionsValue.setValue("This relationship is managed from the Afiliacion side");
-        htmlPanelGrid.getChildren().add(afiliacionsValue);
-        
-        HtmlOutputText historicocargoesLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        historicocargoesLabel.setId("historicocargoesLabel");
-        historicocargoesLabel.setValue("Historicocargoes:");
-        htmlPanelGrid.getChildren().add(historicocargoesLabel);
-        
-        HtmlOutputText historicocargoesValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        historicocargoesValue.setId("historicocargoesValue");
-        historicocargoesValue.setValue("This relationship is managed from the Historicocargo side");
-        htmlPanelGrid.getChildren().add(historicocargoesValue);
-        
-        HtmlOutputText pagoesLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        pagoesLabel.setId("pagoesLabel");
-        pagoesLabel.setValue("Pagoes:");
-        htmlPanelGrid.getChildren().add(pagoesLabel);
-        
-        HtmlOutputText pagoesValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        pagoesValue.setId("pagoesValue");
-        pagoesValue.setValue("This relationship is managed from the Pago side");
-        htmlPanelGrid.getChildren().add(pagoesValue);
-        
         HtmlOutputText empNombreLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
         empNombreLabel.setId("empNombreLabel");
         empNombreLabel.setValue("Emp Nombre:");
@@ -569,49 +433,7 @@ public class EmpleadoBean implements Serializable{
         this.empleado = empleado;
     }
 
-	public List<Afiliacion> getSelectedAfiliacions() {
-        return selectedAfiliacions;
-    }
-
-	public void setSelectedAfiliacions(List<Afiliacion> selectedAfiliacions) {
-        if (selectedAfiliacions != null) {
-            empleado.setAfiliacions(new HashSet<Afiliacion>(selectedAfiliacions));
-        }
-        this.selectedAfiliacions = selectedAfiliacions;
-    }
-
-	public List<Historicocargo> getSelectedHistoricocargoes() {
-        return selectedHistoricocargoes;
-    }
-
-	public void setSelectedHistoricocargoes(List<Historicocargo> selectedHistoricocargoes) {
-        if (selectedHistoricocargoes != null) {
-            empleado.setHistoricocargoes(new HashSet<Historicocargo>(selectedHistoricocargoes));
-        }
-        this.selectedHistoricocargoes = selectedHistoricocargoes;
-    }
-
-	public List<Pago> getSelectedPagoes() {
-        return selectedPagoes;
-    }
-
-	public void setSelectedPagoes(List<Pago> selectedPagoes) {
-        if (selectedPagoes != null) {
-            empleado.setPagoes(new HashSet<Pago>(selectedPagoes));
-        }
-        this.selectedPagoes = selectedPagoes;
-    }
-
 	public String onEdit() {
-        if (empleado != null && empleado.getAfiliacions() != null) {
-            selectedAfiliacions = new ArrayList<Afiliacion>(empleado.getAfiliacions());
-        }
-        if (empleado != null && empleado.getHistoricocargoes() != null) {
-            selectedHistoricocargoes = new ArrayList<Historicocargo>(empleado.getHistoricocargoes());
-        }
-        if (empleado != null && empleado.getPagoes() != null) {
-            selectedPagoes = new ArrayList<Pago>(empleado.getPagoes());
-        }
         return null;
     }
 
@@ -664,9 +486,6 @@ public class EmpleadoBean implements Serializable{
 
 	public void reset() {
         empleado = null;
-        selectedAfiliacions = null;
-        selectedHistoricocargoes = null;
-        selectedPagoes = null;
         createDialogVisible = false;
     }
 

@@ -31,7 +31,7 @@ import org.springframework.roo.addon.serializable.RooSerializable;
 @SessionScoped
 @RooSerializable
 @RooJsfManagedBean(entity = Usuario.class, beanName = "usuarioBean")
-public class UsuarioBean implements Serializable{
+public class UsuarioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

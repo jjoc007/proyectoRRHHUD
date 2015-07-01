@@ -1,12 +1,9 @@
 package co.edu.udistrital.rrhh.web;
-import co.edu.udistrital.rrhh.domain.Afiliacion;
-import co.edu.udistrital.rrhh.domain.Aporte;
 import co.edu.udistrital.rrhh.domain.Entidad;
 import co.edu.udistrital.rrhh.service.EntidadService;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
@@ -30,9 +27,9 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.roo.addon.jsf.managedbean.RooJsfManagedBean;
 import org.springframework.roo.addon.serializable.RooSerializable;
 
-@Configurable
 @ManagedBean(name = "entidadBean")
 @SessionScoped
+@Configurable
 @RooSerializable
 @RooJsfManagedBean(entity = Entidad.class, beanName = "entidadBean")
 public class EntidadBean implements Serializable{
@@ -57,10 +54,6 @@ public class EntidadBean implements Serializable{
 	private HtmlPanelGrid viewPanelGrid;
 
 	private boolean createDialogVisible = false;
-
-	private List<Afiliacion> selectedAfiliacions;
-
-	private List<Aporte> selectedAportes;
 
 	@PostConstruct
     public void init() {
@@ -138,38 +131,6 @@ public class EntidadBean implements Serializable{
         ELContext elContext = facesContext.getELContext();
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
-        
-        HtmlOutputText afiliacionsCreateOutput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        afiliacionsCreateOutput.setId("afiliacionsCreateOutput");
-        afiliacionsCreateOutput.setValue("Afiliacions:");
-        htmlPanelGrid.getChildren().add(afiliacionsCreateOutput);
-        
-        HtmlOutputText afiliacionsCreateInput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        afiliacionsCreateInput.setId("afiliacionsCreateInput");
-        afiliacionsCreateInput.setValue("This relationship is managed from the Afiliacion side");
-        htmlPanelGrid.getChildren().add(afiliacionsCreateInput);
-        
-        Message afiliacionsCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        afiliacionsCreateInputMessage.setId("afiliacionsCreateInputMessage");
-        afiliacionsCreateInputMessage.setFor("afiliacionsCreateInput");
-        afiliacionsCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(afiliacionsCreateInputMessage);
-        
-        HtmlOutputText aportesCreateOutput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        aportesCreateOutput.setId("aportesCreateOutput");
-        aportesCreateOutput.setValue("Aportes:");
-        htmlPanelGrid.getChildren().add(aportesCreateOutput);
-        
-        HtmlOutputText aportesCreateInput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        aportesCreateInput.setId("aportesCreateInput");
-        aportesCreateInput.setValue("This relationship is managed from the Aporte side");
-        htmlPanelGrid.getChildren().add(aportesCreateInput);
-        
-        Message aportesCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        aportesCreateInputMessage.setId("aportesCreateInputMessage");
-        aportesCreateInputMessage.setFor("aportesCreateInput");
-        aportesCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(aportesCreateInputMessage);
         
         OutputLabel entNombreCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         entNombreCreateOutput.setFor("entNombreCreateInput");
@@ -258,38 +219,6 @@ public class EntidadBean implements Serializable{
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
-        HtmlOutputText afiliacionsEditOutput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        afiliacionsEditOutput.setId("afiliacionsEditOutput");
-        afiliacionsEditOutput.setValue("Afiliacions:");
-        htmlPanelGrid.getChildren().add(afiliacionsEditOutput);
-        
-        HtmlOutputText afiliacionsEditInput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        afiliacionsEditInput.setId("afiliacionsEditInput");
-        afiliacionsEditInput.setValue("This relationship is managed from the Afiliacion side");
-        htmlPanelGrid.getChildren().add(afiliacionsEditInput);
-        
-        Message afiliacionsEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        afiliacionsEditInputMessage.setId("afiliacionsEditInputMessage");
-        afiliacionsEditInputMessage.setFor("afiliacionsEditInput");
-        afiliacionsEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(afiliacionsEditInputMessage);
-        
-        HtmlOutputText aportesEditOutput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        aportesEditOutput.setId("aportesEditOutput");
-        aportesEditOutput.setValue("Aportes:");
-        htmlPanelGrid.getChildren().add(aportesEditOutput);
-        
-        HtmlOutputText aportesEditInput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        aportesEditInput.setId("aportesEditInput");
-        aportesEditInput.setValue("This relationship is managed from the Aporte side");
-        htmlPanelGrid.getChildren().add(aportesEditInput);
-        
-        Message aportesEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        aportesEditInputMessage.setId("aportesEditInputMessage");
-        aportesEditInputMessage.setFor("aportesEditInput");
-        aportesEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(aportesEditInputMessage);
-        
         OutputLabel entNombreEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         entNombreEditOutput.setFor("entNombreEditInput");
         entNombreEditOutput.setId("entNombreEditOutput");
@@ -377,26 +306,6 @@ public class EntidadBean implements Serializable{
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
-        HtmlOutputText afiliacionsLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        afiliacionsLabel.setId("afiliacionsLabel");
-        afiliacionsLabel.setValue("Afiliacions:");
-        htmlPanelGrid.getChildren().add(afiliacionsLabel);
-        
-        HtmlOutputText afiliacionsValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        afiliacionsValue.setId("afiliacionsValue");
-        afiliacionsValue.setValue("This relationship is managed from the Afiliacion side");
-        htmlPanelGrid.getChildren().add(afiliacionsValue);
-        
-        HtmlOutputText aportesLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        aportesLabel.setId("aportesLabel");
-        aportesLabel.setValue("Aportes:");
-        htmlPanelGrid.getChildren().add(aportesLabel);
-        
-        HtmlOutputText aportesValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        aportesValue.setId("aportesValue");
-        aportesValue.setValue("This relationship is managed from the Aporte side");
-        htmlPanelGrid.getChildren().add(aportesValue);
-        
         HtmlOutputText entNombreLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
         entNombreLabel.setId("entNombreLabel");
         entNombreLabel.setValue("Ent Nombre:");
@@ -450,35 +359,7 @@ public class EntidadBean implements Serializable{
         this.entidad = entidad;
     }
 
-	public List<Afiliacion> getSelectedAfiliacions() {
-        return selectedAfiliacions;
-    }
-
-	public void setSelectedAfiliacions(List<Afiliacion> selectedAfiliacions) {
-        if (selectedAfiliacions != null) {
-            entidad.setAfiliacions(new HashSet<Afiliacion>(selectedAfiliacions));
-        }
-        this.selectedAfiliacions = selectedAfiliacions;
-    }
-
-	public List<Aporte> getSelectedAportes() {
-        return selectedAportes;
-    }
-
-	public void setSelectedAportes(List<Aporte> selectedAportes) {
-        if (selectedAportes != null) {
-            entidad.setAportes(new HashSet<Aporte>(selectedAportes));
-        }
-        this.selectedAportes = selectedAportes;
-    }
-
 	public String onEdit() {
-        if (entidad != null && entidad.getAfiliacions() != null) {
-            selectedAfiliacions = new ArrayList<Afiliacion>(entidad.getAfiliacions());
-        }
-        if (entidad != null && entidad.getAportes() != null) {
-            selectedAportes = new ArrayList<Aporte>(entidad.getAportes());
-        }
         return null;
     }
 
@@ -531,8 +412,6 @@ public class EntidadBean implements Serializable{
 
 	public void reset() {
         entidad = null;
-        selectedAfiliacions = null;
-        selectedAportes = null;
         createDialogVisible = false;
     }
 

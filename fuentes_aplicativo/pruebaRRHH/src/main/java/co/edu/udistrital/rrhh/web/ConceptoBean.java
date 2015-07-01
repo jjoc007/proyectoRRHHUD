@@ -2,11 +2,10 @@ package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Concepto;
 import co.edu.udistrital.rrhh.domain.Pago;
 import co.edu.udistrital.rrhh.service.ConceptoService;
-import co.edu.udistrital.rrhh.service.PagoService;
-import co.edu.udistrital.rrhh.web.converter.PagoConverter;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
@@ -18,11 +17,11 @@ import javax.faces.component.html.HtmlOutputText;
 import javax.faces.component.html.HtmlPanelGrid;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.LengthValidator;
-import org.primefaces.component.autocomplete.AutoComplete;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.inputtextarea.InputTextarea;
 import org.primefaces.component.message.Message;
 import org.primefaces.component.outputlabel.OutputLabel;
+import org.primefaces.component.spinner.Spinner;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CloseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +34,10 @@ import org.springframework.roo.addon.serializable.RooSerializable;
 @Configurable
 @RooSerializable
 @RooJsfManagedBean(entity = Concepto.class, beanName = "conceptoBean")
-public class ConceptoBean implements Serializable{
+public class ConceptoBean implements Serializable {
 
 	@Autowired
     ConceptoService conceptoService;
-
-	@Autowired
-    PagoService pagoService;
 
 	private String name = "Conceptoes";
 
@@ -61,9 +57,12 @@ public class ConceptoBean implements Serializable{
 
 	private boolean createDialogVisible = false;
 
+	private List<Pago> selectedPagoes;
+
 	@PostConstruct
     public void init() {
         columns = new ArrayList<String>();
+        columns.add("conPago");
         columns.add("conNombre");
         columns.add("conDescripcion");
         columns.add("conTipo");
@@ -138,30 +137,28 @@ public class ConceptoBean implements Serializable{
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
-        OutputLabel conPagoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        conPagoCreateOutput.setFor("conPagoCreateInput");
-        conPagoCreateOutput.setId("conPagoCreateOutput");
-        conPagoCreateOutput.setValue("Con Pago:");
-        htmlPanelGrid.getChildren().add(conPagoCreateOutput);
+        OutputLabel conIdCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        conIdCreateOutput.setFor("conIdCreateInput");
+        conIdCreateOutput.setId("conIdCreateOutput");
+        conIdCreateOutput.setValue("Codigo:");
+        htmlPanelGrid.getChildren().add(conIdCreateOutput);
         
-        AutoComplete conPagoCreateInput = (AutoComplete) application.createComponent(AutoComplete.COMPONENT_TYPE);
-        conPagoCreateInput.setId("conPagoCreateInput");
-        conPagoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conPago}", Pago.class));
-        conPagoCreateInput.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{conceptoBean.completeConPago}", List.class, new Class[] { String.class }));
-        conPagoCreateInput.setDropdown(true);
-        conPagoCreateInput.setValueExpression("var", expressionFactory.createValueExpression(elContext, "conPago", String.class));
-        conPagoCreateInput.setValueExpression("itemLabel", expressionFactory.createValueExpression(elContext, "#{conPago.pagTipo} #{conPago.pagValorPago} #{conPago.pagDescripcion} #{conPago.pagCodigo}", String.class));
-        conPagoCreateInput.setValueExpression("itemValue", expressionFactory.createValueExpression(elContext, "#{conPago}", Pago.class));
-        conPagoCreateInput.setConverter(new PagoConverter());
-        conPagoCreateInput.setRequired(false);
-        htmlPanelGrid.getChildren().add(conPagoCreateInput);
+        InputTextarea conIdCreateInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
+        conIdCreateInput.setId("conIdCreateInput");
+        conIdCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conCodigo}", Integer.class));
+        LengthValidator conIdCreateInputValidator = new LengthValidator();
+        conIdCreateInputValidator.setMaximum(50);
+        conIdCreateInput.addValidator(conIdCreateInputValidator);
+        conIdCreateInput.setRequired(true);
+        htmlPanelGrid.getChildren().add(conIdCreateInput);
         
-        Message conPagoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        conPagoCreateInputMessage.setId("conPagoCreateInputMessage");
-        conPagoCreateInputMessage.setFor("conPagoCreateInput");
-        conPagoCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(conPagoCreateInputMessage);
+        Message conIdCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        conIdCreateInputMessage.setId("conIdCreateInputMessage");
+        conIdCreateInputMessage.setFor("conIdCreateInput");
+        conIdCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(conIdCreateInputMessage);
         
+        /*NOMBRE*/
         OutputLabel conNombreCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         conNombreCreateOutput.setFor("conNombreCreateInput");
         conNombreCreateOutput.setId("conNombreCreateOutput");
@@ -251,22 +248,33 @@ public class ConceptoBean implements Serializable{
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
+        HtmlOutputText pagoesEditOutput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
+        pagoesEditOutput.setId("pagoesEditOutput");
+        pagoesEditOutput.setValue("Pagoes:");
+        htmlPanelGrid.getChildren().add(pagoesEditOutput);
+        
+        HtmlOutputText pagoesEditInput = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
+        pagoesEditInput.setId("pagoesEditInput");
+        pagoesEditInput.setValue("This relationship is managed from the Pago side");
+        htmlPanelGrid.getChildren().add(pagoesEditInput);
+        
+        Message pagoesEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        pagoesEditInputMessage.setId("pagoesEditInputMessage");
+        pagoesEditInputMessage.setFor("pagoesEditInput");
+        pagoesEditInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(pagoesEditInputMessage);
+        
         OutputLabel conPagoEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         conPagoEditOutput.setFor("conPagoEditInput");
         conPagoEditOutput.setId("conPagoEditOutput");
         conPagoEditOutput.setValue("Con Pago:");
         htmlPanelGrid.getChildren().add(conPagoEditOutput);
         
-        AutoComplete conPagoEditInput = (AutoComplete) application.createComponent(AutoComplete.COMPONENT_TYPE);
+        Spinner conPagoEditInput = (Spinner) application.createComponent(Spinner.COMPONENT_TYPE);
         conPagoEditInput.setId("conPagoEditInput");
-        conPagoEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conPago}", Pago.class));
-        conPagoEditInput.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{conceptoBean.completeConPago}", List.class, new Class[] { String.class }));
-        conPagoEditInput.setDropdown(true);
-        conPagoEditInput.setValueExpression("var", expressionFactory.createValueExpression(elContext, "conPago", String.class));
-        conPagoEditInput.setValueExpression("itemLabel", expressionFactory.createValueExpression(elContext, "#{conPago.pagTipo} #{conPago.pagValorPago} #{conPago.pagDescripcion} #{conPago.pagCodigo}", String.class));
-        conPagoEditInput.setValueExpression("itemValue", expressionFactory.createValueExpression(elContext, "#{conPago}", Pago.class));
-        conPagoEditInput.setConverter(new PagoConverter());
-        conPagoEditInput.setRequired(false);
+        conPagoEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conPago}", Integer.class));
+        conPagoEditInput.setRequired(true);
+        
         htmlPanelGrid.getChildren().add(conPagoEditInput);
         
         Message conPagoEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
@@ -364,14 +372,23 @@ public class ConceptoBean implements Serializable{
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
+        HtmlOutputText pagoesLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
+        pagoesLabel.setId("pagoesLabel");
+        pagoesLabel.setValue("Pagoes:");
+        htmlPanelGrid.getChildren().add(pagoesLabel);
+        
+        HtmlOutputText pagoesValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
+        pagoesValue.setId("pagoesValue");
+        pagoesValue.setValue("This relationship is managed from the Pago side");
+        htmlPanelGrid.getChildren().add(pagoesValue);
+        
         HtmlOutputText conPagoLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
         conPagoLabel.setId("conPagoLabel");
         conPagoLabel.setValue("Con Pago:");
         htmlPanelGrid.getChildren().add(conPagoLabel);
         
         HtmlOutputText conPagoValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        conPagoValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conPago}", Pago.class));
-        conPagoValue.setConverter(new PagoConverter());
+        conPagoValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conPago}", String.class));
         htmlPanelGrid.getChildren().add(conPagoValue);
         
         HtmlOutputText conNombreLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
@@ -429,18 +446,21 @@ public class ConceptoBean implements Serializable{
         this.concepto = concepto;
     }
 
-	public List<Pago> completeConPago(String query) {
-        List<Pago> suggestions = new ArrayList<Pago>();
-        for (Pago pago : pagoService.findAllPagoes()) {
-            String pagoStr = String.valueOf(pago.getPagTipo() +  " "  + pago.getPagValorPago() +  " "  + pago.getPagDescripcion() +  " "  + pago.getPagCodigo());
-            if (pagoStr.toLowerCase().startsWith(query.toLowerCase())) {
-                suggestions.add(pago);
-            }
+	public List<Pago> getSelectedPagoes() {
+        return selectedPagoes;
+    }
+
+	public void setSelectedPagoes(List<Pago> selectedPagoes) {
+        if (selectedPagoes != null) {
+            concepto.setPagoes(new HashSet<Pago>(selectedPagoes));
         }
-        return suggestions;
+        this.selectedPagoes = selectedPagoes;
     }
 
 	public String onEdit() {
+        if (concepto != null && concepto.getPagoes() != null) {
+            selectedPagoes = new ArrayList<Pago>(concepto.getPagoes());
+        }
         return null;
     }
 
@@ -493,6 +513,7 @@ public class ConceptoBean implements Serializable{
 
 	public void reset() {
         concepto = null;
+        selectedPagoes = null;
         createDialogVisible = false;
     }
 

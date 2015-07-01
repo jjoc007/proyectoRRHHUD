@@ -62,16 +62,13 @@
         <column name="con_descripcion" primaryKey="false" required="false" scale="0" size="65535" type="-1,TEXT"/>
         <column name="con_tipo" primaryKey="false" required="true" scale="0" size="20" type="12,VARCHAR"/>
         <column name="con_valor" primaryKey="false" required="true" scale="0" size="22" type="8,DOUBLE"/>
-        <foreign-key foreignTable="pago" name="concepto_ibfk_1" onDelete="none" onUpdate="none">
-            <option key="exported" value="false"/>
-            <reference foreign="pag_codigo" local="con_pago"/>
+        <foreign-key foreignTable="pago" name="pago_ibfk_2" onDelete="none" onUpdate="none">
+            <option key="exported" value="true"/>
+            <reference foreign="con_concepto" local="con_codigo"/>
         </foreign-key>
         <unique name="PRIMARY">
             <unique-column name="con_codigo"/>
         </unique>
-        <index name="con_pago">
-            <index-column name="con_pago"/>
-        </index>
     </table>
     <table name="empleado">
         <column name="emp_cedula" primaryKey="true" required="true" scale="0" size="10" type="4,INT"/>
@@ -146,19 +143,23 @@
         <column name="pag_valorPago" primaryKey="false" required="true" scale="0" size="22" type="8,DOUBLE"/>
         <column name="pag_descripcion" primaryKey="false" required="false" scale="0" size="65535" type="-1,TEXT"/>
         <column name="pag_estado" primaryKey="false" required="true" scale="0" size="1" type="-7,BIT"/>
+        <column name="con_concepto" primaryKey="false" required="true" scale="0" size="10" type="4,INT"/>
         <foreign-key foreignTable="empleado" name="pago_ibfk_1" onDelete="none" onUpdate="none">
             <option key="exported" value="false"/>
             <reference foreign="emp_cedula" local="pag_empleado"/>
         </foreign-key>
-        <foreign-key foreignTable="concepto" name="concepto_ibfk_1" onDelete="none" onUpdate="none">
-            <option key="exported" value="true"/>
-            <reference foreign="con_pago" local="pag_codigo"/>
+        <foreign-key foreignTable="concepto" name="pago_ibfk_2" onDelete="none" onUpdate="none">
+            <option key="exported" value="false"/>
+            <reference foreign="con_codigo" local="con_concepto"/>
         </foreign-key>
         <unique name="PRIMARY">
             <unique-column name="pag_codigo"/>
         </unique>
         <index name="pag_empleado">
             <index-column name="pag_empleado"/>
+        </index>
+        <index name="con_concepto">
+            <index-column name="con_concepto"/>
         </index>
     </table>
     <table name="usuario">

@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RooJpaRepository(domainType = Concepto.class)
-public interface ConceptoReprository extends JpaSpecificationExecutor<Concepto>, JpaRepository<Concepto, Integer> {
+public interface ConceptoReprository extends JpaRepository<Concepto, Integer>, JpaSpecificationExecutor<Concepto> {
 }

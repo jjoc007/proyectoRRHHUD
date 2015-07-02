@@ -84,30 +84,30 @@ public class ComponentsGenerator {
 	}
 
 
-	public static SelectOneMenu getAutocompleteSINO(String idComponent, String valueExpression){
+	public static SelectOneMenu getAutocompleteTipoConceptos(String idComponent, String valueExpression){
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		javax.faces.application.Application application = facesContext.getApplication();
 		ExpressionFactory expressionFactory = application.getExpressionFactory();
 		ELContext elContext = facesContext.getELContext();
 
-		SelectOneMenu menuEstadoGenerico =(SelectOneMenu) application.createComponent(SelectOneMenu.COMPONENT_TYPE);
-		menuEstadoGenerico.setId(idComponent);
-		menuEstadoGenerico.setValueExpression("value", expressionFactory.createValueExpression(elContext, valueExpression, BigDecimal.class));
+		SelectOneMenu menuGenerico =(SelectOneMenu) application.createComponent(SelectOneMenu.COMPONENT_TYPE);
+		menuGenerico.setId(idComponent);
+		menuGenerico.setValueExpression("value", expressionFactory.createValueExpression(elContext, valueExpression, BigDecimal.class));
 
-		UISelectItem itemActivo = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
-		itemActivo.setItemLabel("Si");
-		itemActivo.setItemValue(new BigDecimal(1));
+		UISelectItem item1 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
+		item1.setItemLabel("Devengo");
+		item1.setItemValue(Constantes.TIPO_CONCEPTO_DEVENGO);
 
-		UISelectItem itemInactivo = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
-		itemInactivo.setItemLabel("No");
-		itemInactivo.setItemValue(new BigDecimal(0));
+		UISelectItem item2 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
+		item2.setItemLabel("Deducido");
+		item2.setItemValue(Constantes.TIPO_CONCEPTO_DEDUCIDO);
 
-		menuEstadoGenerico.getChildren().add(itemActivo);
-		menuEstadoGenerico.getChildren().add(itemInactivo);
+		menuGenerico.getChildren().add(item1);
+		menuGenerico.getChildren().add(item2);
 
 
-		return menuEstadoGenerico;
+		return menuGenerico;
 
 	}
 

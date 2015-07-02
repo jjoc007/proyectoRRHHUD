@@ -1,6 +1,7 @@
 package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Concepto;
 import co.edu.udistrital.rrhh.service.ConceptoService;
+import co.edu.udistrital.rrhh.web.util.CampoValor;
 import co.edu.udistrital.rrhh.web.util.ComponentsGenerator;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
 
@@ -48,7 +49,7 @@ public class ConceptoBean implements Serializable {
 
 	private boolean dataVisible = false;
 
-	private List<String> columns;
+	private List<CampoValor> columns;
 
 	private HtmlPanelGrid createPanelGrid;
 
@@ -60,18 +61,17 @@ public class ConceptoBean implements Serializable {
 
 	@PostConstruct
     public void init() {
-        columns = new ArrayList<String>();
-        columns.add("conNombre");
-        columns.add("conDescripcion");
-        columns.add("conTipo");
-        columns.add("conValor");
+        columns = new ArrayList<CampoValor>();
+        columns.add(new CampoValor("Nombre", "conNombre"));
+        columns.add(new CampoValor("Descripcion", "conDescripcion"));
+        columns.add(new CampoValor("valor","conValor"));
     }
 
 	public String getName() {
         return name;
     }
 
-	public List<String> getColumns() {
+	public List<CampoValor> getColumns() {
         return columns;
     }
 
@@ -110,7 +110,7 @@ public class ConceptoBean implements Serializable {
 
 	public HtmlPanelGrid getEditPanelGrid() {
         if (editPanelGrid == null) {
-            editPanelGrid = populateEditPanel();
+            editPanelGrid = populateCreatePanel();
         }
         return editPanelGrid;
     }
@@ -190,14 +190,7 @@ public class ConceptoBean implements Serializable {
         conTipoCreateOutput.setValue("Con Tipo:");
         htmlPanelGrid.getChildren().add(conTipoCreateOutput);
         
-        InputText conTipoCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        conTipoCreateInput.setId("conTipoCreateInput");
-        conTipoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conTipo}", String.class));
-        LengthValidator conTipoCreateInputValidator = new LengthValidator();
-        conTipoCreateInputValidator.setMaximum(20);
-        conTipoCreateInput.addValidator(conTipoCreateInputValidator);
-        conTipoCreateInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(conTipoCreateInput);
+        htmlPanelGrid.getChildren().add(ComponentsGenerator.getAutocompleteTipoConceptos("conTipoCreateInput", "#{conceptoBean.concepto.conTipo}"));
         
         Message conTipoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
         conTipoCreateInputMessage.setId("conTipoCreateInputMessage");

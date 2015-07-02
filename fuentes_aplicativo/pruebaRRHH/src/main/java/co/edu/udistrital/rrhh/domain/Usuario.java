@@ -25,15 +25,17 @@ public class Usuario {
 
 	@Id
     @Column(name = "usu_usuario")
-    private Integer usuUsuario;
+    private String usuUsuario;
 
-	public Integer getUsuUsuario() {
-        return this.usuUsuario;
-    }
+	
 
-	public void setUsuUsuario(Integer id) {
-        this.usuUsuario = id;
-    }
+	public String getUsuUsuario() {
+		return usuUsuario;
+	}
+
+	public void setUsuUsuario(String usuUsuario) {
+		this.usuUsuario = usuUsuario;
+	}
 
 	@Column(name = "usu_nombre", length = 50)
     @NotNull

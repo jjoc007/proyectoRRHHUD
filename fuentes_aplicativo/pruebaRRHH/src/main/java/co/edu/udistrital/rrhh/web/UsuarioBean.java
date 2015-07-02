@@ -1,10 +1,13 @@
 package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Usuario;
 import co.edu.udistrital.rrhh.service.UsuarioService;
+import co.edu.udistrital.rrhh.web.util.ComponentsGenerator;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
@@ -15,10 +18,12 @@ import javax.faces.component.html.HtmlOutputText;
 import javax.faces.component.html.HtmlPanelGrid;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.LengthValidator;
+
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.inputtextarea.InputTextarea;
 import org.primefaces.component.message.Message;
 import org.primefaces.component.outputlabel.OutputLabel;
+import org.primefaces.component.password.Password;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CloseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,7 +113,7 @@ public class UsuarioBean implements Serializable {
 
 	public HtmlPanelGrid getEditPanelGrid() {
         if (editPanelGrid == null) {
-            editPanelGrid = populateEditPanel();
+            editPanelGrid = populateCreatePanel();
         }
         return editPanelGrid;
     }
@@ -132,6 +137,27 @@ public class UsuarioBean implements Serializable {
         ELContext elContext = facesContext.getELContext();
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
+        
+        
+        
+        htmlPanelGrid.getChildren().add(ComponentsGenerator.getBasicOutputLabel("usuUserCreateInput", "usuUserCreateOutput", "Usuario:"));
+        
+        InputText usuUserCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
+        usuUserCreateInput.setId("usuUserCreateInput");
+        usuUserCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuUsuario}", String.class));
+        LengthValidator usuUserCreateInputValidator = new LengthValidator();
+        usuUserCreateInputValidator.setMaximum(50);
+        usuUserCreateInput.addValidator(usuUserCreateInputValidator);
+        usuUserCreateInput.setRequired(true);
+        htmlPanelGrid.getChildren().add(usuUserCreateInput);
+        
+        Message usuUserCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        usuUserCreateInputMessage.setId("usuUserCreateInputMessage");
+        usuUserCreateInputMessage.setFor("usuUserCreateInput");
+        usuUserCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(usuUserCreateInputMessage);
+        
+        
         
         OutputLabel usuNombreCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         usuNombreCreateOutput.setFor("usuNombreCreateInput");
@@ -160,7 +186,7 @@ public class UsuarioBean implements Serializable {
         usuClaveCreateOutput.setValue("Usu Clave:");
         htmlPanelGrid.getChildren().add(usuClaveCreateOutput);
         
-        InputTextarea usuClaveCreateInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
+        Password usuClaveCreateInput = (Password) application.createComponent(Password.COMPONENT_TYPE);
         usuClaveCreateInput.setId("usuClaveCreateInput");
         usuClaveCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuClave}", String.class));
         LengthValidator usuClaveCreateInputValidator = new LengthValidator();
@@ -220,157 +246,9 @@ public class UsuarioBean implements Serializable {
         return htmlPanelGrid;
     }
 
-	public HtmlPanelGrid populateEditPanel() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        javax.faces.application.Application application = facesContext.getApplication();
-        ExpressionFactory expressionFactory = application.getExpressionFactory();
-        ELContext elContext = facesContext.getELContext();
-        
-        HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
-        
-        OutputLabel usuNombreEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        usuNombreEditOutput.setFor("usuNombreEditInput");
-        usuNombreEditOutput.setId("usuNombreEditOutput");
-        usuNombreEditOutput.setValue("Usu Nombre:");
-        htmlPanelGrid.getChildren().add(usuNombreEditOutput);
-        
-        InputTextarea usuNombreEditInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
-        usuNombreEditInput.setId("usuNombreEditInput");
-        usuNombreEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuNombre}", String.class));
-        LengthValidator usuNombreEditInputValidator = new LengthValidator();
-        usuNombreEditInputValidator.setMaximum(50);
-        usuNombreEditInput.addValidator(usuNombreEditInputValidator);
-        usuNombreEditInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(usuNombreEditInput);
-        
-        Message usuNombreEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        usuNombreEditInputMessage.setId("usuNombreEditInputMessage");
-        usuNombreEditInputMessage.setFor("usuNombreEditInput");
-        usuNombreEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(usuNombreEditInputMessage);
-        
-        OutputLabel usuClaveEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        usuClaveEditOutput.setFor("usuClaveEditInput");
-        usuClaveEditOutput.setId("usuClaveEditOutput");
-        usuClaveEditOutput.setValue("Usu Clave:");
-        htmlPanelGrid.getChildren().add(usuClaveEditOutput);
-        
-        InputTextarea usuClaveEditInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
-        usuClaveEditInput.setId("usuClaveEditInput");
-        usuClaveEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuClave}", String.class));
-        LengthValidator usuClaveEditInputValidator = new LengthValidator();
-        usuClaveEditInputValidator.setMaximum(50);
-        usuClaveEditInput.addValidator(usuClaveEditInputValidator);
-        usuClaveEditInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(usuClaveEditInput);
-        
-        Message usuClaveEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        usuClaveEditInputMessage.setId("usuClaveEditInputMessage");
-        usuClaveEditInputMessage.setFor("usuClaveEditInput");
-        usuClaveEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(usuClaveEditInputMessage);
-        
-        OutputLabel usuEstadoEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        usuEstadoEditOutput.setFor("usuEstadoEditInput");
-        usuEstadoEditOutput.setId("usuEstadoEditOutput");
-        usuEstadoEditOutput.setValue("Usu Estado:");
-        htmlPanelGrid.getChildren().add(usuEstadoEditOutput);
-        
-        InputText usuEstadoEditInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        usuEstadoEditInput.setId("usuEstadoEditInput");
-        usuEstadoEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuEstado}", String.class));
-        LengthValidator usuEstadoEditInputValidator = new LengthValidator();
-        usuEstadoEditInputValidator.setMaximum(1);
-        usuEstadoEditInput.addValidator(usuEstadoEditInputValidator);
-        usuEstadoEditInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(usuEstadoEditInput);
-        
-        Message usuEstadoEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        usuEstadoEditInputMessage.setId("usuEstadoEditInputMessage");
-        usuEstadoEditInputMessage.setFor("usuEstadoEditInput");
-        usuEstadoEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(usuEstadoEditInputMessage);
-        
-        OutputLabel usuCorreoEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        usuCorreoEditOutput.setFor("usuCorreoEditInput");
-        usuCorreoEditOutput.setId("usuCorreoEditOutput");
-        usuCorreoEditOutput.setValue("Usu Correo:");
-        htmlPanelGrid.getChildren().add(usuCorreoEditOutput);
-        
-        InputTextarea usuCorreoEditInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
-        usuCorreoEditInput.setId("usuCorreoEditInput");
-        usuCorreoEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuCorreo}", String.class));
-        LengthValidator usuCorreoEditInputValidator = new LengthValidator();
-        usuCorreoEditInputValidator.setMaximum(80);
-        usuCorreoEditInput.addValidator(usuCorreoEditInputValidator);
-        usuCorreoEditInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(usuCorreoEditInput);
-        
-        Message usuCorreoEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        usuCorreoEditInputMessage.setId("usuCorreoEditInputMessage");
-        usuCorreoEditInputMessage.setFor("usuCorreoEditInput");
-        usuCorreoEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(usuCorreoEditInputMessage);
-        
-        return htmlPanelGrid;
-    }
+	public HtmlPanelGrid populateEditPanel() {return null;}
 
-	public HtmlPanelGrid populateViewPanel() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        javax.faces.application.Application application = facesContext.getApplication();
-        ExpressionFactory expressionFactory = application.getExpressionFactory();
-        ELContext elContext = facesContext.getELContext();
-        
-        HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
-        
-        HtmlOutputText usuNombreLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        usuNombreLabel.setId("usuNombreLabel");
-        usuNombreLabel.setValue("Usu Nombre:");
-        htmlPanelGrid.getChildren().add(usuNombreLabel);
-        
-        InputTextarea usuNombreValue = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
-        usuNombreValue.setId("usuNombreValue");
-        usuNombreValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuNombre}", String.class));
-        usuNombreValue.setReadonly(true);
-        usuNombreValue.setDisabled(true);
-        htmlPanelGrid.getChildren().add(usuNombreValue);
-        
-        HtmlOutputText usuClaveLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        usuClaveLabel.setId("usuClaveLabel");
-        usuClaveLabel.setValue("Usu Clave:");
-        htmlPanelGrid.getChildren().add(usuClaveLabel);
-        
-        InputTextarea usuClaveValue = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
-        usuClaveValue.setId("usuClaveValue");
-        usuClaveValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuClave}", String.class));
-        usuClaveValue.setReadonly(true);
-        usuClaveValue.setDisabled(true);
-        htmlPanelGrid.getChildren().add(usuClaveValue);
-        
-        HtmlOutputText usuEstadoLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        usuEstadoLabel.setId("usuEstadoLabel");
-        usuEstadoLabel.setValue("Usu Estado:");
-        htmlPanelGrid.getChildren().add(usuEstadoLabel);
-        
-        HtmlOutputText usuEstadoValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        usuEstadoValue.setId("usuEstadoValue");
-        usuEstadoValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuEstado}", String.class));
-        htmlPanelGrid.getChildren().add(usuEstadoValue);
-        
-        HtmlOutputText usuCorreoLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        usuCorreoLabel.setId("usuCorreoLabel");
-        usuCorreoLabel.setValue("Usu Correo:");
-        htmlPanelGrid.getChildren().add(usuCorreoLabel);
-        
-        InputTextarea usuCorreoValue = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
-        usuCorreoValue.setId("usuCorreoValue");
-        usuCorreoValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuCorreo}", String.class));
-        usuCorreoValue.setReadonly(true);
-        usuCorreoValue.setDisabled(true);
-        htmlPanelGrid.getChildren().add(usuCorreoValue);
-        
-        return htmlPanelGrid;
-    }
+	public HtmlPanelGrid populateViewPanel() {return null;}
 
 	public Usuario getUsuario() {
         if (usuario == null) {

@@ -1,15 +1,22 @@
-CREATE DATABASE rrhhdb;# 1 fila afectada.
+﻿CREATE DATABASE rrhhdb;# 1 fila afectada.
 
+USE rrhhdb;# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
 
-USE rrhhbd;# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
-
+CREATE TABLE Rol(
+	rol_id INT PRIMARY KEY,
+	rol_nombre VARCHAR(50) NOT NULL,
+	rol_descripcion TEXT,
+	rol_estado VARCHAR(1) NOT NULL
+);# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
 
 CREATE TABLE Usuario(
-	usu_usuario INT PRIMARY KEY,
+	usu_usuario VARCHAR(100) PRIMARY KEY,
+	usu_rol INT NOT NULL,
 	usu_nombre VARCHAR(50) NOT NULL,
 	usu_clave VARCHAR(50) NOT NULL,
-	usu_estado 	VARCHAR(1) NOT NULL,
-	usu_correo VARCHAR(80) NOT NULL
+	usu_estado VARCHAR(1) NOT NULL,
+	usu_correo VARCHAR(80) NOT NULL,
+	Foreign Key(usu_rol)References Rol(rol_id)
 );# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
 
 
@@ -28,27 +35,30 @@ CREATE TABLE Concepto(
 	con_nombre VARCHAR(50) NOT NULL,
 	con_descripcion TEXT,
 	con_tipo VARCHAR(20) NOT NULL,
-	con_valor DOUBLE NOT NULL
+	con_valor DOUBLE NOT NULL,
+	con_estado VARCHAR(1) NOT NULL
 );# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
 
 
 CREATE TABLE Pago(
 	pag_codigo INT PRIMARY KEY,
 	pag_empleado INT NOT NULL,
+	pag_concepto INT NOT NULL,
+	pag_periodo DATETIME NOT NULL,
 	pag_tipo VARCHAR(20) NOT NULL,
 	pag_valorPago DOUBLE NOT NULL,
 	pag_descripcion TEXT,
-	pag_estado BIT NOT NULL,
-	con_concepto INT NOT NULL,
+	pag_estado VARCHAR(1) NOT NULL,
 	Foreign Key(pag_empleado)References Empleado(emp_cedula),
-	Foreign Key(con_concepto)References Concepto(con_codigo)
+	Foreign Key(pag_concepto)References Concepto(con_codigo)
 );# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
 
 
 CREATE TABLE Cargo(
 	car_cogigo INT PRIMARY KEY,
 	car_nombre VARCHAR(50) NOT NULL,
-	car_salario DOUBLE NOT NULL
+	car_salario DOUBLE NOT NULL,
+	car_estado VARCHAR(1) NOT NULL
 );# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
 
 
@@ -57,8 +67,9 @@ CREATE TABLE HistoricoCargo(
 	his_empleado INT NOT NULL,
 	his_cargo INT NOT NULL,
 	his_fechaInicio DATETIME NOT NULL,
-	his_fechaFinal DATETIME,
+	his_fechaFin DATETIME,
 	his_salario DOUBLE NOT NULL,
+	his_estado VARCHAR(1) NOT NULL,
 	Foreign Key(his_empleado)References Empleado(emp_cedula),
 	Foreign Key(his_cargo)References Cargo(car_cogigo)
 );# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
@@ -69,7 +80,8 @@ CREATE TABLE Entidad(
 	ent_nombre VARCHAR(50) NOT NULL,
 	ent_cuenta INT NOT NULL,
 	ent_aporteEmpleado DOUBLE NOT NULL,
-	ent_aporteEmpresa DOUBLE NOT NULL
+	ent_aporteEmpresa DOUBLE NOT NULL,
+	ent_estado VARCHAR(1) NOT NULL
 );# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
 
 
@@ -85,7 +97,7 @@ CREATE TABLE Aporte(
 	apo_codigo INT PRIMARY KEY,
 	apo_entidad INT NOT NULL,
 	apo_tipo VARCHAR(20) NOT NULL,
-	apo_periodo VARCHAR(20) NOT NULL,
+	apo_periodo DATETIME NOT NULL,
 	apo_valor DOUBLE NOT NULL,
 	Foreign Key(apo_entidad)References Entidad(ent_codigo)
 );# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).

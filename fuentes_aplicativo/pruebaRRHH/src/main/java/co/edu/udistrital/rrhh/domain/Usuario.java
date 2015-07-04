@@ -3,7 +3,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.roo.addon.dbre.RooDbManaged;
@@ -52,7 +54,11 @@ public class Usuario {
 	@Column(name = "usu_correo", length = 80)
     @NotNull
     private String usuCorreo;
-
+	
+	@Transient
+	private boolean logueado;
+	
+	
 	public String getUsuNombre() {
         return usuNombre;
     }
@@ -84,4 +90,12 @@ public class Usuario {
 	public void setUsuCorreo(String usuCorreo) {
         this.usuCorreo = usuCorreo;
     }
+
+	public boolean isLogueado() {
+		return logueado;
+	}
+
+	public void setLogueado(boolean logueado) {
+		this.logueado = logueado;
+	}
 }

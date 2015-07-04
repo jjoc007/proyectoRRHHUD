@@ -2,10 +2,12 @@ package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.service.EmpleadoService;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
@@ -17,6 +19,7 @@ import javax.faces.component.html.HtmlPanelGrid;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.DateTimeConverter;
 import javax.faces.validator.LengthValidator;
+
 import org.primefaces.component.calendar.Calendar;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.inputtextarea.InputTextarea;
@@ -146,12 +149,9 @@ public class EmpleadoBean implements Serializable{
         empCedulaCreateOutput.setValue("Cedula:");
         htmlPanelGrid.getChildren().add(empCedulaCreateOutput);
         
-        InputTextarea empCedulaCreateInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
+        InputText empCedulaCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
         empCedulaCreateInput.setId("empCedulaCreateInput");
         empCedulaCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{empleadoBean.empleado.empCedula}", String.class));
-        LengthValidator empCedulaCreateInputValidator = new LengthValidator();
-        empCedulaCreateInputValidator.setMaximum(50);
-        empCedulaCreateInput.addValidator(empCedulaCreateInputValidator);
         empCedulaCreateInput.setRequired(true);
         htmlPanelGrid.getChildren().add(empCedulaCreateInput);
         

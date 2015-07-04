@@ -50,6 +50,10 @@ public class Concepto {
     @NotNull
     private Double conValor;
 
+	@Column(name = "con_estado", length = 1)
+    @NotNull
+    private String conEstado;
+
 	public String getConNombre() {
         return conNombre;
     }
@@ -80,5 +84,13 @@ public class Concepto {
 
 	public void setConValor(Double conValor) {
         this.conValor = conValor;
+    }
+
+	public String getConEstado() {
+        return conEstado;
+    }
+
+	public void setConEstado(String conEstado) {
+        this.conEstado = conEstado;
     }
 }

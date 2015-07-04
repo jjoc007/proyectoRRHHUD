@@ -1,11 +1,15 @@
 package co.edu.udistrital.rrhh.domain;
+import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.entity.RooJpaEntity;
@@ -23,6 +27,16 @@ public class Pago {
     @NotNull
     private Integer pagEmpleado;
 
+	@Column(name = "pag_concepto")
+    @NotNull
+    private Integer pagConcepto;
+
+	@Column(name = "pag_periodo")
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "MM")
+    private Calendar pagPeriodo;
+
 	@Column(name = "pag_tipo", length = 20)
     @NotNull
     private String pagTipo;
@@ -34,13 +48,9 @@ public class Pago {
 	@Column(name = "pag_descripcion")
     private String pagDescripcion;
 
-	@Column(name = "pag_estado")
+	@Column(name = "pag_estado", length = 1)
     @NotNull
-    private boolean pagEstado;
-
-	@Column(name = "con_concepto")
-    @NotNull
-    private Integer conConcepto;
+    private String pagEstado;
 
 	public Integer getPagEmpleado() {
         return pagEmpleado;
@@ -48,6 +58,22 @@ public class Pago {
 
 	public void setPagEmpleado(Integer pagEmpleado) {
         this.pagEmpleado = pagEmpleado;
+    }
+
+	public Integer getPagConcepto() {
+        return pagConcepto;
+    }
+
+	public void setPagConcepto(Integer pagConcepto) {
+        this.pagConcepto = pagConcepto;
+    }
+
+	public Calendar getPagPeriodo() {
+        return pagPeriodo;
+    }
+
+	public void setPagPeriodo(Calendar pagPeriodo) {
+        this.pagPeriodo = pagPeriodo;
     }
 
 	public String getPagTipo() {
@@ -74,20 +100,16 @@ public class Pago {
         this.pagDescripcion = pagDescripcion;
     }
 
-	public boolean isPagEstado() {
+	public String getPagEstado() {
         return pagEstado;
     }
 
-	public void setPagEstado(boolean pagEstado) {
+	public void setPagEstado(String pagEstado) {
         this.pagEstado = pagEstado;
     }
 
-	public Integer getConConcepto() {
-        return conConcepto;
-    }
-
-	public void setConConcepto(Integer conConcepto) {
-        this.conConcepto = conConcepto;
+	public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
 	@Id
@@ -102,7 +124,15 @@ public class Pago {
         this.pagCodigo = id;
     }
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+	@Column(name = "con_concepto")
+    @NotNull
+    private Integer conConcepto;
+
+	public Integer getConConcepto() {
+        return conConcepto;
+    }
+
+	public void setConConcepto(Integer conConcepto) {
+        this.conConcepto = conConcepto;
     }
 }

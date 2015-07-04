@@ -19,6 +19,18 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooDbManaged(automaticallyDelete = true)
 public class Entidad {
 
+	@Id
+    @Column(name = "ent_codigo")
+    private Integer entCodigo;
+
+	public Integer getEntCodigo() {
+        return this.entCodigo;
+    }
+
+	public void setEntCodigo(Integer id) {
+        this.entCodigo = id;
+    }
+
 	@Column(name = "ent_nombre", length = 50)
     @NotNull
     private String entNombre;
@@ -34,6 +46,10 @@ public class Entidad {
 	@Column(name = "ent_aporteEmpresa", precision = 22)
     @NotNull
     private Double entAporteEmpresa;
+
+	@Column(name = "ent_estado", length = 1)
+    @NotNull
+    private String entEstado;
 
 	public String getEntNombre() {
         return entNombre;
@@ -67,19 +83,15 @@ public class Entidad {
         this.entAporteEmpresa = entAporteEmpresa;
     }
 
+	public String getEntEstado() {
+        return entEstado;
+    }
+
+	public void setEntEstado(String entEstado) {
+        this.entEstado = entEstado;
+    }
+
 	public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
-	@Id
-    @Column(name = "ent_codigo")
-    private Integer entCodigo;
-
-	public Integer getEntCodigo() {
-        return this.entCodigo;
-    }
-
-	public void setEntCodigo(Integer id) {
-        this.entCodigo = id;
     }
 }

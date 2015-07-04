@@ -3,9 +3,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.roo.addon.dbre.RooDbManaged;
@@ -21,23 +19,9 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooDbManaged(automaticallyDelete = true)
 public class Usuario {
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
-	@Id
-    @Column(name = "usu_usuario")
-    private String usuUsuario;
-
-	
-
-	public String getUsuUsuario() {
-		return usuUsuario;
-	}
-
-	public void setUsuUsuario(String usuUsuario) {
-		this.usuUsuario = usuUsuario;
-	}
+	@Column(name = "usu_rol")
+    @NotNull
+    private Integer usuRol;
 
 	@Column(name = "usu_nombre", length = 50)
     @NotNull
@@ -54,11 +38,15 @@ public class Usuario {
 	@Column(name = "usu_correo", length = 80)
     @NotNull
     private String usuCorreo;
-	
-	@Transient
-	private boolean logueado;
-	
-	
+
+	public Integer getUsuRol() {
+        return usuRol;
+    }
+
+	public void setUsuRol(Integer usuRol) {
+        this.usuRol = usuRol;
+    }
+
 	public String getUsuNombre() {
         return usuNombre;
     }
@@ -91,11 +79,19 @@ public class Usuario {
         this.usuCorreo = usuCorreo;
     }
 
-	public boolean isLogueado() {
-		return logueado;
-	}
+	public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+    }
 
-	public void setLogueado(boolean logueado) {
-		this.logueado = logueado;
-	}
+	@Id
+    @Column(name = "usu_usuario", length = 100)
+    private String usuUsuario;
+
+	public String getUsuUsuario() {
+        return this.usuUsuario;
+    }
+
+	public void setUsuUsuario(String id) {
+        this.usuUsuario = id;
+    }
 }

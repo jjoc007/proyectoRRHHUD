@@ -19,10 +19,6 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooDbManaged(automaticallyDelete = true)
 public class Cargo {
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
 	@Column(name = "car_nombre", length = 50)
     @NotNull
     private String carNombre;
@@ -30,6 +26,10 @@ public class Cargo {
 	@Column(name = "car_salario", precision = 22)
     @NotNull
     private Double carSalario;
+
+	@Column(name = "car_estado", length = 1)
+    @NotNull
+    private String carEstado;
 
 	public String getCarNombre() {
         return carNombre;
@@ -45,6 +45,18 @@ public class Cargo {
 
 	public void setCarSalario(Double carSalario) {
         this.carSalario = carSalario;
+    }
+
+	public String getCarEstado() {
+        return carEstado;
+    }
+
+	public void setCarEstado(String carEstado) {
+        this.carEstado = carEstado;
+    }
+
+	public String toString() {
+        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
 	@Id

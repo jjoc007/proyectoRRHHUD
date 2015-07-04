@@ -1,11 +1,15 @@
 package co.edu.udistrital.rrhh.domain;
+import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.entity.RooJpaEntity;
@@ -19,18 +23,6 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooDbManaged(automaticallyDelete = true)
 public class Aporte {
 
-	@Id
-    @Column(name = "apo_codigo")
-    private Integer apoCodigo;
-
-	public Integer getApoCodigo() {
-        return this.apoCodigo;
-    }
-
-	public void setApoCodigo(Integer id) {
-        this.apoCodigo = id;
-    }
-
 	@Column(name = "apo_entidad")
     @NotNull
     private Integer apoEntidad;
@@ -39,9 +31,11 @@ public class Aporte {
     @NotNull
     private String apoTipo;
 
-	@Column(name = "apo_periodo", length = 20)
+	@Column(name = "apo_periodo")
     @NotNull
-    private String apoPeriodo;
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "MM")
+    private Calendar apoPeriodo;
 
 	@Column(name = "apo_valor", precision = 22)
     @NotNull
@@ -63,11 +57,11 @@ public class Aporte {
         this.apoTipo = apoTipo;
     }
 
-	public String getApoPeriodo() {
+	public Calendar getApoPeriodo() {
         return apoPeriodo;
     }
 
-	public void setApoPeriodo(String apoPeriodo) {
+	public void setApoPeriodo(Calendar apoPeriodo) {
         this.apoPeriodo = apoPeriodo;
     }
 
@@ -81,5 +75,17 @@ public class Aporte {
 
 	public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+    }
+
+	@Id
+    @Column(name = "apo_codigo")
+    private Integer apoCodigo;
+
+	public Integer getApoCodigo() {
+        return this.apoCodigo;
+    }
+
+	public void setApoCodigo(Integer id) {
+        this.apoCodigo = id;
     }
 }

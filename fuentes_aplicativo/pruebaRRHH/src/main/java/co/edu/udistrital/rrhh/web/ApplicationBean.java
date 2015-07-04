@@ -233,6 +233,29 @@ public class ApplicationBean {
         menuModel.addSubmenu(submenu);
         
         submenu = new Submenu();
+        submenu.setId("rolSubmenu");
+        submenu.setLabel("Rol");
+        item = new MenuItem();
+        item.setId("createRolMenuItem");
+        item.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{messages.label_create}", String.class));
+        item.setActionExpression(expressionFactory.createMethodExpression(elContext, "#{rolBean.displayCreateDialog}", String.class, new Class[0]));
+        item.setIcon("ui-icon ui-icon-document");
+        item.setAjax(false);
+        item.setAsync(false);
+        item.setUpdate(":dataForm:data");
+        submenu.getChildren().add(item);
+        item = new MenuItem();
+        item.setId("listRolMenuItem");
+        item.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{messages.label_list}", String.class));
+        item.setActionExpression(expressionFactory.createMethodExpression(elContext, "#{rolBean.displayList}", String.class, new Class[0]));
+        item.setIcon("ui-icon ui-icon-folder-open");
+        item.setAjax(false);
+        item.setAsync(false);
+        item.setUpdate(":dataForm:data");
+        submenu.getChildren().add(item);
+        menuModel.addSubmenu(submenu);
+        
+        submenu = new Submenu();
         submenu.setId("usuarioSubmenu");
         submenu.setLabel("Usuario");
         item = new MenuItem();

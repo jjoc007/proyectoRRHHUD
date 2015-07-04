@@ -23,6 +23,18 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooDbManaged(automaticallyDelete = true)
 public class Historicocargo {
 
+	@Id
+    @Column(name = "his_codigo")
+    private Integer hisCodigo;
+
+	public Integer getHisCodigo() {
+        return this.hisCodigo;
+    }
+
+	public void setHisCodigo(Integer id) {
+        this.hisCodigo = id;
+    }
+
 	@Column(name = "his_empleado")
     @NotNull
     private Integer hisEmpleado;
@@ -37,14 +49,18 @@ public class Historicocargo {
     @DateTimeFormat(style = "MM")
     private Calendar hisFechaInicio;
 
-	@Column(name = "his_fechaFinal")
+	@Column(name = "his_fechaFin")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MM")
-    private Calendar hisFechaFinal;
+    private Calendar hisFechaFin;
 
 	@Column(name = "his_salario", precision = 22)
     @NotNull
     private Double hisSalario;
+
+	@Column(name = "his_estado", length = 1)
+    @NotNull
+    private String hisEstado;
 
 	public Integer getHisEmpleado() {
         return hisEmpleado;
@@ -70,12 +86,12 @@ public class Historicocargo {
         this.hisFechaInicio = hisFechaInicio;
     }
 
-	public Calendar getHisFechaFinal() {
-        return hisFechaFinal;
+	public Calendar getHisFechaFin() {
+        return hisFechaFin;
     }
 
-	public void setHisFechaFinal(Calendar hisFechaFinal) {
-        this.hisFechaFinal = hisFechaFinal;
+	public void setHisFechaFin(Calendar hisFechaFin) {
+        this.hisFechaFin = hisFechaFin;
     }
 
 	public Double getHisSalario() {
@@ -86,19 +102,28 @@ public class Historicocargo {
         this.hisSalario = hisSalario;
     }
 
+	public String getHisEstado() {
+        return hisEstado;
+    }
+
+	public void setHisEstado(String hisEstado) {
+        this.hisEstado = hisEstado;
+    }
+
 	public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 
-	@Id
-    @Column(name = "his_codigo")
-    private Integer hisCodigo;
+	@Column(name = "his_fechaFinal")
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(style = "MM")
+    private Calendar hisFechaFinal;
 
-	public Integer getHisCodigo() {
-        return this.hisCodigo;
+	public Calendar getHisFechaFinal() {
+        return hisFechaFinal;
     }
 
-	public void setHisCodigo(Integer id) {
-        this.hisCodigo = id;
+	public void setHisFechaFinal(Calendar hisFechaFinal) {
+        this.hisFechaFinal = hisFechaFinal;
     }
 }

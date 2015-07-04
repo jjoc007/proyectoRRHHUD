@@ -1,8 +1,10 @@
 package co.edu.udistrital.rrhh.service.impl;
 import co.edu.udistrital.rrhh.domain.Pago;
-import co.edu.udistrital.rrhh.repository.PagoReprository;
+import co.edu.udistrital.rrhh.repository.PagoRepository;
 import co.edu.udistrital.rrhh.service.PagoService;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PagoServiceImpl implements PagoService {
 
 	@Autowired
-    PagoReprository pagoReprository;
+    PagoRepository pagoReprository;
 
 	public long countAllPagoes() {
         return pagoReprository.count();

@@ -1,8 +1,10 @@
 package co.edu.udistrital.rrhh.service.impl;
 import co.edu.udistrital.rrhh.domain.Usuario;
-import co.edu.udistrital.rrhh.repository.UsuarioReprository;
+import co.edu.udistrital.rrhh.repository.UsuarioRepository;
 import co.edu.udistrital.rrhh.service.UsuarioService;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UsuarioServiceImpl implements UsuarioService {
 
 	@Autowired
-    UsuarioReprository usuarioReprository;
+    UsuarioRepository usuarioReprository;
 
 	public long countAllUsuarios() {
         return usuarioReprository.count();

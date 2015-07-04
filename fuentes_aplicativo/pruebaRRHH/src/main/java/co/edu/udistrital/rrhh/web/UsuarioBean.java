@@ -18,7 +18,9 @@ import javax.faces.component.html.HtmlOutputText;
 import javax.faces.component.html.HtmlPanelGrid;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.LengthValidator;
+import javax.faces.validator.RegexValidator;
 
+import org.hibernate.validator.internal.constraintvalidators.EmailValidator;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.inputtextarea.InputTextarea;
 import org.primefaces.component.message.Message;
@@ -191,6 +193,7 @@ public class UsuarioBean implements Serializable {
         usuClaveCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuClave}", String.class));
         LengthValidator usuClaveCreateInputValidator = new LengthValidator();
         usuClaveCreateInputValidator.setMaximum(50);
+        
         usuClaveCreateInput.addValidator(usuClaveCreateInputValidator);
         usuClaveCreateInput.setRequired(true);
         htmlPanelGrid.getChildren().add(usuClaveCreateInput);
@@ -228,7 +231,7 @@ public class UsuarioBean implements Serializable {
         usuCorreoCreateOutput.setValue("Usu Correo:");
         htmlPanelGrid.getChildren().add(usuCorreoCreateOutput);
         
-        InputTextarea usuCorreoCreateInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
+        InputText usuCorreoCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
         usuCorreoCreateInput.setId("usuCorreoCreateInput");
         usuCorreoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuCorreo}", String.class));
         LengthValidator usuCorreoCreateInputValidator = new LengthValidator();
@@ -236,12 +239,17 @@ public class UsuarioBean implements Serializable {
         usuCorreoCreateInput.addValidator(usuCorreoCreateInputValidator);
         usuCorreoCreateInput.setRequired(true);
         htmlPanelGrid.getChildren().add(usuCorreoCreateInput);
+        javax.faces.validator.RegexValidator reg =  new RegexValidator();
+        reg.setPattern("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        usuCorreoCreateInput.addValidator(reg);
         
         Message usuCorreoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
         usuCorreoCreateInputMessage.setId("usuCorreoCreateInputMessage");
         usuCorreoCreateInputMessage.setFor("usuCorreoCreateInput");
         usuCorreoCreateInputMessage.setDisplay("icon");
+
         htmlPanelGrid.getChildren().add(usuCorreoCreateInputMessage);
+        
         
         return htmlPanelGrid;
     }

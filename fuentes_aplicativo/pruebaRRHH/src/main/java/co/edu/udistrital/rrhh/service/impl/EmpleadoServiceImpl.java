@@ -1,8 +1,10 @@
 package co.edu.udistrital.rrhh.service.impl;
 import co.edu.udistrital.rrhh.domain.Empleado;
-import co.edu.udistrital.rrhh.repository.EmpleadoReprository;
+import co.edu.udistrital.rrhh.repository.EmpleadoRepository;
 import co.edu.udistrital.rrhh.service.EmpleadoService;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class EmpleadoServiceImpl implements EmpleadoService {
 
 	@Autowired
-    EmpleadoReprository empleadoReprository;
+    EmpleadoRepository empleadoReprository;
 
 	public long countAllEmpleadoes() {
         return empleadoReprository.count();

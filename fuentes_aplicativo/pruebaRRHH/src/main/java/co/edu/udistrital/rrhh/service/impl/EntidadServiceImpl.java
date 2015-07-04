@@ -1,8 +1,10 @@
 package co.edu.udistrital.rrhh.service.impl;
 import co.edu.udistrital.rrhh.domain.Entidad;
-import co.edu.udistrital.rrhh.repository.EntidadReprository;
+import co.edu.udistrital.rrhh.repository.EntidadRepository;
 import co.edu.udistrital.rrhh.service.EntidadService;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class EntidadServiceImpl implements EntidadService {
 
 	@Autowired
-    EntidadReprository entidadReprository;
+    EntidadRepository entidadReprository;
 
 	public long countAllEntidads() {
         return entidadReprository.count();

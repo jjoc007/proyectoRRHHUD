@@ -1,6 +1,6 @@
 package co.edu.udistrital.rrhh.service.impl;
 import co.edu.udistrital.rrhh.domain.Aporte;
-import co.edu.udistrital.rrhh.repository.AporteReprository;
+import co.edu.udistrital.rrhh.repository.AporteRepository;
 import co.edu.udistrital.rrhh.service.AporteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AporteServiceImpl implements AporteService {
 
 	@Autowired
-    AporteReprository aporteReprository;
+    AporteRepository aporteReprository;
 
 	public long countAllAportes() {
         return aporteReprository.count();

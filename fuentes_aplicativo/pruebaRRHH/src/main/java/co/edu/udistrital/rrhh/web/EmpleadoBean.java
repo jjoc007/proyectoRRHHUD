@@ -61,6 +61,7 @@ public class EmpleadoBean implements Serializable{
 	@PostConstruct
     public void init() {
         columns = new ArrayList<String>();
+        columns.add("empCedula");
         columns.add("empNombre");
         columns.add("empFechaIngreso");
         columns.add("empFechaSalida");
@@ -136,6 +137,32 @@ public class EmpleadoBean implements Serializable{
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
+        // jcri 
+        
+        
+        OutputLabel empCedulaCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        empCedulaCreateOutput.setFor("empCedulaCreateOutput");
+        empCedulaCreateOutput.setId("empCedulaCreateOutput");
+        empCedulaCreateOutput.setValue("Cedula:");
+        htmlPanelGrid.getChildren().add(empCedulaCreateOutput);
+        
+        InputTextarea empCedulaCreateInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
+        empCedulaCreateInput.setId("empCedulaCreateInput");
+        empCedulaCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{empleadoBean.empleado.empCedula}", String.class));
+        LengthValidator empCedulaCreateInputValidator = new LengthValidator();
+        empCedulaCreateInputValidator.setMaximum(50);
+        empCedulaCreateInput.addValidator(empCedulaCreateInputValidator);
+        empCedulaCreateInput.setRequired(true);
+        htmlPanelGrid.getChildren().add(empCedulaCreateInput);
+        
+        Message empCedulaCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        empCedulaCreateInputMessage.setId("empCedulaCreateInputMessage");
+        empCedulaCreateInputMessage.setFor("empCedulaCreateInput");
+        empCedulaCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(empCedulaCreateInputMessage);
+        
+        // jcri 
+        
         OutputLabel empNombreCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         empNombreCreateOutput.setFor("empNombreCreateInput");
         empNombreCreateOutput.setId("empNombreCreateOutput");
@@ -178,6 +205,7 @@ public class EmpleadoBean implements Serializable{
         empFechaIngresoCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(empFechaIngresoCreateInputMessage);
         
+        /*
         OutputLabel empFechaSalidaCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         empFechaSalidaCreateOutput.setFor("empFechaSalidaCreateInput");
         empFechaSalidaCreateOutput.setId("empFechaSalidaCreateOutput");
@@ -198,6 +226,8 @@ public class EmpleadoBean implements Serializable{
         empFechaSalidaCreateInputMessage.setFor("empFechaSalidaCreateInput");
         empFechaSalidaCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(empFechaSalidaCreateInputMessage);
+        */
+        
         
         OutputLabel empCuentaPagoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         empCuentaPagoCreateOutput.setFor("empCuentaPagoCreateInput");

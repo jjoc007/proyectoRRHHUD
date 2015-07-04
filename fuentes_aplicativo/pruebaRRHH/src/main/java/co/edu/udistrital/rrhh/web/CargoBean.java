@@ -131,6 +131,30 @@ public class CargoBean implements Serializable {
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
+        // Codigo del cargo 
+        
+        OutputLabel carCogigoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        carCogigoCreateOutput.setFor("carCogigoCreateInput");
+        carCogigoCreateOutput.setId("carCogigoCreateOutput");
+        carCogigoCreateOutput.setValue("Codigo:");
+        htmlPanelGrid.getChildren().add(carCogigoCreateOutput);
+        
+        InputTextarea carCogigoCreateInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
+        carCogigoCreateInput.setId("carCogigoCreateInput");
+        carCogigoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{cargoBean.cargo.carCogigo}", String.class));
+        LengthValidator carCogigoCreateInputValidator = new LengthValidator();
+        carCogigoCreateInputValidator.setMaximum(50);
+        carCogigoCreateInput.addValidator(carCogigoCreateInputValidator);
+        carCogigoCreateInput.setRequired(true);
+        htmlPanelGrid.getChildren().add(carCogigoCreateInput);
+        
+        Message carCogigoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        carCogigoCreateInputMessage.setId("carCogigoCreateInputMessage");
+        carCogigoCreateInputMessage.setFor("carCogigoCreateInput");
+        carCogigoCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(carCogigoCreateInputMessage);
+        
+        // 
         OutputLabel carNombreCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         carNombreCreateOutput.setFor("carNombreCreateInput");
         carNombreCreateOutput.setId("carNombreCreateOutput");

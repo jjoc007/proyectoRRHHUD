@@ -59,9 +59,7 @@ public class PagoBean implements Serializable  {
     public void init() {
         columns = new ArrayList<String>();
         columns.add("pagEmpleado");
-        columns.add("pagTipo");
         columns.add("pagValorPago");
-        columns.add("pagDescripcion");
         columns.add("conConcepto");
     }
 
@@ -143,7 +141,6 @@ public class PagoBean implements Serializable  {
         pagEmpleadoCreateInput.setId("pagEmpleadoCreateInput");
         pagEmpleadoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{pagoBean.pago.pagEmpleado}", Integer.class));
         pagEmpleadoCreateInput.setRequired(true);
-        
         htmlPanelGrid.getChildren().add(pagEmpleadoCreateInput);
         
         Message pagEmpleadoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
@@ -151,27 +148,6 @@ public class PagoBean implements Serializable  {
         pagEmpleadoCreateInputMessage.setFor("pagEmpleadoCreateInput");
         pagEmpleadoCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(pagEmpleadoCreateInputMessage);
-        
-        OutputLabel pagTipoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        pagTipoCreateOutput.setFor("pagTipoCreateInput");
-        pagTipoCreateOutput.setId("pagTipoCreateOutput");
-        pagTipoCreateOutput.setValue("Pag Tipo:");
-        htmlPanelGrid.getChildren().add(pagTipoCreateOutput);
-        
-        InputText pagTipoCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        pagTipoCreateInput.setId("pagTipoCreateInput");
-        pagTipoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{pagoBean.pago.pagTipo}", String.class));
-        LengthValidator pagTipoCreateInputValidator = new LengthValidator();
-        pagTipoCreateInputValidator.setMaximum(20);
-        pagTipoCreateInput.addValidator(pagTipoCreateInputValidator);
-        pagTipoCreateInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(pagTipoCreateInput);
-        
-        Message pagTipoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        pagTipoCreateInputMessage.setId("pagTipoCreateInputMessage");
-        pagTipoCreateInputMessage.setFor("pagTipoCreateInput");
-        pagTipoCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(pagTipoCreateInputMessage);
         
         OutputLabel pagValorPagoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         pagValorPagoCreateOutput.setFor("pagValorPagoCreateInput");
@@ -190,24 +166,6 @@ public class PagoBean implements Serializable  {
         pagValorPagoCreateInputMessage.setFor("pagValorPagoCreateInput");
         pagValorPagoCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(pagValorPagoCreateInputMessage);
-        
-        OutputLabel pagDescripcionCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        pagDescripcionCreateOutput.setFor("pagDescripcionCreateInput");
-        pagDescripcionCreateOutput.setId("pagDescripcionCreateOutput");
-        pagDescripcionCreateOutput.setValue("Pag Descripcion:");
-        htmlPanelGrid.getChildren().add(pagDescripcionCreateOutput);
-        
-        InputText pagDescripcionCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        pagDescripcionCreateInput.setId("pagDescripcionCreateInput");
-        pagDescripcionCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{pagoBean.pago.pagDescripcion}", String.class));
-        pagDescripcionCreateInput.setRequired(false);
-        htmlPanelGrid.getChildren().add(pagDescripcionCreateInput);
-        
-        Message pagDescripcionCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        pagDescripcionCreateInputMessage.setId("pagDescripcionCreateInputMessage");
-        pagDescripcionCreateInputMessage.setFor("pagDescripcionCreateInput");
-        pagDescripcionCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(pagDescripcionCreateInputMessage);
         
         OutputLabel pagEstadoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         pagEstadoCreateOutput.setFor("pagEstadoCreateInput");

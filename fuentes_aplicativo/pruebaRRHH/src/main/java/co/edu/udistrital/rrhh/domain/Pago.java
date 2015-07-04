@@ -36,17 +36,10 @@ public class Pago {
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MM")
     private Calendar pagPeriodo;
-
-	@Column(name = "pag_tipo", length = 20)
-    @NotNull
-    private String pagTipo;
-
+	
 	@Column(name = "pag_valorPago", precision = 22)
     @NotNull
     private Double pagValorPago;
-
-	@Column(name = "pag_descripcion")
-    private String pagDescripcion;
 
 	@Column(name = "pag_estado", length = 1)
     @NotNull
@@ -76,28 +69,12 @@ public class Pago {
         this.pagPeriodo = pagPeriodo;
     }
 
-	public String getPagTipo() {
-        return pagTipo;
-    }
-
-	public void setPagTipo(String pagTipo) {
-        this.pagTipo = pagTipo;
-    }
-
 	public Double getPagValorPago() {
         return pagValorPago;
     }
 
 	public void setPagValorPago(Double pagValorPago) {
         this.pagValorPago = pagValorPago;
-    }
-
-	public String getPagDescripcion() {
-        return pagDescripcion;
-    }
-
-	public void setPagDescripcion(String pagDescripcion) {
-        this.pagDescripcion = pagDescripcion;
     }
 
 	public String getPagEstado() {

@@ -45,7 +45,11 @@ public class Concepto {
 	@Column(name = "con_tipo", length = 20)
     @NotNull
     private String conTipo;
-
+	
+	@Column(name = "con_tipoPercepcion", length = 20)
+    @NotNull
+    private String conTipoPercepcion;
+	
 	@Column(name = "con_valor", precision = 22)
     @NotNull
     private Double conValor;
@@ -77,6 +81,14 @@ public class Concepto {
 	public void setConTipo(String conTipo) {
         this.conTipo = conTipo;
     }
+	
+	public String getConTipoPercepcion() {
+		return conTipoPercepcion;
+	}
+
+	public void setConTipoPercepcion(String conTipoPercepcion) {
+		this.conTipoPercepcion = conTipoPercepcion;
+	}
 
 	public Double getConValor() {
         return conValor;

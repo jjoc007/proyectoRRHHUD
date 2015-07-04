@@ -18,6 +18,9 @@ public class Constantes {
 	public static final int CONCEPTO_PRIMA = 8;
 	public static final int CONCEPTO_VACACIONES = 9;
 	
+	public static final String GENERAL_ESTADO_ACTIVO = "A";
+	public static final String GENERAL_ESTADO_INACTIVO = "I";
+	
 	
 	
 	

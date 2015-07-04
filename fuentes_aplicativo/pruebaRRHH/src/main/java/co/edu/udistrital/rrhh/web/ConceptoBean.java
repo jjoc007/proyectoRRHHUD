@@ -198,6 +198,20 @@ public class ConceptoBean implements Serializable {
         conTipoCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(conTipoCreateInputMessage);
         
+        OutputLabel conEstadoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        conEstadoCreateOutput.setFor("conEstadoCreateInput");
+        conEstadoCreateOutput.setId("conEstadoCreateOutput");
+        conEstadoCreateOutput.setValue("Estado:");
+        htmlPanelGrid.getChildren().add(conEstadoCreateOutput);
+        
+        htmlPanelGrid.getChildren().add(ComponentsGenerator.getAutocompleteEstadoActual("conEstadoCreateInput", "#{conceptoBean.concepto.conEstado}"));
+        
+        Message conEstadoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        conEstadoCreateInputMessage.setId("conEstadoCreateInputMessage");
+        conEstadoCreateInputMessage.setFor("conEstadoCreateInput");
+        conEstadoCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(conEstadoCreateInputMessage);
+        
         OutputLabel conValorCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         conValorCreateOutput.setFor("conValorCreateInput");
         conValorCreateOutput.setId("conValorCreateOutput");

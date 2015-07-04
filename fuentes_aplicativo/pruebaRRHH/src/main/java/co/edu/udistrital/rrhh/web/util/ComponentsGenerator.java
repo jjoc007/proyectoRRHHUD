@@ -65,15 +65,15 @@ public class ComponentsGenerator {
 
 		SelectOneMenu menuEstadoGenerico =(SelectOneMenu) application.createComponent(SelectOneMenu.COMPONENT_TYPE);
 		menuEstadoGenerico.setId(idComponent);
-		menuEstadoGenerico.setValueExpression("value", expressionFactory.createValueExpression(elContext, valueExpression, BigDecimal.class));
+		menuEstadoGenerico.setValueExpression("value", expressionFactory.createValueExpression(elContext, valueExpression, String.class));
 
 		UISelectItem itemActivo = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
 		itemActivo.setItemLabel("Activo");
-		itemActivo.setItemValue(new BigDecimal(1));
+		itemActivo.setItemValue(Constantes.GENERAL_ESTADO_ACTIVO);
 
 		UISelectItem itemInactivo = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
 		itemInactivo.setItemLabel("Inactivo");
-		itemInactivo.setItemValue(new BigDecimal(0));
+		itemInactivo.setItemValue(Constantes.GENERAL_ESTADO_INACTIVO);
 
 		menuEstadoGenerico.getChildren().add(itemActivo);
 		menuEstadoGenerico.getChildren().add(itemInactivo);

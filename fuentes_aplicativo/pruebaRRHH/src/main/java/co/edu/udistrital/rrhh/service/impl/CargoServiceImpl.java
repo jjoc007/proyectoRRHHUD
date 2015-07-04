@@ -1,6 +1,6 @@
 package co.edu.udistrital.rrhh.service.impl;
 import co.edu.udistrital.rrhh.domain.Cargo;
-import co.edu.udistrital.rrhh.repository.CargoReprository;
+import co.edu.udistrital.rrhh.repository.CargoRepository;
 import co.edu.udistrital.rrhh.service.CargoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CargoServiceImpl implements CargoService {
 
 	@Autowired
-    CargoReprository cargoReprository;
+    CargoRepository cargoReprository;
 
 	public long countAllCargoes() {
         return cargoReprository.count();

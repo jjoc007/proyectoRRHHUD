@@ -1,6 +1,6 @@
 package co.edu.udistrital.rrhh.service.impl;
 import co.edu.udistrital.rrhh.domain.Concepto;
-import co.edu.udistrital.rrhh.repository.ConceptoReprository;
+import co.edu.udistrital.rrhh.repository.ConceptoRepository;
 import co.edu.udistrital.rrhh.service.ConceptoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ConceptoServiceImpl implements ConceptoService {
 
 	@Autowired
-    ConceptoReprository conceptoReprository;
+    ConceptoRepository conceptoReprository;
 
 	public long countAllConceptoes() {
         return conceptoReprository.count();

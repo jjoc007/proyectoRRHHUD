@@ -14,8 +14,30 @@
     <h:form prependId="false" id="dataForm">
       <p:panel id="data" toggleable="true" toggleSpeed="250">
         <f:facet name="header">
-          <h:outputText value="rueba de vista" />
+          <h:outputText value="Conceptos liquidacion" />
         </f:facet>
+        
+        
+         <p:dataTable id="list" value="#{conceptosLiquidacionBean.allEmpleadoes}" var="empleado" rendered="#{conceptosLiquidacionBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10" editable="true" editMode="cell">
+         
+          <p:column styleClass="action-column" headerText="Identificacion">
+            <p:cellEditor>
+                  <f:facet name="output"><h:outputText value="#{empleado.empCedula}" /></f:facet>
+                  <f:facet name="input"><h:outputText value="#{empleado.empCedula}" /></f:facet>
+             </p:cellEditor>
+            	
+          </p:column>
+          
+          <p:column styleClass="action-column" headerText="Nombre">
+            <p:cellEditor>
+                  <f:facet name="output"><h:outputText value="#{empleado.empNombre}" /></f:facet>
+                  <f:facet name="input"><h:outputText value="#{empleado.empNombre}" /></f:facet>
+             </p:cellEditor>
+            	
+          </p:column>
+          
+        </p:dataTable>
+        
       </p:panel>
     </h:form>
    

@@ -2,6 +2,7 @@ package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Afiliacion;
 import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.service.AfiliacionService;
+import co.edu.udistrital.rrhh.service.EmpleadoService;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
 
 import java.io.Serializable;
@@ -30,20 +31,27 @@ public class ConceptosLiquidacionBean implements Serializable  {
 
 
 	private boolean dataVisible = false;
-
-	private List<String> columns;
-
-
+	
+	@Autowired
+    EmpleadoService empleadoService;
+	
+	private List<Empleado> allEmpleadoes;
+	
+	
 	private boolean createDialogVisible = false;
 
 	@PostConstruct
     public void init() {
-        columns = new ArrayList<String>();
+		findAllEmpleadoes();
     }
-
-	public List<String> getColumns() {
-        return columns;
+	
+	
+	public String findAllEmpleadoes() {
+        allEmpleadoes = empleadoService.findAllEmpleadoes();
+        dataVisible = !allEmpleadoes.isEmpty();
+        return null;
     }
+	
 
 	public boolean isDataVisible() {
         return dataVisible;
@@ -82,6 +90,19 @@ public class ConceptosLiquidacionBean implements Serializable  {
 	public void handleDialogClose(CloseEvent event) {
         reset();
     }
+
+	
+	
+	public List<Empleado> getAllEmpleadoes() {
+		return allEmpleadoes;
+	}
+
+
+	public void setAllEmpleadoes(List<Empleado> allEmpleadoes) {
+		this.allEmpleadoes = allEmpleadoes;
+	}
+
+
 
 	private static final long serialVersionUID = 1L;
 }

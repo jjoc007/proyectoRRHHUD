@@ -1,6 +1,6 @@
 ﻿CREATE DATABASE rrhhdb;# 1 fila afectada.
 
-USE rrhhdb;# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
+USE rrhhdb;
 
 CREATE TABLE Rol(
 	rol_id INT PRIMARY KEY,
@@ -35,6 +35,7 @@ CREATE TABLE Concepto(
 	con_nombre VARCHAR(50) NOT NULL,
 	con_descripcion TEXT,
 	con_tipo VARCHAR(20) NOT NULL,
+	con_tipoPercepcion VARCHAR(20) NOT NULL,
 	con_valor DOUBLE NOT NULL,
 	con_estado VARCHAR(1) NOT NULL
 );# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
@@ -45,12 +46,22 @@ CREATE TABLE Pago(
 	pag_empleado INT NOT NULL,
 	pag_concepto INT NOT NULL,
 	pag_periodo DATETIME NOT NULL,
-	pag_tipo VARCHAR(20) NOT NULL,
 	pag_valorPago DOUBLE NOT NULL,
-	pag_descripcion TEXT,
 	pag_estado VARCHAR(1) NOT NULL,
 	Foreign Key(pag_empleado)References Empleado(emp_cedula),
 	Foreign Key(pag_concepto)References Concepto(con_codigo)
+);# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
+
+
+CREATE TABLE Provision(
+	pro_codigo INT PRIMARY KEY,
+	pro_empleado INT NOT NULL,
+	pro_concepto INT NOT NULL,
+	pro_periodo DATETIME NOT NULL,
+	pro_valor DOUBLE NOT NULL,
+	pro_estado VARCHAR(1) NOT NULL,
+	Foreign Key(pro_empleado)References Empleado(emp_cedula),
+	Foreign Key(pro_concepto)References Concepto(con_codigo)
 );# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
 
 

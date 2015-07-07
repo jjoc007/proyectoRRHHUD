@@ -1,10 +1,13 @@
 package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Cargo;
 import co.edu.udistrital.rrhh.service.CargoService;
+import co.edu.udistrital.rrhh.web.util.ComponentsGenerator;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
@@ -15,6 +18,7 @@ import javax.faces.component.html.HtmlOutputText;
 import javax.faces.component.html.HtmlPanelGrid;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.LengthValidator;
+
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.inputtextarea.InputTextarea;
 import org.primefaces.component.message.Message;
@@ -131,6 +135,27 @@ public class CargoBean implements Serializable {
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
+        // Codigo del cargo 
+        
+        OutputLabel carCogigoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        carCogigoCreateOutput.setFor("carCogigoCreateInput");
+        carCogigoCreateOutput.setId("carCogigoCreateOutput");
+        carCogigoCreateOutput.setValue("Codigo:");
+        htmlPanelGrid.getChildren().add(carCogigoCreateOutput);
+        
+        InputText carCogigoCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
+        carCogigoCreateInput.setId("carCogigoCreateInput");
+        carCogigoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{cargoBean.cargo.carCogigo}", String.class));
+        carCogigoCreateInput.setRequired(true);
+        htmlPanelGrid.getChildren().add(carCogigoCreateInput);
+        
+        Message carCogigoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        carCogigoCreateInputMessage.setId("carCogigoCreateInputMessage");
+        carCogigoCreateInputMessage.setFor("carCogigoCreateInput");
+        carCogigoCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(carCogigoCreateInputMessage);
+        
+        // 
         OutputLabel carNombreCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         carNombreCreateOutput.setFor("carNombreCreateInput");
         carNombreCreateOutput.setId("carNombreCreateOutput");
@@ -169,6 +194,22 @@ public class CargoBean implements Serializable {
         carSalarioCreateInputMessage.setFor("carSalarioCreateInput");
         carSalarioCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(carSalarioCreateInputMessage);
+        
+        // Estado del cargo 
+        OutputLabel carEstadoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        carEstadoCreateOutput.setFor("carEstadoCreateInput");
+        carEstadoCreateOutput.setId("carEstadoCreateOutput");
+        carEstadoCreateOutput.setValue("Estado:");
+        htmlPanelGrid.getChildren().add(carEstadoCreateOutput);
+        
+        htmlPanelGrid.getChildren().add(ComponentsGenerator.getAutocompleteEstadoActual("carEstadoCreateInput", "#{cargoBean.cargo.carEstado}"));
+        
+        Message carEstadoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        carEstadoCreateInputMessage.setId("carEstadoCreateInputMessage");
+        carEstadoCreateInputMessage.setFor("carEstadoCreateInput");
+        carEstadoCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(carEstadoCreateInputMessage);
+        //
         
         return htmlPanelGrid;
     }

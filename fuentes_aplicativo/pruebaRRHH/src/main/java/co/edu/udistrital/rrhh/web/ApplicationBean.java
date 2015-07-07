@@ -117,6 +117,24 @@ public class ApplicationBean {
         submenu.getChildren().add(item);
         menuModel.addSubmenu(submenu);
         
+        
+        submenu = new Submenu();
+        submenu.setId("conceptoLiqSubmenu");
+        submenu.setLabel("ConceptoLiquidacion");
+        item = new MenuItem();
+        item.setId("createConceptoLiqMenuItem");
+        item.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{messages.label_create}", String.class));
+        item.setActionExpression(expressionFactory.createMethodExpression(elContext, "#{conceptosLiquidacionBean.displayCreateDialog}", String.class, new Class[0]));
+        item.setIcon("ui-icon ui-icon-document");
+        item.setAjax(false);
+        item.setAsync(false);
+        item.setUpdate(":dataForm:data");
+        submenu.getChildren().add(item);
+        menuModel.addSubmenu(submenu);
+        
+        
+        
+        
         submenu = new Submenu();
         submenu.setId("conceptoSubmenu");
         submenu.setLabel("Concepto");

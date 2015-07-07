@@ -83,3 +83,4 @@ repository jpa --interface ~.repository.RolReprository --entity ~.domain.Rol
 service all --interfacePackage ~.service --classPackage ~.service.impl
 web jsf all --package ~.web
 web jsf all --package ~.web
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2015-07-04 14:44:18

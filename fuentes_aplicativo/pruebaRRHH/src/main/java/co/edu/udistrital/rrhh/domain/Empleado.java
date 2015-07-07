@@ -1,5 +1,7 @@
 package co.edu.udistrital.rrhh.domain;
 import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,6 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -44,15 +47,12 @@ public class Empleado {
     private String empNombre;
 
 	@Column(name = "emp_fechaIngreso")
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "MM")
-    private Calendar empFechaIngreso;
+    private Date empFechaIngreso;
 
 	@Column(name = "emp_fechaSalida")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(style = "MM")
-    private Calendar empFechaSalida;
+    private Date empFechaSalida;
 
 	@Column(name = "emp_cuentaPago")
     @NotNull
@@ -70,19 +70,19 @@ public class Empleado {
         this.empNombre = empNombre;
     }
 
-	public Calendar getEmpFechaIngreso() {
+	public Date getEmpFechaIngreso() {
         return empFechaIngreso;
     }
 
-	public void setEmpFechaIngreso(Calendar empFechaIngreso) {
+	public void setEmpFechaIngreso(Date empFechaIngreso) {
         this.empFechaIngreso = empFechaIngreso;
     }
 
-	public Calendar getEmpFechaSalida() {
+	public Date getEmpFechaSalida() {
         return empFechaSalida;
     }
 
-	public void setEmpFechaSalida(Calendar empFechaSalida) {
+	public void setEmpFechaSalida(Date empFechaSalida) {
         this.empFechaSalida = empFechaSalida;
     }
 

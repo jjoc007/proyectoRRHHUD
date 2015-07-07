@@ -83,10 +83,4 @@ repository jpa --interface ~.repository.RolReprository --entity ~.domain.Rol
 service all --interfacePackage ~.service --classPackage ~.service.impl
 web jsf all --package ~.web
 web jsf all --package ~.web
-// Spring Roo 1.3.1.RC1 [rev 4877cfb] log closed at 2015-07-04 17:35:37
-// Spring Roo 1.3.1.RC1 [rev 4877cfb] log opened at 2015-07-04 18:31:45
-repository jpa --interface ~.repository.ProvisionReprository --entity ~.domain.Provision
-// [failed] service all --interfacePackage ~.service --classPackage ~.service.impl
-service all --interfacePackage ~.service --classPackage ~.service.impl
-web jsf all --package ~.web
-// Spring Roo 1.3.1.RC1 [rev 4877cfb] log closed at 2015-07-04 19:31:44
+// Spring Roo 1.2.5.RELEASE [rev 8341dc2] log opened at 2015-07-04 14:44:18

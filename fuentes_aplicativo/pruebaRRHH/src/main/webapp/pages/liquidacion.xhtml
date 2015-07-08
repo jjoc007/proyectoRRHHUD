@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="../templates/layout.xhtml">
+  <ui:define name="content">
+    <h:form prependId="false" id="growlForm">
+      <p:growl id="growl" showDetail="false" />
+    </h:form>
+    <h:form prependId="false" id="dataForm">
+      <p:panel id="data" toggleable="true" toggleSpeed="250">
+        <h:outputFormat id="noRecordsFound" value="#{messages.label_no_records_found}" >
+        </h:outputFormat>
+        <p:dataTable id="list" value="#{liquidacionBean.allEmpleados}" var="empleado" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10">
+       <p:column headerText="Empleado">
+        <h:outputText value="#{empleado.empCedula}" />
+     </p:column>
+     <p:column headerText="Nombre">
+        <h:outputText value="#{empleado.empNombre}" />
+    </p:column>
+     <p:column headerText="Vacaciones">
+        <p:selectBooleanCheckbox value="#{empleado.emp_vacaciones}" />
+    </p:column>
+     <p:column headerText="Liquidacion">
+        <p:selectBooleanCheckbox value="#{empleado.emp_liquida}" />
+    </p:column>
+        </p:dataTable>
+        <p:commandButton id="procesarLiquid" value="Liquidar" action="#{liquidacionBean.liquidar}"/>
+      </p:panel>
+    </h:form>
+
+  </ui:define>
+</ui:composition>
+</html>

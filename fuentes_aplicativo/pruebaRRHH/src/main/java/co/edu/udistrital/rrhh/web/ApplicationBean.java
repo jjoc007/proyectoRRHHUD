@@ -295,6 +295,21 @@ public class ApplicationBean {
         item.setUpdate(":dataForm:data");
         submenu.getChildren().add(item);
         menuModel.addSubmenu(submenu);
+        
+        //liquidación
+        submenu = new Submenu();
+        submenu.setId("liquidacionSubmenu");
+        submenu.setLabel("Liquidación");
+        item = new MenuItem();
+        item.setId("listLiquidacionMenuItem");
+        item.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{messages.label_list}", String.class));
+        item.setActionExpression(expressionFactory.createMethodExpression(elContext, "#{liquidacionBean.displayList}", String.class, new Class[0]));
+        item.setIcon("ui-icon ui-icon-folder-open");
+        item.setAjax(false);
+        item.setAsync(false);
+        item.setUpdate(":dataForm:data");
+        submenu.getChildren().add(item);
+        menuModel.addSubmenu(submenu);
     }
 
 	public MenuModel getMenuModel() {

@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -65,6 +66,12 @@ public class Empleado {
 	@Column(name = "emp_estado", length = 1)
     @NotNull
     private String empEstado;
+	
+	@Transient
+	private boolean emp_vacaciones;
+
+	@Transient
+	private boolean emp_liquida;
 
 	public String getEmpNombre() {
         return empNombre;
@@ -115,6 +122,22 @@ public class Empleado {
 
 	public void setPagos(List<Pago> pagos) {
 		this.pagos = pagos;
+	}
+
+	public boolean isEmp_vacaciones() {
+		return emp_vacaciones;
+	}
+
+	public void setEmp_vacaciones(boolean emp_vacaciones) {
+		this.emp_vacaciones = emp_vacaciones;
+	}
+
+	public boolean isEmp_liquida() {
+		return emp_liquida;
+	}
+
+	public void setEmp_liquida(boolean emp_liquida) {
+		this.emp_liquida = emp_liquida;
 	}
 	
 }

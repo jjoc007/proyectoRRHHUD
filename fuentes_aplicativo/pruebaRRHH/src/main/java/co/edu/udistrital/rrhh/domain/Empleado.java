@@ -1,10 +1,14 @@
 package co.edu.udistrital.rrhh.domain;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -101,4 +105,16 @@ public class Empleado {
 	public void setEmpEstado(String empEstado) {
         this.empEstado = empEstado;
     }
+	
+	@OneToMany(mappedBy = "pagoEmpleado")
+    private List<Pago> pagos;
+
+	public List<Pago> getPagos() {
+		return pagos;
+	}
+
+	public void setPagos(List<Pago> pagos) {
+		this.pagos = pagos;
+	}
+	
 }

@@ -18,24 +18,46 @@
         </f:facet>
         
         
-         <p:dataTable id="list" value="#{conceptosLiquidacionBean.allEmpleadoes}" var="empleado" rendered="#{conceptosLiquidacionBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10" editable="true" editMode="cell">
+         <p:dataTable id="list" value="#{conceptosLiquidacionBean.allEmpleadosWithPagos}" var="empleado" rendered="#{conceptosLiquidacionBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10" editable="true" editMode="cell">
          
-          <p:column styleClass="action-column" headerText="Identificacion">
-            <p:cellEditor>
-                  <f:facet name="output"><h:outputText value="#{empleado.empCedula}" /></f:facet>
-                  <f:facet name="input"><h:outputText value="#{empleado.empCedula}" /></f:facet>
-             </p:cellEditor>
-            	
-          </p:column>
+          <p:columnGroup type="header">
+            <p:row>
+                
+                <p:column rowspan="1" headerText="concepto" />
+                <p:column colspan="1" headerText="valor" />
+            </p:row>
+           
+        </p:columnGroup>
+         
           
-          <p:column styleClass="action-column" headerText="Nombre">
-            <p:cellEditor>
-                  <f:facet name="output"><h:outputText value="#{empleado.empNombre}" /></f:facet>
-                  <f:facet name="input"><h:outputText value="#{empleado.empNombre}" /></f:facet>
+           <p:subTable var="pago" value="#{empleado.pagos}">
+            <f:facet name="header">
+                <h:outputText value="#{empleado.empNombre}" />
+            </f:facet>
+            
+             <p:column>
+           
+                <p:cellEditor>
+                  <f:facet name="output"><h:outputText value="#{pago.pagConcepto.conNombre}" /></f:facet>
+                  <f:facet name="input"><h:outputText value="#{pago.pagConcepto.conNombre}" />
+                  </f:facet>
              </p:cellEditor>
-            	
-          </p:column>
+            </p:column>
+            
           
+            <p:column>
+            
+                <p:cellEditor>
+                  <f:facet name="output"><h:outputText value="#{pago.pagValorPago}" /></f:facet>
+                  <f:facet name="input"><h:outputText value="#{pago.pagValorPago}" /></f:facet>
+             </p:cellEditor>
+            </p:column>
+            
+        </p:subTable>
+            
+            
+            
+                
         </p:dataTable>
         
       </p:panel>

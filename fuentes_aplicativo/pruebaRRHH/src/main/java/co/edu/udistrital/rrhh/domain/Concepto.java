@@ -1,9 +1,14 @@
 package co.edu.udistrital.rrhh.domain;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.roo.addon.dbre.RooDbManaged;
@@ -105,4 +110,18 @@ public class Concepto {
 	public void setConEstado(String conEstado) {
         this.conEstado = conEstado;
     }
+	
+	@OneToMany(mappedBy = "pagConcepto")
+    private Set<Pago> pagos;
+
+	public Set<Pago> getPagos() {
+		return pagos;
+	}
+
+	public void setPagos(Set<Pago> pagos) {
+		this.pagos = pagos;
+	}
+	
+	
+	
 }

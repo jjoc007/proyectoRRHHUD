@@ -187,16 +187,30 @@ public class ConceptoBean implements Serializable {
         OutputLabel conTipoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         conTipoCreateOutput.setFor("conTipoCreateInput");
         conTipoCreateOutput.setId("conTipoCreateOutput");
-        conTipoCreateOutput.setValue("Con Tipo:");
+        conTipoCreateOutput.setValue("Tipo Percepcion:");
         htmlPanelGrid.getChildren().add(conTipoCreateOutput);
         
-        htmlPanelGrid.getChildren().add(ComponentsGenerator.getAutocompleteTipoConceptos("conTipoCreateInput", "#{conceptoBean.concepto.conTipo}"));
+        htmlPanelGrid.getChildren().add(ComponentsGenerator.getAutocompleteTipoConceptosPer("conTipoCreateInput", "#{conceptoBean.concepto.conTipoPercepcion}"));
         
         Message conTipoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
         conTipoCreateInputMessage.setId("conTipoCreateInputMessage");
         conTipoCreateInputMessage.setFor("conTipoCreateInput");
         conTipoCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(conTipoCreateInputMessage);
+        
+        OutputLabel conTipoValorCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        conTipoValorCreateOutput.setFor("conTipoValorCreateInput");
+        conTipoValorCreateOutput.setId("conTipoValorCreateOutput");
+        conTipoValorCreateOutput.setValue("Tipo Concepto:");
+        htmlPanelGrid.getChildren().add(conTipoValorCreateOutput);
+        
+        htmlPanelGrid.getChildren().add(ComponentsGenerator.getAutocompleteTipoConceptos("conTipoValorCreateInput", "#{conceptoBean.concepto.conTipo}"));
+        
+        Message conTipoValorCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        conTipoValorCreateInputMessage.setId("conTipoValorCreateInputMessage");
+        conTipoValorCreateInputMessage.setFor("conTipoValorCreateInput");
+        conTipoValorCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(conTipoValorCreateInputMessage);
         
         OutputLabel conEstadoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         conEstadoCreateOutput.setFor("conEstadoCreateInput");

@@ -2,7 +2,9 @@ package co.edu.udistrital.rrhh.service.impl;
 import co.edu.udistrital.rrhh.domain.Concepto;
 import co.edu.udistrital.rrhh.repository.ConceptoRepository;
 import co.edu.udistrital.rrhh.service.ConceptoService;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,4 +43,11 @@ public class ConceptoServiceImpl implements ConceptoService {
 	public Concepto updateConcepto(Concepto concepto) {
         return conceptoReprository.save(concepto);
     }
+	
+	public List<Concepto> findByTipoPer(String paramConTipoPer) {
+        return conceptoReprository.findByTipoPer(paramConTipoPer);
+        
+    }
+
+	
 }

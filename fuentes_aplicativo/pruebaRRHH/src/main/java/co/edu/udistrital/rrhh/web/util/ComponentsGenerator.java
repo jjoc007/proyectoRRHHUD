@@ -84,7 +84,7 @@ public class ComponentsGenerator {
 	}
 
 
-	public static SelectOneMenu getAutocompleteTipoConceptos(String idComponent, String valueExpression){
+	public static SelectOneMenu getAutocompleteTipoConceptosPer(String idComponent, String valueExpression){
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		javax.faces.application.Application application = facesContext.getApplication();
@@ -102,7 +102,39 @@ public class ComponentsGenerator {
 		UISelectItem item2 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
 		item2.setItemLabel("Deducido");
 		item2.setItemValue(Constantes.TIPO_CONCEPTO_DEDUCIDO);
+		
+		UISelectItem item3 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
+		item3.setItemLabel("Otros");
+		item3.setItemValue(Constantes.TIPO_CONCEPTO_OTROS);
 
+		menuGenerico.getChildren().add(item1);
+		menuGenerico.getChildren().add(item2);
+		menuGenerico.getChildren().add(item3);
+
+
+		return menuGenerico;
+
+	}
+	
+	public static SelectOneMenu getAutocompleteTipoConceptos(String idComponent, String valueExpression){
+
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		javax.faces.application.Application application = facesContext.getApplication();
+		ExpressionFactory expressionFactory = application.getExpressionFactory();
+		ELContext elContext = facesContext.getELContext();
+
+		SelectOneMenu menuGenerico =(SelectOneMenu) application.createComponent(SelectOneMenu.COMPONENT_TYPE);
+		menuGenerico.setId(idComponent);
+		menuGenerico.setValueExpression("value", expressionFactory.createValueExpression(elContext, valueExpression, BigDecimal.class));
+
+		UISelectItem item1 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
+		item1.setItemLabel("Porcentaje");
+		item1.setItemValue(Constantes.TIPO_CONCEPTO_PORCENTAJE);
+
+		UISelectItem item2 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
+		item2.setItemLabel("Valor");
+		item2.setItemValue(Constantes.TIPO_CONCEPTO_VALOR);
+		
 		menuGenerico.getChildren().add(item1);
 		menuGenerico.getChildren().add(item2);
 

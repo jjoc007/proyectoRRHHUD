@@ -1,12 +1,17 @@
 package co.edu.udistrital.rrhh.domain;
 import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,19 +28,16 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooDbManaged(automaticallyDelete = true)
 public class Pago {
 
-	@Column(name = "pag_empleado")
-    @NotNull
-    private Integer pagEmpleado;
+	@ManyToOne
+	@JoinColumn(name = "pag_empleado", referencedColumnName = "emp_cedula", nullable = false)
+	private Empleado pagoEmpleado;
 
-	@Column(name = "pag_concepto")
-    @NotNull
-    private Integer pagConcepto;
+	@ManyToOne
+    @JoinColumn(name = "pag_concepto", referencedColumnName = "con_codigo", nullable = false)
+    private Concepto pagConcepto;
 
 	@Column(name = "pag_periodo")
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "MM")
-    private Calendar pagPeriodo;
+    private Date pagPeriodo;
 	
 	@Column(name = "pag_valorPago", precision = 22)
     @NotNull
@@ -45,29 +47,37 @@ public class Pago {
     @NotNull
     private String pagEstado;
 
-	public Integer getPagEmpleado() {
-        return pagEmpleado;
-    }
+	public Concepto getPagConcepto() {
+		return pagConcepto;
+	}
 
-	public void setPagEmpleado(Integer pagEmpleado) {
-        this.pagEmpleado = pagEmpleado;
-    }
+	public void setPagConcepto(Concepto pagConcepto) {
+		this.pagConcepto = pagConcepto;
+	}
 
-	public Integer getPagConcepto() {
-        return pagConcepto;
-    }
+	public Pago() {
+		// TODO Auto-generated constructor stub
+	}
 
-	public void setPagConcepto(Integer pagConcepto) {
-        this.pagConcepto = pagConcepto;
-    }
+	public Pago(Empleado pagoEmpleado, Concepto pagConcepto, Date pagPeriodo,
+			Double pagValorPago, String pagEstado, Integer pagCodigo) {
+		super();
+		this.pagoEmpleado = pagoEmpleado;
+		this.pagConcepto = pagConcepto;
+		this.pagPeriodo = pagPeriodo;
+		this.pagValorPago = pagValorPago;
+		this.pagEstado = pagEstado;
+		this.pagCodigo = pagCodigo;
 
-	public Calendar getPagPeriodo() {
-        return pagPeriodo;
-    }
+	}
 
-	public void setPagPeriodo(Calendar pagPeriodo) {
-        this.pagPeriodo = pagPeriodo;
-    }
+	public Date getPagPeriodo() {
+		return pagPeriodo;
+	}
+
+	public void setPagPeriodo(Date pagPeriodo) {
+		this.pagPeriodo = pagPeriodo;
+	}
 
 	public Double getPagValorPago() {
         return pagValorPago;
@@ -101,15 +111,14 @@ public class Pago {
         this.pagCodigo = id;
     }
 
-	@Column(name = "con_concepto")
-    @NotNull
-    private Integer conConcepto;
+	public Empleado getPagoEmpleado() {
+		return pagoEmpleado;
+	}
 
-	public Integer getConConcepto() {
-        return conConcepto;
-    }
+	public void setPagoEmpleado(Empleado pagoEmpleado) {
+		this.pagoEmpleado = pagoEmpleado;
+	}
+	
 
-	public void setConConcepto(Integer conConcepto) {
-        this.conConcepto = conConcepto;
-    }
+	
 }

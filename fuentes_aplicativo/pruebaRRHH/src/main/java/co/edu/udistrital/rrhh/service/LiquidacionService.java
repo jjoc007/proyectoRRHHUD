@@ -16,7 +16,8 @@ public interface LiquidacionService {
 
 */
 	public abstract List<Empleado> findAllEmpleados();
-
+	
+	public abstract void Liquidar(List<Empleado> allEmpleados); 
 /*
 	public abstract List<Empleado> findEmpleadoEntries(int firstResult, int maxResults);
 

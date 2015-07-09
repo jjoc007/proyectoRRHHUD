@@ -1,114 +1,234 @@
-﻿CREATE DATABASE rrhhdb;# 1 fila afectada.
+﻿-- phpMyAdmin SQL Dump
+-- version 3.2.0.1
+-- http://www.phpmyadmin.net
+--
+-- Servidor: localhost
+-- Tiempo de generación: 09-07-2015 a las 00:33:45
+-- Versión del servidor: 5.1.37
+-- Versión de PHP: 5.3.0
 
-USE rrhhdb;
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
-CREATE TABLE Rol(
-	rol_id INT PRIMARY KEY,
-	rol_nombre VARCHAR(50) NOT NULL,
-	rol_descripcion TEXT,
-	rol_estado VARCHAR(1) NOT NULL
-);# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
+--
+-- Base de datos: `rrhhdb`
+--
 
-CREATE TABLE Usuario(
-	usu_usuario VARCHAR(100) PRIMARY KEY,
-	usu_rol INT NOT NULL,
-	usu_nombre VARCHAR(50) NOT NULL,
-	usu_clave VARCHAR(50) NOT NULL,
-	usu_estado VARCHAR(1) NOT NULL,
-	usu_correo VARCHAR(80) NOT NULL,
-	Foreign Key(usu_rol)References Rol(rol_id)
-);# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
+-- --------------------------------------------------------
 
+--
+-- Estructura de tabla para la tabla `afiliacion`
+--
 
-CREATE TABLE Empleado(
-	emp_cedula INT PRIMARY KEY,
-	emp_nombre VARCHAR(50) NOT NULL,
-	emp_fechaIngreso DATETIME NOT NULL,
-	emp_fechaSalida DATETIME,
-	emp_cuentaPago INT NOT NULL,
-	emp_estado VARCHAR(1) NOT NULL
-);# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
+CREATE TABLE IF NOT EXISTS `afiliacion` (
+  `afi_empleado` int(11) NOT NULL,
+  `afi_entidad` int(11) NOT NULL,
+  KEY `afi_empleado` (`afi_empleado`),
+  KEY `afi_entidad` (`afi_entidad`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
-CREATE TABLE Concepto(
-	con_codigo INT PRIMARY KEY,
-	con_nombre VARCHAR(50) NOT NULL,
-	con_descripcion TEXT,
-	con_tipo VARCHAR(20) NOT NULL,
-	con_tipoPercepcion VARCHAR(20) NOT NULL,
-	con_valor DOUBLE NOT NULL,
-	con_estado VARCHAR(1) NOT NULL
-);# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
+--
+-- Volcar la base de datos para la tabla `afiliacion`
+--
 
 
-CREATE TABLE Pago(
-	pag_codigo INT PRIMARY KEY,
-	pag_empleado INT NOT NULL,
-	pag_concepto INT NOT NULL,
-	pag_periodo DATETIME NOT NULL,
-	pag_valorPago DOUBLE NOT NULL,
-	pag_estado VARCHAR(1) NOT NULL,
-	Foreign Key(pag_empleado)References Empleado(emp_cedula),
-	Foreign Key(pag_concepto)References Concepto(con_codigo)
-);# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `aporte`
+--
+
+CREATE TABLE IF NOT EXISTS `aporte` (
+  `apo_codigo` int(11) NOT NULL,
+  `apo_entidad` int(11) NOT NULL,
+  `apo_tipo` varchar(20) NOT NULL,
+  `apo_periodo` datetime NOT NULL,
+  `apo_valor` double NOT NULL,
+  PRIMARY KEY (`apo_codigo`),
+  KEY `apo_entidad` (`apo_entidad`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Volcar la base de datos para la tabla `aporte`
+--
 
 
-CREATE TABLE Provision(
-	pro_codigo INT PRIMARY KEY,
-	pro_empleado INT NOT NULL,
-	pro_concepto INT NOT NULL,
-	pro_periodo DATETIME NOT NULL,
-	pro_valor DOUBLE NOT NULL,
-	pro_estado VARCHAR(1) NOT NULL,
-	Foreign Key(pro_empleado)References Empleado(emp_cedula),
-	Foreign Key(pro_concepto)References Concepto(con_codigo)
-);# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cargo`
+--
+
+CREATE TABLE IF NOT EXISTS `cargo` (
+  `car_cogigo` int(11) NOT NULL,
+  `car_nombre` varchar(50) NOT NULL,
+  `car_salario` double NOT NULL,
+  `car_estado` varchar(1) NOT NULL,
+  PRIMARY KEY (`car_cogigo`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Volcar la base de datos para la tabla `cargo`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `concepto`
+--
+
+CREATE TABLE IF NOT EXISTS `concepto` (
+  `con_codigo` int(11) NOT NULL,
+  `con_nombre` varchar(50) NOT NULL,
+  `con_descripcion` text,
+  `con_tipo` varchar(20) NOT NULL,
+  `con_tipoPercepcion` varchar(20) NOT NULL,
+  `con_valor` double NOT NULL,
+  `con_estado` varchar(1) NOT NULL,
+  PRIMARY KEY (`con_codigo`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Volcar la base de datos para la tabla `concepto`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empleado`
+--
+
+CREATE TABLE IF NOT EXISTS `empleado` (
+  `emp_cedula` int(11) NOT NULL,
+  `emp_nombre` varchar(50) NOT NULL,
+  `emp_fechaIngreso` datetime NOT NULL,
+  `emp_fechaSalida` datetime DEFAULT NULL,
+  `emp_cuentaPago` int(11) NOT NULL,
+  `emp_estado` varchar(1) NOT NULL,
+  `cargo` int(11) NOT NULL,
+  PRIMARY KEY (`emp_cedula`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Volcar la base de datos para la tabla `empleado`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `entidad`
+--
+
+CREATE TABLE IF NOT EXISTS `entidad` (
+  `ent_codigo` int(11) NOT NULL,
+  `ent_nombre` varchar(50) NOT NULL,
+  `ent_cuenta` int(11) NOT NULL,
+  `ent_aporteEmpleado` double NOT NULL,
+  `ent_aporteEmpresa` double NOT NULL,
+  `ent_estado` varchar(1) NOT NULL,
+  PRIMARY KEY (`ent_codigo`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Volcar la base de datos para la tabla `entidad`
+--
 
 
-CREATE TABLE Cargo(
-	car_cogigo INT PRIMARY KEY,
-	car_nombre VARCHAR(50) NOT NULL,
-	car_salario DOUBLE NOT NULL,
-	car_estado VARCHAR(1) NOT NULL
-);# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `historicocargo`
+--
+
+CREATE TABLE IF NOT EXISTS `historicocargo` (
+  `his_codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `his_empleado` int(11) NOT NULL,
+  `his_cargo` int(11) NOT NULL,
+  `his_fechaInicio` datetime NOT NULL,
+  `his_fechaFin` datetime DEFAULT NULL,
+  `his_estado` varchar(1) NOT NULL,
+  PRIMARY KEY (`his_codigo`),
+  KEY `his_empleado` (`his_empleado`),
+  KEY `his_cargo` (`his_cargo`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Volcar la base de datos para la tabla `historicocargo`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pago`
+--
+
+CREATE TABLE IF NOT EXISTS `pago` (
+  `pag_codigo` int(11) NOT NULL,
+  `pag_empleado` int(11) NOT NULL,
+  `pag_concepto` int(11) NOT NULL,
+  `pag_periodo` datetime NOT NULL,
+  `pag_valorPago` double NOT NULL,
+  `pag_estado` varchar(1) NOT NULL,
+  PRIMARY KEY (`pag_codigo`),
+  KEY `pag_empleado` (`pag_empleado`),
+  KEY `pag_concepto` (`pag_concepto`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Volcar la base de datos para la tabla `pago`
+--
 
 
-CREATE TABLE HistoricoCargo(
-	his_codigo INT PRIMARY KEY,
-	his_empleado INT NOT NULL,
-	his_cargo INT NOT NULL,
-	his_fechaInicio DATETIME NOT NULL,
-	his_fechaFin DATETIME,
-	his_salario DOUBLE NOT NULL,
-	his_estado VARCHAR(1) NOT NULL,
-	Foreign Key(his_empleado)References Empleado(emp_cedula),
-	Foreign Key(his_cargo)References Cargo(car_cogigo)
-);# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `provision`
+--
+
+CREATE TABLE IF NOT EXISTS `provision` (
+  `pro_codigo` int(11) NOT NULL,
+  `pro_empleado` int(11) NOT NULL,
+  `pro_concepto` int(11) NOT NULL,
+  `pro_periodo` datetime NOT NULL,
+  `pro_valor` double NOT NULL,
+  `pro_estado` varchar(1) NOT NULL,
+  PRIMARY KEY (`pro_codigo`),
+  KEY `pro_empleado` (`pro_empleado`),
+  KEY `pro_concepto` (`pro_concepto`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Volcar la base de datos para la tabla `provision`
+--
 
 
-CREATE TABLE Entidad(
-	ent_codigo INT PRIMARY KEY,
-	ent_nombre VARCHAR(50) NOT NULL,
-	ent_cuenta INT NOT NULL,
-	ent_aporteEmpleado DOUBLE NOT NULL,
-	ent_aporteEmpresa DOUBLE NOT NULL,
-	ent_estado VARCHAR(1) NOT NULL
-);# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
+-- --------------------------------------------------------
 
+--
+-- Estructura de tabla para la tabla `rol`
+--
 
-CREATE TABLE Afiliacion(
-	afi_empleado INT NOT NULL,
-	afi_entidad INT NOT NULL,
-	Foreign Key(afi_empleado)References Empleado(emp_cedula),
-	Foreign Key(afi_entidad)References Entidad(ent_codigo)
-);# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
+CREATE TABLE IF NOT EXISTS `rol` (
+  `rol_id` int(11) NOT NULL,
+  `rol_nombre` varchar(50) NOT NULL,
+  `rol_descripcion` text,
+  `rol_estado` varchar(1) NOT NULL,
+  PRIMARY KEY (`rol_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+------------------------------------------------------
 
+--
+-- Estructura de tabla para la tabla `usuario`
+--
 
-CREATE TABLE Aporte(
-	apo_codigo INT PRIMARY KEY,
-	apo_entidad INT NOT NULL,
-	apo_tipo VARCHAR(20) NOT NULL,
-	apo_periodo DATETIME NOT NULL,
-	apo_valor DOUBLE NOT NULL,
-	Foreign Key(apo_entidad)References Entidad(ent_codigo)
-);# MySQL ha devuelto un conjunto de valores vacío (es decir: cero columnas).
+CREATE TABLE IF NOT EXISTS `usuario` (
+  `usu_usuario` varchar(100) NOT NULL,
+  `usu_rol` int(11) NOT NULL,
+  `usu_nombre` varchar(50) NOT NULL,
+  `usu_clave` varchar(50) NOT NULL,
+  `usu_estado` varchar(1) NOT NULL,
+  `usu_correo` varchar(80) NOT NULL,
+  PRIMARY KEY (`usu_usuario`),
+  KEY `usu_rol` (`usu_rol`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--

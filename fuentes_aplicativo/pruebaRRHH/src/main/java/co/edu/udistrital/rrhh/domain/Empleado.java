@@ -7,10 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -104,15 +101,6 @@ public class Empleado {
         return empCuentaPago;
     }
 
-	
-	public Cargo getCargo() {
-		return cargo;
-	}
-
-	public void setCargo(Cargo cargo) {
-		this.cargo = cargo;
-	}
-
 	public void setEmpCuentaPago(Integer empCuentaPago) {
         this.empCuentaPago = empCuentaPago;
     }
@@ -131,25 +119,9 @@ public class Empleado {
 	public List<Pago> getPagos() {
 		return pagos;
 	}
-	
-	@OneToMany(mappedBy = "hisEmpleado", fetch = FetchType.EAGER)
-    private List<Historicocargo> historicoCargos;
-
-	@ManyToOne
-	@JoinColumn(name = "cargo", referencedColumnName = "car_cogigo", nullable = false)
-	private Cargo cargo;
-
 
 	public void setPagos(List<Pago> pagos) {
 		this.pagos = pagos;
-	}
-
-	public List<Historicocargo> getHistoricoCargos() {
-		return historicoCargos;
-	}
-
-	public void setHistoricoCargos(List<Historicocargo> historicoCargos) {
-		this.historicoCargos = historicoCargos;
 	}
 
 	public boolean isEmp_vacaciones() {

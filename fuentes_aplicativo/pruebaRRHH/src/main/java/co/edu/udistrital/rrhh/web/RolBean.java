@@ -110,7 +110,7 @@ public class RolBean implements Serializable {
 
 	public HtmlPanelGrid getEditPanelGrid() {
         if (editPanelGrid == null) {
-            editPanelGrid = populateEditPanel();
+            editPanelGrid = populateCreatePanel();
         }
         return editPanelGrid;
     }
@@ -134,6 +134,25 @@ public class RolBean implements Serializable {
         ELContext elContext = facesContext.getELContext();
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
+        
+        OutputLabel rolIdCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        rolIdCreateOutput.setFor("rolIdCreateInput");
+        rolIdCreateOutput.setId("rolIdCreateOutput");
+        rolIdCreateOutput.setValue("Codigo:");
+        htmlPanelGrid.getChildren().add(rolIdCreateOutput);
+        
+        InputText rolIdCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
+        rolIdCreateInput.setId("rolIdCreateInput");
+        rolIdCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{rolBean.rol.rolId}", Integer.class));
+        rolIdCreateInput.setRequired(true);
+        htmlPanelGrid.getChildren().add(rolIdCreateInput);
+        
+        Message rolIdCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        rolIdCreateInputMessage.setId("rolIdCreateInputMessage");
+        rolIdCreateInputMessage.setFor("rolIdCreateInput");
+        rolIdCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(rolIdCreateInputMessage);
+        
         
         OutputLabel rolNombreCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         rolNombreCreateOutput.setFor("rolNombreCreateInput");
@@ -198,119 +217,9 @@ public class RolBean implements Serializable {
         return htmlPanelGrid;
     }
 
-	public HtmlPanelGrid populateEditPanel() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        javax.faces.application.Application application = facesContext.getApplication();
-        ExpressionFactory expressionFactory = application.getExpressionFactory();
-        ELContext elContext = facesContext.getELContext();
-        
-        HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
-        
-        OutputLabel rolNombreEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        rolNombreEditOutput.setFor("rolNombreEditInput");
-        rolNombreEditOutput.setId("rolNombreEditOutput");
-        rolNombreEditOutput.setValue("Rol Nombre:");
-        htmlPanelGrid.getChildren().add(rolNombreEditOutput);
-        
-        InputTextarea rolNombreEditInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
-        rolNombreEditInput.setId("rolNombreEditInput");
-        rolNombreEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{rolBean.rol.rolNombre}", String.class));
-        LengthValidator rolNombreEditInputValidator = new LengthValidator();
-        rolNombreEditInputValidator.setMaximum(50);
-        rolNombreEditInput.addValidator(rolNombreEditInputValidator);
-        rolNombreEditInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(rolNombreEditInput);
-        
-        Message rolNombreEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        rolNombreEditInputMessage.setId("rolNombreEditInputMessage");
-        rolNombreEditInputMessage.setFor("rolNombreEditInput");
-        rolNombreEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(rolNombreEditInputMessage);
-        
-        OutputLabel rolDescripcionEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        rolDescripcionEditOutput.setFor("rolDescripcionEditInput");
-        rolDescripcionEditOutput.setId("rolDescripcionEditOutput");
-        rolDescripcionEditOutput.setValue("Rol Descripcion:");
-        htmlPanelGrid.getChildren().add(rolDescripcionEditOutput);
-        
-        InputText rolDescripcionEditInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        rolDescripcionEditInput.setId("rolDescripcionEditInput");
-        rolDescripcionEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{rolBean.rol.rolDescripcion}", String.class));
-        rolDescripcionEditInput.setRequired(false);
-        htmlPanelGrid.getChildren().add(rolDescripcionEditInput);
-        
-        Message rolDescripcionEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        rolDescripcionEditInputMessage.setId("rolDescripcionEditInputMessage");
-        rolDescripcionEditInputMessage.setFor("rolDescripcionEditInput");
-        rolDescripcionEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(rolDescripcionEditInputMessage);
-        
-        OutputLabel rolEstadoEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        rolEstadoEditOutput.setFor("rolEstadoEditInput");
-        rolEstadoEditOutput.setId("rolEstadoEditOutput");
-        rolEstadoEditOutput.setValue("Rol Estado:");
-        htmlPanelGrid.getChildren().add(rolEstadoEditOutput);
-        
-        InputText rolEstadoEditInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        rolEstadoEditInput.setId("rolEstadoEditInput");
-        rolEstadoEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{rolBean.rol.rolEstado}", String.class));
-        LengthValidator rolEstadoEditInputValidator = new LengthValidator();
-        rolEstadoEditInputValidator.setMaximum(1);
-        rolEstadoEditInput.addValidator(rolEstadoEditInputValidator);
-        rolEstadoEditInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(rolEstadoEditInput);
-        
-        Message rolEstadoEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        rolEstadoEditInputMessage.setId("rolEstadoEditInputMessage");
-        rolEstadoEditInputMessage.setFor("rolEstadoEditInput");
-        rolEstadoEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(rolEstadoEditInputMessage);
-        
-        return htmlPanelGrid;
-    }
+	public HtmlPanelGrid populateEditPanel() {return null;}
 
-	public HtmlPanelGrid populateViewPanel() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        javax.faces.application.Application application = facesContext.getApplication();
-        ExpressionFactory expressionFactory = application.getExpressionFactory();
-        ELContext elContext = facesContext.getELContext();
-        
-        HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
-        
-        HtmlOutputText rolNombreLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        rolNombreLabel.setId("rolNombreLabel");
-        rolNombreLabel.setValue("Rol Nombre:");
-        htmlPanelGrid.getChildren().add(rolNombreLabel);
-        
-        InputTextarea rolNombreValue = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
-        rolNombreValue.setId("rolNombreValue");
-        rolNombreValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{rolBean.rol.rolNombre}", String.class));
-        rolNombreValue.setReadonly(true);
-        rolNombreValue.setDisabled(true);
-        htmlPanelGrid.getChildren().add(rolNombreValue);
-        
-        HtmlOutputText rolDescripcionLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        rolDescripcionLabel.setId("rolDescripcionLabel");
-        rolDescripcionLabel.setValue("Rol Descripcion:");
-        htmlPanelGrid.getChildren().add(rolDescripcionLabel);
-        
-        HtmlOutputText rolDescripcionValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        rolDescripcionValue.setId("rolDescripcionValue");
-        rolDescripcionValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{rolBean.rol.rolDescripcion}", String.class));
-        htmlPanelGrid.getChildren().add(rolDescripcionValue);
-        
-        HtmlOutputText rolEstadoLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        rolEstadoLabel.setId("rolEstadoLabel");
-        rolEstadoLabel.setValue("Rol Estado:");
-        htmlPanelGrid.getChildren().add(rolEstadoLabel);
-        
-        HtmlOutputText rolEstadoValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        rolEstadoValue.setId("rolEstadoValue");
-        rolEstadoValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{rolBean.rol.rolEstado}", String.class));
-        htmlPanelGrid.getChildren().add(rolEstadoValue);
-        
-        return htmlPanelGrid;
-    }
+	public HtmlPanelGrid populateViewPanel() {return null;}
 
 	public Rol getRol() {
         if (rol == null) {

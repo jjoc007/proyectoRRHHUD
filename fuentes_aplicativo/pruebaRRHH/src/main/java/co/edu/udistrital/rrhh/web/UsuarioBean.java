@@ -225,6 +225,24 @@ public class UsuarioBean implements Serializable {
         usuEstadoCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(usuEstadoCreateInputMessage);
         
+        
+        OutputLabel usuRolCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        usuRolCreateOutput.setFor("usuRolCreateInput");
+        usuRolCreateOutput.setId("usuRolCreateOutput");
+        usuRolCreateOutput.setValue("Rol:");
+        htmlPanelGrid.getChildren().add(usuRolCreateOutput);
+        
+        htmlPanelGrid.getChildren().add(ComponentsGenerator.getAutocompleteRol("usuRolCreateInput", "#{usuarioBean.usuario.usuRol}"));
+        
+        Message usuRolCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        usuRolCreateInputMessage.setId("usuRolCreateInputMessage");
+        usuRolCreateInputMessage.setFor("usuRolCreateInput");
+        usuRolCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(usuRolCreateInputMessage);
+        
+        
+        
+        
         OutputLabel usuCorreoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         usuCorreoCreateOutput.setFor("usuCorreoCreateInput");
         usuCorreoCreateOutput.setId("usuCorreoCreateOutput");

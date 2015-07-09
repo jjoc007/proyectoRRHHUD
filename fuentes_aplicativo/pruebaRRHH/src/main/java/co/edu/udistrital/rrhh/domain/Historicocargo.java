@@ -1,12 +1,20 @@
 package co.edu.udistrital.rrhh.domain;
+import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,11 +29,16 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooToString
 @RooJpaEntity(versionField = "", sequenceName = "", table = "historicocargo")
 @RooDbManaged(automaticallyDelete = true)
-public class Historicocargo {
+public class Historicocargo implements Serializable{
 
 	@Id
     @Column(name = "his_codigo")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer hisCodigo;
+	
+	@ManyToOne
+	@JoinColumn(name = "his_empleado", referencedColumnName = "emp_cedula", nullable = false)
+	private Empleado hisEmpleado;
 
 	public Integer getHisCodigo() {
         return this.hisCodigo;
@@ -35,72 +48,55 @@ public class Historicocargo {
         this.hisCodigo = id;
     }
 
-	@Column(name = "his_empleado")
-    @NotNull
-    private Integer hisEmpleado;
 
-	@Column(name = "his_cargo")
+	@ManyToOne
+	@JoinColumn(name = "his_cargo", referencedColumnName = "car_cogigo", nullable = false)
     @NotNull
-    private Integer hisCargo;
+    private Cargo hisCargo;
 
 	@Column(name = "his_fechaInicio")
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "MM")
-    private Calendar hisFechaInicio;
+    private Date hisFechaInicio;
 
 	@Column(name = "his_fechaFin")
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "MM")
-    private Calendar hisFechaFin;
-
-	@Column(name = "his_salario", precision = 22)
-    @NotNull
-    private Double hisSalario;
+    private Date hisFechaFin;
 
 	@Column(name = "his_estado", length = 1)
     @NotNull
     private String hisEstado;
 
-	public Integer getHisEmpleado() {
-        return hisEmpleado;
-    }
+	
 
-	public void setHisEmpleado(Integer hisEmpleado) {
-        this.hisEmpleado = hisEmpleado;
-    }
+	public Empleado getHisEmpleado() {
+		return hisEmpleado;
+	}
 
-	public Integer getHisCargo() {
-        return hisCargo;
-    }
+	public void setHisEmpleado(Empleado hisEmpleado) {
+		this.hisEmpleado = hisEmpleado;
+	}
 
-	public void setHisCargo(Integer hisCargo) {
-        this.hisCargo = hisCargo;
-    }
+	public Cargo getHisCargo() {
+		return hisCargo;
+	}
 
-	public Calendar getHisFechaInicio() {
-        return hisFechaInicio;
-    }
+	public void setHisCargo(Cargo hisCargo) {
+		this.hisCargo = hisCargo;
+	}
 
-	public void setHisFechaInicio(Calendar hisFechaInicio) {
-        this.hisFechaInicio = hisFechaInicio;
-    }
+	public Date getHisFechaInicio() {
+		return hisFechaInicio;
+	}
 
-	public Calendar getHisFechaFin() {
-        return hisFechaFin;
-    }
+	public void setHisFechaInicio(Date hisFechaInicio) {
+		this.hisFechaInicio = hisFechaInicio;
+	}
 
-	public void setHisFechaFin(Calendar hisFechaFin) {
-        this.hisFechaFin = hisFechaFin;
-    }
+	public Date getHisFechaFin() {
+		return hisFechaFin;
+	}
 
-	public Double getHisSalario() {
-        return hisSalario;
-    }
-
-	public void setHisSalario(Double hisSalario) {
-        this.hisSalario = hisSalario;
-    }
+	public void setHisFechaFin(Date hisFechaFin) {
+		this.hisFechaFin = hisFechaFin;
+	}
 
 	public String getHisEstado() {
         return hisEstado;
@@ -113,17 +109,5 @@ public class Historicocargo {
 	public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
-
-	@Column(name = "his_fechaFinal")
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "MM")
-    private Calendar hisFechaFinal;
-
-	public Calendar getHisFechaFinal() {
-        return hisFechaFinal;
-    }
-
-	public void setHisFechaFinal(Calendar hisFechaFinal) {
-        this.hisFechaFinal = hisFechaFinal;
-    }
+	
 }

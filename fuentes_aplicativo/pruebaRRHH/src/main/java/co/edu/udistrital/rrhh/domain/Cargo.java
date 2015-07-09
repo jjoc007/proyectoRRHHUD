@@ -1,9 +1,13 @@
 package co.edu.udistrital.rrhh.domain;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.roo.addon.dbre.RooDbManaged;
@@ -34,6 +38,12 @@ public class Cargo {
 	public String getCarNombre() {
         return carNombre;
     }
+	
+	@OneToMany(mappedBy = "cargo")
+    private List<Empleado> empleados;
+	
+	@OneToMany(mappedBy = "hisCargo")
+    private List<Historicocargo> hisCargos;
 
 	public void setCarNombre(String carNombre) {
         this.carNombre = carNombre;
@@ -70,4 +80,22 @@ public class Cargo {
 	public void setCarCogigo(Integer id) {
         this.carCogigo = id;
     }
+
+	public List<Empleado> getEmpleados() {
+		return empleados;
+	}
+
+	public void setEmpleados(List<Empleado> empleados) {
+		this.empleados = empleados;
+	}
+
+	public List<Historicocargo> getHisCargos() {
+		return hisCargos;
+	}
+
+	public void setHisCargos(List<Historicocargo> hisCargos) {
+		this.hisCargos = hisCargos;
+	}
+	
+	
 }

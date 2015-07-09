@@ -14,6 +14,7 @@ import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.LengthValidator;
 import javax.swing.JPanel;
+
 import org.primefaces.component.autocomplete.AutoComplete;
 import org.primefaces.component.calendar.Calendar;
 import org.primefaces.component.inputtext.InputText;
@@ -21,6 +22,11 @@ import org.primefaces.component.message.Message;
 import org.primefaces.component.outputlabel.OutputLabel;
 import org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
+
+import co.edu.udistrital.rrhh.domain.Cargo;
+import co.edu.udistrital.rrhh.domain.Rol;
+import co.edu.udistrital.rrhh.web.converter.CargoConverter;
+import co.edu.udistrital.rrhh.web.converter.RolConverter;
 
 public class ComponentsGenerator {
 
@@ -32,27 +38,49 @@ public class ComponentsGenerator {
 
 	
 	
-//	public static AutoComplete getAutocompleteFormulaXRegimen(String idComponent, String valueExpression){
-//
-//		FacesContext facesContext = FacesContext.getCurrentInstance();
-//		javax.faces.application.Application application = facesContext.getApplication();
-//		ExpressionFactory expressionFactory = application.getExpressionFactory();
-//		ELContext elContext = facesContext.getELContext();
-//
-//		AutoComplete autoCompleteLineaGenerico = (AutoComplete) application.createComponent(AutoComplete.COMPONENT_TYPE);
-//		autoCompleteLineaGenerico.setId(idComponent);
-//		autoCompleteLineaGenerico.setValueExpression("value", expressionFactory.createValueExpression(elContext, valueExpression, T21formulasxregimen.class));
-//		autoCompleteLineaGenerico.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{autoCompleteBean.completeT21formulasxregimen}", List.class, new Class[] { String.class }));
-//		autoCompleteLineaGenerico.setDropdown(true);
-//		autoCompleteLineaGenerico.setValueExpression("var", expressionFactory.createValueExpression(elContext, "for", String.class));
-//		autoCompleteLineaGenerico.setValueExpression("itemLabel", expressionFactory.createValueExpression(elContext, "#{for.c21formulacp}", String.class));
-//		autoCompleteLineaGenerico.setValueExpression("itemValue", expressionFactory.createValueExpression(elContext, "#{for.c21formulacp}", String.class));
-//		autoCompleteLineaGenerico.setScrollHeight(300);
-//		autoCompleteLineaGenerico.setConverter(new T21formulasxregimenConverter());
-//		autoCompleteLineaGenerico.setRequired(false);
-//
-//		return autoCompleteLineaGenerico;
-//	}
+	public static AutoComplete getAutocompleteRol(String idComponent, String valueExpression){
+
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		javax.faces.application.Application application = facesContext.getApplication();
+		ExpressionFactory expressionFactory = application.getExpressionFactory();
+		ELContext elContext = facesContext.getELContext();
+
+		AutoComplete autoCompleteLineaGenerico = (AutoComplete) application.createComponent(AutoComplete.COMPONENT_TYPE);
+		autoCompleteLineaGenerico.setId(idComponent);
+		autoCompleteLineaGenerico.setValueExpression("value", expressionFactory.createValueExpression(elContext, valueExpression, Rol.class));
+		autoCompleteLineaGenerico.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{autoCompleteBean.completeRol}", List.class, new Class[] { String.class }));
+		autoCompleteLineaGenerico.setDropdown(true);
+		autoCompleteLineaGenerico.setValueExpression("var", expressionFactory.createValueExpression(elContext, "rol", String.class));
+		autoCompleteLineaGenerico.setValueExpression("itemLabel", expressionFactory.createValueExpression(elContext, "#{rol.rolNombre}", String.class));
+		autoCompleteLineaGenerico.setValueExpression("itemValue", expressionFactory.createValueExpression(elContext, "#{rol}", Rol.class));
+		autoCompleteLineaGenerico.setScrollHeight(300);
+		autoCompleteLineaGenerico.setConverter(new RolConverter());
+		autoCompleteLineaGenerico.setRequired(false);
+
+		return autoCompleteLineaGenerico;
+	}
+	
+	public static AutoComplete getAutocompleteCargo(String idComponent, String valueExpression){
+
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		javax.faces.application.Application application = facesContext.getApplication();
+		ExpressionFactory expressionFactory = application.getExpressionFactory();
+		ELContext elContext = facesContext.getELContext();
+
+		AutoComplete autoCompleteLineaGenerico = (AutoComplete) application.createComponent(AutoComplete.COMPONENT_TYPE);
+		autoCompleteLineaGenerico.setId(idComponent);
+		autoCompleteLineaGenerico.setValueExpression("value", expressionFactory.createValueExpression(elContext, valueExpression, Cargo.class));
+		autoCompleteLineaGenerico.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{autoCompleteBean.completeCargo}", List.class, new Class[] { String.class }));
+		autoCompleteLineaGenerico.setDropdown(true);
+		autoCompleteLineaGenerico.setValueExpression("var", expressionFactory.createValueExpression(elContext, "car", String.class));
+		autoCompleteLineaGenerico.setValueExpression("itemLabel", expressionFactory.createValueExpression(elContext, "#{car.carNombre}", String.class));
+		autoCompleteLineaGenerico.setValueExpression("itemValue", expressionFactory.createValueExpression(elContext, "#{car}", Cargo.class));
+		autoCompleteLineaGenerico.setScrollHeight(300);
+		autoCompleteLineaGenerico.setConverter(new CargoConverter());
+		autoCompleteLineaGenerico.setRequired(false);
+
+		return autoCompleteLineaGenerico;
+	}
 	
 
 	//menus

@@ -1,6 +1,11 @@
 package co.edu.udistrital.rrhh.web;
+import co.edu.udistrital.rrhh.domain.Cargo;
 import co.edu.udistrital.rrhh.domain.Empleado;
+import co.edu.udistrital.rrhh.domain.Historicocargo;
 import co.edu.udistrital.rrhh.service.EmpleadoService;
+import co.edu.udistrital.rrhh.service.HistoricocargoService;
+import co.edu.udistrital.rrhh.web.util.ComponentsGenerator;
+import co.edu.udistrital.rrhh.web.util.Constantes;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
 
 import java.io.Serializable;
@@ -20,11 +25,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.DateTimeConverter;
 import javax.faces.validator.LengthValidator;
 
+import org.primefaces.component.autocomplete.AutoComplete;
 import org.primefaces.component.calendar.Calendar;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.inputtextarea.InputTextarea;
 import org.primefaces.component.message.Message;
 import org.primefaces.component.outputlabel.OutputLabel;
+import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.primefaces.component.spinner.Spinner;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CloseEvent;
@@ -42,8 +49,11 @@ public class EmpleadoBean implements Serializable{
 
 	@Autowired
     EmpleadoService empleadoService;
+	
+	@Autowired
+	HistoricocargoService historicocargoService;
 
-	private String name = "Empleadoes";
+	private String name = "Empleados";
 
 	private Empleado empleado;
 
@@ -60,6 +70,13 @@ public class EmpleadoBean implements Serializable{
 	private HtmlPanelGrid viewPanelGrid;
 
 	private boolean createDialogVisible = false;
+	
+	private boolean insertAction = false;
+	private boolean updateAction = false;
+	
+	private AutoComplete autocompleteCargo;
+	private SelectOneMenu selectEstadoEmpleado;
+	private Calendar fechaIngreso;
 
 	@PostConstruct
     public void init() {
@@ -464,6 +481,10 @@ public class EmpleadoBean implements Serializable{
     }
 
 	public String onEdit() {
+		
+        insertAction = false;
+        updateAction = true;
+		
         return null;
     }
 
@@ -475,6 +496,21 @@ public class EmpleadoBean implements Serializable{
         this.createDialogVisible = createDialogVisible;
     }
 
+	public AutoComplete getAutocompleteCargo() {
+		
+		if(autocompleteCargo ==null){
+			
+			autocompleteCargo =  ComponentsGenerator.getAutocompleteCargo("autoCompleteCargoInput", "#{empleadoBean.empleado.cargo}");
+			
+		}
+		
+		return autocompleteCargo;
+	}
+
+	public void setAutocompleteCargo(AutoComplete autocompleteCargo) {
+		this.autocompleteCargo = autocompleteCargo;
+	}
+
 	public String displayList() {
         createDialogVisible = false;
         findAllEmpleadoes();
@@ -483,17 +519,62 @@ public class EmpleadoBean implements Serializable{
 
 	public String displayCreateDialog() {
         empleado = new Empleado();
+        insertAction = true;
+        updateAction = false;
+        
         createDialogVisible = true;
         return "empleado";
     }
 
+	
+	
 	public String persist() {
         String message = "";
-        if (empleado.getEmpCedula() != null) {
-            empleadoService.updateEmpleado(empleado);
+        
+        
+        //insercion historico cargo
+        
+        //acatualizacionhistorico cargo
+        
+        if (insertAction) {
+        	//inserta
+            empleadoService.saveEmpleado(empleado);
+            
+            //inserta regiustro de historial cargo
+            Historicocargo historialCargo=  new Historicocargo();
+            historialCargo.setHisCargo(empleado.getCargo());
+            historialCargo.setHisEmpleado(empleado);
+            historialCargo.setHisEstado(Constantes.GENERAL_ESTADO_ACTIVO);
+            historialCargo.setHisFechaInicio(new Date());
+
+            historicocargoService.saveHistoricocargo(historialCargo);
+            
             message = "message_successfully_updated";
         } else {
-            empleadoService.saveEmpleado(empleado);
+        	//actualiza
+            empleadoService.updateEmpleado(empleado);
+            
+            
+            for(Historicocargo histAux :  empleado.getHistoricoCargos()){            	
+            	if(histAux.getHisFechaFin() == null){
+            		
+            		if(histAux.getHisCargo().getCarCogigo().intValue() != empleado.getCargo().getCarCogigo().intValue()){
+            			
+            			histAux.setHisFechaFin(new Date());
+            			histAux.setHisEstado(Constantes.GENERAL_ESTADO_INACTIVO);
+            			historicocargoService.updateHistoricocargo(histAux);
+            			
+            			Historicocargo historialCargo=  new Historicocargo();
+                        historialCargo.setHisCargo(empleado.getCargo());
+                        historialCargo.setHisEmpleado(empleado);
+                        historialCargo.setHisEstado(Constantes.GENERAL_ESTADO_ACTIVO);
+                        historialCargo.setHisFechaInicio(new Date());
+            			
+                        historicocargoService.saveHistoricocargo(historialCargo);
+            		}
+            	}
+            }
+            
             message = "message_successfully_created";
         }
         RequestContext context = RequestContext.getCurrentInstance();
@@ -522,6 +603,39 @@ public class EmpleadoBean implements Serializable{
 	public void handleDialogClose(CloseEvent event) {
         reset();
     }
+
+	
+	public SelectOneMenu getSelectEstadoEmpleado() {
+		if(selectEstadoEmpleado == null){
+			
+			selectEstadoEmpleado=ComponentsGenerator.getAutocompleteEstadoActual("SelectEstadoEmp", "#{empleadoBean.empleado.empEstado}");
+		}
+		
+		return selectEstadoEmpleado;
+	}
+
+	public void setSelectEstadoEmpleado(SelectOneMenu selectEstadoEmpleado) {
+		this.selectEstadoEmpleado = selectEstadoEmpleado;
+	}
+
+	
+
+
+	public Calendar getFechaIngreso() {
+		if(fechaIngreso==null){
+			
+			fechaIngreso = ComponentsGenerator.getBasicCalendar("calendarFecIngEmpleado", "#{empleadoBean.empleado.empFechaIngreso}");
+		}
+		
+		return fechaIngreso;
+	}
+
+	public void setFechaIngreso(Calendar fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
+	}
+
+
+
 
 	private static final long serialVersionUID = 1L;
 }

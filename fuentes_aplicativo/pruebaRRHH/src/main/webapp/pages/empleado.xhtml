@@ -30,11 +30,7 @@
             <f:facet name="header">
               <h:outputText value="Actions" />
             </f:facet>
-            <p:commandButton id="viewButton" icon="ui-icon-zoomin" update=":viewForm:viewPanelGrid" oncomplete="viewDialogWidget.show()" title="#{messages.label_view}">
-              <f:setPropertyActionListener value="#{empleado}" target="#{empleadoBean.empleado}" />
-            </p:commandButton>
-            <p:tooltip for="viewButton" value="#{messages.label_view}" showEffect="fade" hideEffect="fade" />
-            <p:commandButton id="editButton" icon="ui-icon-pencil" update=":editForm:editPanelGrid" action="#{empleadoBean.onEdit}" oncomplete="editDialogWidget.show()" title="#{messages.label_edit}">
+            <p:commandButton id="editButton" icon="ui-icon-pencil" update=":createForm:createPanelGrid" action="#{empleadoBean.onEdit}" oncomplete="createDialogWidget.show()" title="#{messages.label_edit}">
               <f:setPropertyActionListener value="#{empleado}" target="#{empleadoBean.empleado}" />
             </p:commandButton>
             <p:tooltip for="editButton" value="#{messages.label_edit}" showEffect="fade" hideEffect="fade" />
@@ -50,30 +46,33 @@
       <p:ajax event="close" update=":dataForm:data" listener="#{empleadoBean.handleDialogClose}" />
       <p:outputPanel id="createPanel">
         <h:form id="createForm" enctype="multipart/form-data">
-          <h:panelGrid id="createPanelGrid" columns="3" binding="#{empleadoBean.createPanelGrid}" styleClass="dialog" columnClasses="col1,col2,col3" />
+          <h:panelGrid id="createPanelGrid" columns="2" styleClass="dialog" columnClasses="col1,col2,col3" >
+         
+         	 <h:outputText value="Cedula " />
+         	 <p:inputText value="#{empleadoBean.empleado.empCedula}" />
+         	 
+         	  <h:outputText value="Nombre" />
+         	  <p:inputText value="#{empleadoBean.empleado.empNombre}" />
+         	 
+         	  <h:outputText value="Fecha Ingreso" />
+         	  <p:calendar id="calendarFecIngEmpleado" binding="#{empleadoBean.fechaIngreso}" />
+         	 
+         	  <h:outputText value="Cuenta bancaria " />
+         	  <p:inputText value = "#{empleadoBean.empleado.empCuentaPago}" />
+         	 
+         	  <h:outputText value="cargo" />
+         	  <p:autoComplete id="autoCompleteCargoInput" binding="#{empleadoBean.autocompleteCargo}" />
+         	 
+         	  <h:outputText value="Estado" />
+         	 <p:selectOneMenu id="SelectEstadoEmp" binding="#{empleadoBean.selectEstadoEmpleado}" />
+         </h:panelGrid>
           <p:commandButton id="createSaveButton" value="#{messages.label_save}" action="#{empleadoBean.persist}" update="createPanelGrid :growlForm:growl" />
           <p:commandButton id="createCloseButton" value="#{messages.label_close}" onclick="createDialogWidget.hide()" type="button" />
         </h:form>
       </p:outputPanel>
     </p:dialog>
-    <p:dialog id="editDialog" header="#{messages.label_edit} Empleado" modal="true" widgetVar="editDialogWidget" dynamic="true" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
-      <p:ajax event="close" update=":dataForm:data" listener="#{empleadoBean.handleDialogClose}" />
-      <p:outputPanel id="editPanel">
-        <h:form id="editForm" enctype="multipart/form-data">
-          <h:panelGrid id="editPanelGrid" columns="3" binding="#{empleadoBean.editPanelGrid}" styleClass="dialog" columnClasses="col1,col2,col3" />
-          <p:commandButton id="editSaveButton" value="#{messages.label_save}" action="#{empleadoBean.persist}" update="editPanelGrid :growlForm:growl" />
-          <p:commandButton id="editCloseButton" value="#{messages.label_close}" onclick="editDialogWidget.hide()" type="button" />
-        </h:form>
-      </p:outputPanel>
-    </p:dialog>
-    <p:dialog id="viewDialog" header="#{messages.label_view} Empleado" modal="true" widgetVar="viewDialogWidget" dynamic="true" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
-      <p:outputPanel id="viewPanel">
-        <h:form id="viewForm" enctype="multipart/form-data">
-          <h:panelGrid id="viewPanelGrid" columns="2" binding="#{empleadoBean.viewPanelGrid}" styleClass="dialog" columnClasses="col1,col2" />
-          <p:commandButton id="viewCloseButton" value="#{messages.label_close}" onclick="viewDialogWidget.hide()" type="button" />
-        </h:form>
-      </p:outputPanel>
-    </p:dialog>
+   
+   
     <p:confirmDialog id="deleteDialog" widgetVar="deleteDialogWidget" message="#{messages.label_delete_record}" showEffect="fade" hideEffect="explode" header="#{messages.label_confirm_deletion}" severity="alarm">
       <p:outputPanel id="deletePanel">
         <h:form id="deleteForm">

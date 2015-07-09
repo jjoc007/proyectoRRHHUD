@@ -2,8 +2,11 @@ package co.edu.udistrital.rrhh.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.roo.addon.dbre.RooDbManaged;
@@ -19,9 +22,10 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooDbManaged(automaticallyDelete = true)
 public class Usuario {
 
-	@Column(name = "usu_rol")
-    @NotNull
-    private Integer usuRol;
+	
+	@ManyToOne
+	@JoinColumn(name = "usu_rol", referencedColumnName = "rol_id", nullable = false)
+    private Rol usuRol;
 
 	@Column(name = "usu_nombre", length = 50)
     @NotNull
@@ -39,13 +43,13 @@ public class Usuario {
     @NotNull
     private String usuCorreo;
 
-	public Integer getUsuRol() {
-        return usuRol;
-    }
+	public Rol getUsuRol() {
+		return usuRol;
+	}
 
-	public void setUsuRol(Integer usuRol) {
-        this.usuRol = usuRol;
-    }
+	public void setUsuRol(Rol usuRol) {
+		this.usuRol = usuRol;
+	}
 
 	public String getUsuNombre() {
         return usuNombre;

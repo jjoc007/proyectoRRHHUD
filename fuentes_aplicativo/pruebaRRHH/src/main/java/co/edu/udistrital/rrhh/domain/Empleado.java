@@ -7,11 +7,15 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -65,6 +69,12 @@ public class Empleado {
 	@Column(name = "emp_estado", length = 1)
     @NotNull
     private String empEstado;
+	
+	@Transient
+	private boolean emp_vacaciones;
+
+	@Transient
+	private boolean emp_liquida;
 
 	public String getEmpNombre() {
         return empNombre;
@@ -94,6 +104,15 @@ public class Empleado {
         return empCuentaPago;
     }
 
+	
+	public Cargo getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
+
 	public void setEmpCuentaPago(Integer empCuentaPago) {
         this.empCuentaPago = empCuentaPago;
     }
@@ -112,9 +131,41 @@ public class Empleado {
 	public List<Pago> getPagos() {
 		return pagos;
 	}
+	
+	@OneToMany(mappedBy = "hisEmpleado", fetch = FetchType.EAGER)
+    private List<Historicocargo> historicoCargos;
+
+	@ManyToOne
+	@JoinColumn(name = "cargo", referencedColumnName = "car_cogigo", nullable = false)
+	private Cargo cargo;
+
 
 	public void setPagos(List<Pago> pagos) {
 		this.pagos = pagos;
+	}
+
+	public List<Historicocargo> getHistoricoCargos() {
+		return historicoCargos;
+	}
+
+	public void setHistoricoCargos(List<Historicocargo> historicoCargos) {
+		this.historicoCargos = historicoCargos;
+	}
+
+	public boolean isEmp_vacaciones() {
+		return emp_vacaciones;
+	}
+
+	public void setEmp_vacaciones(boolean emp_vacaciones) {
+		this.emp_vacaciones = emp_vacaciones;
+	}
+
+	public boolean isEmp_liquida() {
+		return emp_liquida;
+	}
+
+	public void setEmp_liquida(boolean emp_liquida) {
+		this.emp_liquida = emp_liquida;
 	}
 	
 }

@@ -5,6 +5,7 @@ import co.edu.udistrital.rrhh.repository.UsuarioRepository;
 import co.edu.udistrital.rrhh.service.AporteService;
 import co.edu.udistrital.rrhh.service.LoginService;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class LoginServiceImpl implements LoginService {
+public class LoginServiceImpl implements LoginService, Serializable {
 	
 	@Autowired
 	UsuarioRepository usuarioRepository;

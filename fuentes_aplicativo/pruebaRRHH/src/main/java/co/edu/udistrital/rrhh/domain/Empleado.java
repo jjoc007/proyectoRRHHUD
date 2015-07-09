@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -121,7 +122,7 @@ public class Empleado {
 	@OneToMany(mappedBy = "pagoEmpleado")
     private List<Pago> pagos;
 	
-	@OneToMany(mappedBy = "hisEmpleado")
+	@OneToMany(mappedBy = "hisEmpleado", fetch= FetchType.EAGER)
     private List<Historicocargo> historicoCargos;
 
 	public List<Pago> getPagos() {

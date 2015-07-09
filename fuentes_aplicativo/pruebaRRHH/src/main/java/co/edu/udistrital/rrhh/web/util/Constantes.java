@@ -11,8 +11,19 @@ public class Constantes {
 	public static final String TIPO_CONCEPTO_PORCENTAJE = "0";
 	public static final String TIPO_CONCEPTO_VALOR = "1";
 	
+	public static final String PROV_PAGADA = "P";
+	public static final String PROV_NO_APLICA = "N";
+	public static final String PROV_ACTIVA = "A";
+	public static final String PROV_PAG_ENTIDAD = "E";
 	
+	public static final String MES_CESANTIAS = "02";
+	public static final String MES_PRIMA = "06";
+	public static final String MES_PRIMA2 = "12";
 	
+	public static final String PAGO_ACTIVO = "A";
+	
+	public static final String APORTE_CESANTIAS = "CESANTIAS";
+		
 	public static final int CONCEPTO_SMLV = 1;
 	public static final int CONCEPTO_TRANSPORTE = 2;
 	public static final int CONCEPTO_SALUD= 3;

@@ -73,7 +73,8 @@ public class LiquidacionBean implements Serializable{
 	}
 	
 	public void liquidar() {
-		this.liquidacionService.Liquidar(allEmpleados);
+		String periodo = "201502";
+		this.liquidacionService.Liquidar(allEmpleados, periodo);
 	}
 
 }

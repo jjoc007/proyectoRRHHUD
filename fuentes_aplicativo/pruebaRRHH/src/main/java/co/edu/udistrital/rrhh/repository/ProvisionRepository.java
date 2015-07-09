@@ -2,6 +2,7 @@ package co.edu.udistrital.rrhh.repository;
 import java.util.List;
 
 import co.edu.udistrital.rrhh.domain.Provision;
+import co.edu.udistrital.rrhh.web.util.Constantes;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -14,19 +15,18 @@ import org.springframework.stereotype.Repository;
 @RooJpaRepository(domainType = Provision.class)
 public interface ProvisionRepository extends JpaRepository<Provision, Integer>, JpaSpecificationExecutor<Provision> {
 
-	@Query(value ="SELECT COUNT(p.pro_periodo) FROM  provision p"+
-			"WHERE p.pro_empleado = :empleado "+
-			"AND   p.pro_concepto = :concepto ", nativeQuery = true)
-			public int findProviVacaciones(
-					@Param("empleado") int empleado,
-					@Param("concepto") int concepto);
+	@Query(value ="SELECT p FROM Provision p WHERE p.proEmpleado = :empleado AND p.proConcepto = :concepto ")
+			public List<Provision> findProviVacaciones(
+					@Param("empleado") Integer empleado,
+					@Param("concepto") Integer concepto);
    
-	@Query(value ="UPDATE  provision p"+
-			"SET   p.pro_estado = :estado "+
-			"WHERE p.pro_empleado = :empleado "+
-			"AND   p.pro_concepto = :concepto ", nativeQuery = true)
-			public void updateProviVacaciones(
-					@Param("empleado") int empleado,
-					@Param("concepto") int concepto,
-					@Param("estado") String estado);
+	/*@Query(value ="SELECT p FROM Provision p WHERE p.proEmpleado = :empleado AND p.proConcepto in(:concepVacaciones, :concepCesantias, :concepIntereses, :concepPrima")
+	public List<Provision> findProvisionesAct(
+			@Param("empleado") Integer empleado,
+			@Param("concepVacaciones") Integer concepVacaciones,
+			@Param("concepCesantias") Integer concepCesantias,
+			@Param("concepIntereses") Integer concepIntereses,
+			@Param("concepPrima") Integer concepPrima
+			);*/
+	
 }

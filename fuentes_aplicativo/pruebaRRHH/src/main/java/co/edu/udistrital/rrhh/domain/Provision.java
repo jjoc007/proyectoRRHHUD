@@ -1,5 +1,7 @@
 package co.edu.udistrital.rrhh.domain;
 import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,6 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,9 +36,7 @@ public class Provision {
 
 	@Column(name = "pro_periodo")
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "MM")
-    private Calendar proPeriodo;
+    private Date proPeriodo;
 
 	@Column(name = "pro_valor", precision = 22)
     @NotNull
@@ -61,13 +62,13 @@ public class Provision {
         this.proConcepto = proConcepto;
     }
 
-	public Calendar getProPeriodo() {
-        return proPeriodo;
-    }
+	public Date getProPeriodo() {
+		return proPeriodo;
+	}
 
-	public void setProPeriodo(Calendar proPeriodo) {
-        this.proPeriodo = proPeriodo;
-    }
+	public void setProPeriodo(Date proPeriodo) {
+		this.proPeriodo = proPeriodo;
+	}
 
 	public Double getProValor() {
         return proValor;

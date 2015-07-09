@@ -8,6 +8,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,6 +44,11 @@ public class Empleado {
 	public Integer getEmpCedula() {
         return this.empCedula;
     }
+	
+	@ManyToOne
+	@JoinColumn(name = "cargo", referencedColumnName = "car_cogigo", nullable = false)
+    @NotNull
+    private Cargo cargo;
 
 	public void setEmpCedula(Integer id) {
         this.empCedula = id;
@@ -55,8 +62,6 @@ public class Empleado {
     private Date empFechaIngreso;
 
 	@Column(name = "emp_fechaSalida")
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "MM")
     private Date empFechaSalida;
 
 	@Column(name = "emp_cuentaPago")
@@ -115,9 +120,22 @@ public class Empleado {
 	
 	@OneToMany(mappedBy = "pagoEmpleado")
     private List<Pago> pagos;
+	
+	@OneToMany(mappedBy = "hisEmpleado")
+    private List<Historicocargo> historicoCargos;
 
 	public List<Pago> getPagos() {
 		return pagos;
+	}
+	
+	
+
+	public List<Historicocargo> getHistoricoCargos() {
+		return historicoCargos;
+	}
+
+	public void setHistoricoCargos(List<Historicocargo> historicoCargos) {
+		this.historicoCargos = historicoCargos;
 	}
 
 	public void setPagos(List<Pago> pagos) {
@@ -139,5 +157,14 @@ public class Empleado {
 	public void setEmp_liquida(boolean emp_liquida) {
 		this.emp_liquida = emp_liquida;
 	}
+
+	public Cargo getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
+
 	
 }

@@ -51,15 +51,7 @@ public class ApplicationBean {
         submenu = new Submenu();
         submenu.setId("afiliacionSubmenu");
         submenu.setLabel("Afiliacion");
-        item = new MenuItem();
-        item.setId("createAfiliacionMenuItem");
-        item.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{messages.label_create}", String.class));
-        item.setActionExpression(expressionFactory.createMethodExpression(elContext, "#{afiliacionBean.displayCreateDialog}", String.class, new Class[0]));
-        item.setIcon("ui-icon ui-icon-document");
-        item.setAjax(false);
-        item.setAsync(false);
-        item.setUpdate(":dataForm:data");
-        submenu.getChildren().add(item);
+       
         item = new MenuItem();
         item.setId("listAfiliacionMenuItem");
         item.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{messages.label_list}", String.class));
@@ -207,15 +199,7 @@ public class ApplicationBean {
         submenu = new Submenu();
         submenu.setId("historicocargoSubmenu");
         submenu.setLabel("Historicocargo");
-        item = new MenuItem();
-        item.setId("createHistoricocargoMenuItem");
-        item.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{messages.label_create}", String.class));
-        item.setActionExpression(expressionFactory.createMethodExpression(elContext, "#{historicocargoBean.displayCreateDialog}", String.class, new Class[0]));
-        item.setIcon("ui-icon ui-icon-document");
-        item.setAjax(false);
-        item.setAsync(false);
-        item.setUpdate(":dataForm:data");
-        submenu.getChildren().add(item);
+        
         item = new MenuItem();
         item.setId("listHistoricocargoMenuItem");
         item.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{messages.label_list}", String.class));

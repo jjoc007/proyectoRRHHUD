@@ -23,6 +23,8 @@ import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.entity.RooJpaEntity;
 import org.springframework.roo.addon.tostring.RooToString;
 
+import co.edu.udistrital.rrhh.web.util.Utilidades;
+
 @Entity
 @Table(name = "historicocargo")
 @RooJavaBean
@@ -109,5 +111,12 @@ public class Historicocargo implements Serializable{
 	public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
+	public String getFormatedFechaInicial(){
+		return Utilidades.dateFormated(hisFechaInicio);
+	}
 	
+	public String getFormatedFechaFinal(){
+		return Utilidades.dateFormated(hisFechaFin);
+	}
 }

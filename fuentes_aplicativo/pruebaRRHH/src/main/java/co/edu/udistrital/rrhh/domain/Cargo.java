@@ -15,6 +15,8 @@ import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.entity.RooJpaEntity;
 import org.springframework.roo.addon.tostring.RooToString;
 
+import co.edu.udistrital.rrhh.web.util.Utilidades;
+
 @Entity
 @Table(name = "cargo")
 @RooJavaBean
@@ -97,5 +99,9 @@ public class Cargo {
 		this.hisCargos = hisCargos;
 	}
 	
-	
+
+	public String getFormatedSalario(){
+		
+		return Utilidades.doubleFormated(carSalario);
+	}
 }

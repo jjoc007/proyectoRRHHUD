@@ -8,12 +8,7 @@ import java.util.List;
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.faces.component.UISelectItem;
-import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.model.SelectItem;
-import javax.faces.validator.LengthValidator;
-import javax.swing.JPanel;
 
 import org.primefaces.component.autocomplete.AutoComplete;
 import org.primefaces.component.calendar.Calendar;

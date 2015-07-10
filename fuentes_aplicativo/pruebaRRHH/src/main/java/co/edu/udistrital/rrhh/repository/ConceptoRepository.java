@@ -1,5 +1,4 @@
 package co.edu.udistrital.rrhh.repository;
-import java.math.BigDecimal;
 import java.util.List;
 
 import co.edu.udistrital.rrhh.domain.Concepto;

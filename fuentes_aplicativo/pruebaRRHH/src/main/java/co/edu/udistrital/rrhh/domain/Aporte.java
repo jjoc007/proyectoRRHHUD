@@ -1,12 +1,17 @@
 package co.edu.udistrital.rrhh.domain;
 import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,9 +38,7 @@ public class Aporte {
 
 	@Column(name = "apo_periodo")
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "MM")
-    private Calendar apoPeriodo;
+    private Date apoPeriodo;
 
 	@Column(name = "apo_valor", precision = 22)
     @NotNull
@@ -57,11 +60,11 @@ public class Aporte {
         this.apoTipo = apoTipo;
     }
 
-	public Calendar getApoPeriodo() {
+	public Date getApoPeriodo() {
         return apoPeriodo;
     }
 
-	public void setApoPeriodo(Calendar apoPeriodo) {
+	public void setApoPeriodo(Date apoPeriodo) {
         this.apoPeriodo = apoPeriodo;
     }
 
@@ -79,6 +82,7 @@ public class Aporte {
 
 	@Id
     @Column(name = "apo_codigo")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer apoCodigo;
 
 	public Integer getApoCodigo() {

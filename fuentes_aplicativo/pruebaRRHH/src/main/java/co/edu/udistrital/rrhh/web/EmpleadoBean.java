@@ -1,5 +1,4 @@
 package co.edu.udistrital.rrhh.web;
-import co.edu.udistrital.rrhh.domain.Cargo;
 import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.domain.Historicocargo;
 import co.edu.udistrital.rrhh.service.EmpleadoService;

@@ -1,7 +1,5 @@
 package co.edu.udistrital.rrhh.web.util;
 
-import java.math.BigDecimal;
-
 public class Constantes {
 
 	public static final String TIPO_CONCEPTO_DEVENGO = "0";
@@ -16,13 +14,15 @@ public class Constantes {
 	public static final String PROV_ACTIVA = "A";
 	public static final String PROV_PAG_ENTIDAD = "E";
 	
-	public static final String MES_CESANTIAS = "02";
-	public static final String MES_PRIMA = "06";
-	public static final String MES_PRIMA2 = "12";
+	public static final Integer MES_CESANTIAS = 1;
+	public static final Integer MES_PRIMA = 5;
+	public static final Integer MES_PRIMA2 = 11;
 	
 	public static final String PAGO_ACTIVO = "A";
 	
 	public static final String APORTE_CESANTIAS = "CESANTIAS";
+	
+	public static final String ESTADO_EMPL_ACTIVO = "A";
 		
 	public static final int CONCEPTO_SMLV = 1;
 	public static final int CONCEPTO_TRANSPORTE = 2;

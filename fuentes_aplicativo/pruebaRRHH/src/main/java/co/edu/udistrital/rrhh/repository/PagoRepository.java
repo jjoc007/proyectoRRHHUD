@@ -3,7 +3,6 @@ import java.util.Date;
 import java.util.List;
 
 import co.edu.udistrital.rrhh.domain.Pago;
-import co.edu.udistrital.rrhh.domain.Provision;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -16,10 +15,10 @@ import org.springframework.stereotype.Repository;
 @RooJpaRepository(domainType = Pago.class)
 public interface PagoRepository extends JpaSpecificationExecutor<Pago>, JpaRepository<Pago, Integer> {
 	
-	@Query(value ="SELECT p FROM Pago p WHERE p.pagoEmpleado.empCedula = :empleadoParam AND p.pagPeriodo = :periodoParam AND p.pagConcepto.conTipoPercepcion = :tipoPerParam")
-	public List<Pago> findPagosDeduccion(
-			@Param("empleadoParam") Integer empleadoParam,
-			@Param("periodoParam") Date periodoParam,
-			@Param("tipoPerParam") String tipoPerParam);
+	@Query(value ="SELECT p FROM Pago p WHERE p.pagoEmpleado.empCedula = :empleado AND p.pagPeriodo = :periodo AND p.pagConcepto.conTipoPercepcion = :tipoPer")
+	public List<Pago> findPagos(
+			@Param("empleado") Integer empleado,
+			@Param("periodo") Date periodo,
+			@Param("tipoPer") String tipoPer);
 
 }

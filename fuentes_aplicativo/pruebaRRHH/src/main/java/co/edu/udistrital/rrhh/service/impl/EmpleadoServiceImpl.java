@@ -43,4 +43,9 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 	public Empleado updateEmpleado(Empleado empleado) {
         return empleadoReprository.save(empleado);
     }
+	
+	public List<Empleado> findAllEmpleadosAct(String estado) {
+        return empleadoReprository.findAllEmpleadosAct(estado);
+    }
+	
 }

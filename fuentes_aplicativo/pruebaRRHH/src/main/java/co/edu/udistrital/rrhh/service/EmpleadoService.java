@@ -25,5 +25,8 @@ public interface EmpleadoService {
 
 
 	public abstract Empleado updateEmpleado(Empleado empleado);
+	
+	
+	public List<Empleado> findAllEmpleadosAct(String estado);
 
 }

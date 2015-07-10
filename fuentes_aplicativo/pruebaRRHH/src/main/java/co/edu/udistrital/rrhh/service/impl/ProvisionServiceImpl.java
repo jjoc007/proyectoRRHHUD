@@ -43,4 +43,9 @@ public class ProvisionServiceImpl implements ProvisionService {
 	public Provision updateProvision(Provision provision) {
         return provisionReprository.save(provision);
     }
+	
+	public List<Provision> findProvisiones(Integer cedulaEmpleado, Integer concepto, String estado){
+		 return provisionReprository.findProvisiones(cedulaEmpleado, concepto, estado);
+	}
+	
 }

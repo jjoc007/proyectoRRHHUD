@@ -43,7 +43,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		Integer mes;
 
 		for (Empleado empleadoAux : allEmpleados) {
-
+			
 			List<Provision> provisionesRep = provisionService.findProvisiones(
 					empleadoAux.getEmpCedula(), Constantes.CONCEPTO_VACACIONES,
 					Constantes.PROV_ACTIVA);
@@ -60,10 +60,10 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 				int cont = 0;
 
 				for (Provision provisionAux : provisionesRep) {
-					cont += 1;
 
 					if (cont < 12) {
 
+						cont += 1;
 						provisionAux.setProEstado(Constantes.PROV_NO_APLICA);
 						provisionService.saveProvision(provisionAux);
 
@@ -86,10 +86,9 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 
 					for (Provision provisionAux : provisionesRep) {
 
-						cont += 1;
-
 						if (cont < 12) {
 
+							cont += 1;
 							provisionAux.setProEstado(Constantes.PROV_PAGADA);
 							provisionService.saveProvision(provisionAux);
 

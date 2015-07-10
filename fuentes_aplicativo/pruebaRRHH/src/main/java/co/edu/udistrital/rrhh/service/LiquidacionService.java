@@ -20,6 +20,6 @@ public interface LiquidacionService {
 
 	public abstract void procesarPrima(Empleado empleado, Calendar periodo);
 
-	public void procesarCesantias(Empleado empleado, Calendar periodo);
+	public abstract void procesarCesantias(Empleado empleado, Calendar periodo);
 
 }

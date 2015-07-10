@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 @RooJpaRepository(domainType = Provision.class)
 public interface ProvisionRepository extends JpaRepository<Provision, Integer>, JpaSpecificationExecutor<Provision> {
 
-	@Query(value ="SELECT p FROM Provision p WHERE p.proEmpleado = :empleado AND p.proConcepto = :concepto AND p.proEstado = :estado ")
+	@Query(value ="SELECT p FROM Provision p WHERE p.proEmpleado = :empleado AND p.proConcepto = :concepto AND p.proEstado = :estado order by p.proPeriodo")
 			public List<Provision> findProvisiones(
 					@Param("empleado") Integer empleado,
 					@Param("concepto") Integer concepto,

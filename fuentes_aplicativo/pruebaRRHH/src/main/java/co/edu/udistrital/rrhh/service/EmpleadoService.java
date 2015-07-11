@@ -1,6 +1,8 @@
 package co.edu.udistrital.rrhh.service;
 import co.edu.udistrital.rrhh.domain.Empleado;
+
 import java.util.List;
+
 import org.springframework.roo.addon.layers.service.RooService;
 
 @RooService(domainTypes = { co.edu.udistrital.rrhh.domain.Empleado.class })
@@ -28,5 +30,8 @@ public interface EmpleadoService {
 	
 	
 	public List<Empleado> findAllEmpleadosAct(String estado);
+
+
+	public Double calcularSubsidoTransporte(Double sueldoEmpleado);
 
 }

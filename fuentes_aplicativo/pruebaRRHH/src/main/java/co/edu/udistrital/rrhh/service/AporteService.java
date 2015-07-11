@@ -1,6 +1,8 @@
 package co.edu.udistrital.rrhh.service;
 import co.edu.udistrital.rrhh.domain.Aporte;
+
 import java.util.List;
+
 import org.springframework.roo.addon.layers.service.RooService;
 
 @RooService(domainTypes = { co.edu.udistrital.rrhh.domain.Aporte.class })
@@ -25,5 +27,14 @@ public interface AporteService {
 
 
 	public abstract Aporte updateAporte(Aporte aporte);
+
+
+	Double calcularAporteSalud(Double sueldoEmpleado);
+
+
+	Double calcularAportePension(Double sueldoEmpleado);
+
+
+	Double calcularAporteARP(Double sueldoEmpleado);
 
 }

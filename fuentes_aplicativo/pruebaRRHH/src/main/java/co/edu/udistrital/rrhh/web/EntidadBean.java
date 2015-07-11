@@ -1,10 +1,13 @@
 package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Entidad;
 import co.edu.udistrital.rrhh.service.EntidadService;
+import co.edu.udistrital.rrhh.web.util.ComponentsGenerator;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
@@ -15,6 +18,7 @@ import javax.faces.component.html.HtmlOutputText;
 import javax.faces.component.html.HtmlPanelGrid;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.LengthValidator;
+
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.inputtextarea.InputTextarea;
 import org.primefaces.component.message.Message;
@@ -37,7 +41,7 @@ public class EntidadBean implements Serializable{
 	@Autowired
     EntidadService entidadService;
 
-	private String name = "Entidads";
+	private String name = "Entidades";
 
 	private Entidad entidad;
 
@@ -207,6 +211,20 @@ public class EntidadBean implements Serializable{
         entAporteEmpresaCreateInputMessage.setFor("entAporteEmpresaCreateInput");
         entAporteEmpresaCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(entAporteEmpresaCreateInputMessage);
+        
+        OutputLabel entTipoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        entTipoCreateOutput.setFor("entTipoCreateInput");
+        entTipoCreateOutput.setId("entTipoCreateOutput");
+        entTipoCreateOutput.setValue("Tipo:");
+        htmlPanelGrid.getChildren().add(entTipoCreateOutput);
+        
+        htmlPanelGrid.getChildren().add(ComponentsGenerator.getAutocompleteTipoEntidad("entTipoCreateInput", "#{entidadBean.entidad.entTipo}"));
+        
+        Message entTipoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        entTipoCreateInputMessage.setId("entTiporeateInputMessage");
+        entTipoCreateInputMessage.setFor("entTipoCreateInput");
+        entTipoCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(entTipoCreateInputMessage);
         
         return htmlPanelGrid;
     }

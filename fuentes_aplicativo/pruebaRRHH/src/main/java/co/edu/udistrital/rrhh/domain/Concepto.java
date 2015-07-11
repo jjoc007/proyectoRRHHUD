@@ -49,11 +49,11 @@ public class Concepto {
 
 	@Column(name = "con_tipo", length = 20)
     @NotNull
-    private String conTipo;
+    private String conTipo; //Si es valor o porcentaje
 	
 	@Column(name = "con_tipoPercepcion", length = 20)
     @NotNull
-    private String conTipoPercepcion;
+    private String conTipoPercepcion;// Devengo o Deducido
 	
 	@Column(name = "con_valor", precision = 22)
     @NotNull

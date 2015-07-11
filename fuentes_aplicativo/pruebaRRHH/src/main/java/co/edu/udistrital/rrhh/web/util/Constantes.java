@@ -18,6 +18,8 @@ public class Constantes {
 	public static final Integer MES_PRIMA = 5;
 	public static final Integer MES_PRIMA2 = 11;
 	
+	public static final Integer CANTIDAD_SMLV_TRANSPORTE = 2;
+	
 	public static final String PAGO_ACTIVO = "A";
 	
 	public static final String APORTE_CESANTIAS = "CESANTIAS";
@@ -38,6 +40,10 @@ public class Constantes {
 	public static final String GENERAL_ESTADO_INACTIVO = "I";
 	
 	
-	
+	public static final String 	TIPO_ENTIDAD_SALUD = "S";
+	public static final String 	TIPO_ENTIDAD_PENSION = "P";
+	public static final String 	TIPO_ENTIDAD_CESANTIAS = "C";
+	public static final String 	TIPO_ENTIDAD_ARP = "A";
+	public static final String 	TIPO_ENTIDAD_CAJA_COMPENSACION = "O";
 	
 }

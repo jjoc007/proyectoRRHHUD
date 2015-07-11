@@ -29,10 +29,6 @@ public class ComponentsGenerator {
 	public static final int STRING = 2;
 	public static final int INTEGER = 3;
 
-	
-
-	
-	
 	public static AutoComplete getAutocompleteRol(String idComponent, String valueExpression){
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -160,6 +156,49 @@ public class ComponentsGenerator {
 		
 		menuGenerico.getChildren().add(item1);
 		menuGenerico.getChildren().add(item2);
+
+
+		return menuGenerico;
+
+	}
+	
+	public static SelectOneMenu getAutocompleteTipoEntidad(String idComponent, String valueExpression){
+
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		javax.faces.application.Application application = facesContext.getApplication();
+		ExpressionFactory expressionFactory = application.getExpressionFactory();
+		ELContext elContext = facesContext.getELContext();
+
+		SelectOneMenu menuGenerico =(SelectOneMenu) application.createComponent(SelectOneMenu.COMPONENT_TYPE);
+		menuGenerico.setId(idComponent);
+		menuGenerico.setValueExpression("value", expressionFactory.createValueExpression(elContext, valueExpression, String.class));
+
+		UISelectItem item1 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
+		item1.setItemLabel("Salud");
+		item1.setItemValue(Constantes.TIPO_ENTIDAD_SALUD);
+
+		UISelectItem item2 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
+		item2.setItemLabel("Pension");
+		item2.setItemValue(Constantes.TIPO_ENTIDAD_PENSION);
+		
+		UISelectItem item3 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
+		item3.setItemLabel("Cesantias");
+		item3.setItemValue(Constantes.TIPO_ENTIDAD_CESANTIAS);
+
+		UISelectItem item4 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
+		item4.setItemLabel("ARP");
+		item4.setItemValue(Constantes.TIPO_ENTIDAD_ARP);
+
+		UISelectItem item5 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
+		item5.setItemLabel("Caja de compensacion");
+		item5.setItemValue(Constantes.TIPO_ENTIDAD_CAJA_COMPENSACION);
+
+		
+		menuGenerico.getChildren().add(item1);
+		menuGenerico.getChildren().add(item2);
+		menuGenerico.getChildren().add(item3);
+		menuGenerico.getChildren().add(item4);
+		menuGenerico.getChildren().add(item5);
 
 
 		return menuGenerico;

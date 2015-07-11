@@ -5,6 +5,7 @@ public class Constantes {
 	public static final String TIPO_CONCEPTO_DEVENGO = "0";
 	public static final String TIPO_CONCEPTO_DEDUCIDO = "1";
 	public static final String TIPO_CONCEPTO_OTROS = "2";
+	public static final int[] PERIODO_DEFECTO = new int[]{01,01,2015}; // DD/MM/AAAA
 	
 	public static final String TIPO_CONCEPTO_PORCENTAJE = "0";
 	public static final String TIPO_CONCEPTO_VALOR = "1";

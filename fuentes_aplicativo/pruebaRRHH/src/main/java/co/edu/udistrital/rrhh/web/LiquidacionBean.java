@@ -4,6 +4,7 @@ package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.service.EmpleadoService;
 import co.edu.udistrital.rrhh.service.LiquidacionService;
+import co.edu.udistrital.rrhh.service.PagoService;
 import co.edu.udistrital.rrhh.web.util.Constantes;
 
 import java.io.Serializable;
@@ -31,8 +32,12 @@ public class LiquidacionBean implements Serializable {
 
 	@Autowired
 	EmpleadoService empleadoService;
+	
 	@Autowired
 	LiquidacionService liquidacionService;
+	
+	@Autowired
+	PagoService pagoService;
 
 	private List<String> columns;
 
@@ -88,7 +93,7 @@ public class LiquidacionBean implements Serializable {
 
 	public void liquidar() throws ParseException {
 
-		Calendar periodo = Calendar.getInstance();
+		Calendar periodo = pagoService.traerPeriodoActualPago();;
 		periodo.set(2015, 1, 1, 0, 0, 0);
 
 		System.out.println("calendario " + periodo.getTime());

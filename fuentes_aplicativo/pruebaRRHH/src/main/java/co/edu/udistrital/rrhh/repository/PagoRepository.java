@@ -20,5 +20,8 @@ public interface PagoRepository extends JpaSpecificationExecutor<Pago>, JpaRepos
 			@Param("empleado") Integer empleado,
 			@Param("periodo") Date periodo,
 			@Param("tipoPer") String tipoPer);
-
+	
+	@Query(value ="SELECT max(p.pagPeriodo) FROM Pago p")
+	public Date findPeriodoPago();
+	
 }

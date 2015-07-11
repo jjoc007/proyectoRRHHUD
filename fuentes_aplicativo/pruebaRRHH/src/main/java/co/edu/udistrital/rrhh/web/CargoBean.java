@@ -159,7 +159,7 @@ public class CargoBean implements Serializable {
         OutputLabel carNombreCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         carNombreCreateOutput.setFor("carNombreCreateInput");
         carNombreCreateOutput.setId("carNombreCreateOutput");
-        carNombreCreateOutput.setValue("Car Nombre:");
+        carNombreCreateOutput.setValue("Nombre:");
         htmlPanelGrid.getChildren().add(carNombreCreateOutput);
         
         InputTextarea carNombreCreateInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
@@ -180,7 +180,7 @@ public class CargoBean implements Serializable {
         OutputLabel carSalarioCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         carSalarioCreateOutput.setFor("carSalarioCreateInput");
         carSalarioCreateOutput.setId("carSalarioCreateOutput");
-        carSalarioCreateOutput.setValue("Car Salario:");
+        carSalarioCreateOutput.setValue("Salario:");
         htmlPanelGrid.getChildren().add(carSalarioCreateOutput);
         
         InputText carSalarioCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
@@ -225,7 +225,7 @@ public class CargoBean implements Serializable {
         OutputLabel carNombreEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         carNombreEditOutput.setFor("carNombreEditInput");
         carNombreEditOutput.setId("carNombreEditOutput");
-        carNombreEditOutput.setValue("Car Nombre:");
+        carNombreEditOutput.setValue("Nombre:");
         htmlPanelGrid.getChildren().add(carNombreEditOutput);
         
         InputTextarea carNombreEditInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
@@ -246,7 +246,7 @@ public class CargoBean implements Serializable {
         OutputLabel carSalarioEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         carSalarioEditOutput.setFor("carSalarioEditInput");
         carSalarioEditOutput.setId("carSalarioEditOutput");
-        carSalarioEditOutput.setValue("Car Salario:");
+        carSalarioEditOutput.setValue("Salario:");
         htmlPanelGrid.getChildren().add(carSalarioEditOutput);
         
         InputText carSalarioEditInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
@@ -274,7 +274,7 @@ public class CargoBean implements Serializable {
         
         HtmlOutputText carNombreLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
         carNombreLabel.setId("carNombreLabel");
-        carNombreLabel.setValue("Car Nombre:");
+        carNombreLabel.setValue("Nombre:");
         htmlPanelGrid.getChildren().add(carNombreLabel);
         
         InputTextarea carNombreValue = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
@@ -286,7 +286,7 @@ public class CargoBean implements Serializable {
         
         HtmlOutputText carSalarioLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
         carSalarioLabel.setId("carSalarioLabel");
-        carSalarioLabel.setValue("Car Salario:");
+        carSalarioLabel.setValue("Salario:");
         htmlPanelGrid.getChildren().add(carSalarioLabel);
         
         HtmlOutputText carSalarioValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);

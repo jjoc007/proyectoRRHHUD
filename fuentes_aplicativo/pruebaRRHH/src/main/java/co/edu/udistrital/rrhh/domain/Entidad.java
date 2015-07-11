@@ -50,6 +50,10 @@ public class Entidad {
 	@Column(name = "ent_estado", length = 1)
     @NotNull
     private String entEstado;
+	
+	@Column(name = "ent_tipo", length = 2)
+    @NotNull
+    private String entTipo;
 
 	public String getEntNombre() {
         return entNombre;
@@ -94,4 +98,14 @@ public class Entidad {
 	public String toString() {
         return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
+	public String getEntTipo() {
+		return entTipo;
+	}
+
+	public void setEntTipo(String entTipo) {
+		this.entTipo = entTipo;
+	}
+	
+	
 }

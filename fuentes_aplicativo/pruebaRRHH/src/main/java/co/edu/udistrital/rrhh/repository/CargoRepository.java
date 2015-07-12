@@ -3,7 +3,6 @@ package co.edu.udistrital.rrhh.repository;
 import java.util.List;
 
 import co.edu.udistrital.rrhh.domain.Cargo;
-import co.edu.udistrital.rrhh.domain.Empleado;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -37,16 +37,29 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 	EmpleadoService empleadoService;
 
 	public Pago pago;
-	public Aporte aporte = new Aporte();
+	public Aporte aporte;
+	public Provision provision;
 
 	public void Liquidar(List<Empleado> allEmpleados, Calendar periodo) {
 
 		Integer numProviVacaciones;
 		Integer mes;
-
+		List<Provision> provisionesRep;
+		System.out.println("aqui");
+		provisionesRep = provisionService.findProvisionesPeriodo(periodo.getTime());
+		System.out.println("aqui2 provisiones"+provisionesRep.size());
+		if (provisionesRep.size() == 0){
+			System.out
+			.println("No se puede realizar el proceso de liquidación ya que no existe liquidación de prestaciones");
+		}
+		System.out.println("aqui3");
+		provisionesRep = null;
+		
 		for (Empleado empleadoAux : allEmpleados) {
-			
-			List<Provision> provisionesRep = provisionService.findProvisiones(
+			System.out.println("aqui4");
+			realizarAporteSeguridadSocial(empleadoAux.getEmpCedula(), periodo.getTime());
+			System.out.println("aqui5");
+					provisionesRep = provisionService.findProvisiones(
 					empleadoAux.getEmpCedula(), Constantes.CONCEPTO_VACACIONES,
 					Constantes.PROV_ACTIVA);
 
@@ -252,7 +265,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		pagoService.savePago(pago);
 	}
 
-	public Integer recuperarAfiliacion(Integer empleado, String tipoEntidad) {
+	public Integer recuperarAfiliacion(Integer cedulaEmpleado, String tipoEntidad) {
 
 		Integer entidad = 0;
 		// entidad = recuperar la entidad
@@ -261,7 +274,8 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 
 	public void realizarAporte(Integer entidad, String tipo, Date periodo,
 			Double valor) {
-
+		
+		aporte = new Aporte();
 		aporte.setApoEntidad(entidad);
 		aporte.setApoTipo(tipo);
 		aporte.setApoPeriodo(periodo);
@@ -346,6 +360,29 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		
 		realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado,
 				periodo, prima);
+
+	}
+	
+	public void realizarAporteSeguridadSocial(Integer cedulaEmpleado, Date periodo){
+		
+		Double salud = 0.0;
+		Double pension = 0.0;
+		
+		pago = pagoService.findPago(
+				cedulaEmpleado, Constantes.CONCEPTO_SALUD,
+				periodo);
+		
+		salud = pago.getPagValorPago();
+		
+		realizarAporte(1, Constantes.APORTE_SALUD, periodo, salud);
+		
+		pago = pagoService.findPago(
+				cedulaEmpleado, Constantes.CONCEPTO_PENSION,
+				periodo);
+		
+		pension = pago.getPagValorPago();
+		
+		realizarAporte(1, Constantes.APORTE_PENSION, periodo, pension);
 
 	}
 

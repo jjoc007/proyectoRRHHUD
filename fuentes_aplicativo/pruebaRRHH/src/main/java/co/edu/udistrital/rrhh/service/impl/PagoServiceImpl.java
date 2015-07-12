@@ -71,4 +71,8 @@ public class PagoServiceImpl implements PagoService {
 	public Pago updatePago(Pago pago) {
         return pagoReprository.save(pago);
     }
+	
+	public Pago findPago(Integer cedulaEmpleado, Integer concepto, Date	periodo){
+		return pagoReprository.findPago(cedulaEmpleado, concepto, periodo);
+	}
 }

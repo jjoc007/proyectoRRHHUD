@@ -1,6 +1,5 @@
 package co.edu.udistrital.rrhh.service.impl;
 import co.edu.udistrital.rrhh.domain.Cargo;
-import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.repository.CargoRepository;
 import co.edu.udistrital.rrhh.service.CargoService;
 import co.edu.udistrital.rrhh.web.util.Constantes;

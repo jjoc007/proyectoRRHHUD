@@ -1,4 +1,5 @@
 package co.edu.udistrital.rrhh.repository;
+import java.util.Date;
 import java.util.List;
 
 import co.edu.udistrital.rrhh.domain.Provision;
@@ -19,5 +20,9 @@ public interface ProvisionRepository extends JpaRepository<Provision, Integer>, 
 					@Param("empleado") Integer empleado,
 					@Param("concepto") Integer concepto,
 					@Param("estado") String estado);
+	
+	@Query(value ="SELECT p FROM Provision p WHERE p.proPeriodo = :periodo")
+	public List<Provision> findProvisionesPeriodo(
+			@Param("periodo") Date periodo);
 	
 }

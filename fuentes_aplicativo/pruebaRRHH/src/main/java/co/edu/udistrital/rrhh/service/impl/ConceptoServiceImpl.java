@@ -1,5 +1,4 @@
 package co.edu.udistrital.rrhh.service.impl;
-import co.edu.udistrital.rrhh.domain.Cargo;
 import co.edu.udistrital.rrhh.domain.Concepto;
 import co.edu.udistrital.rrhh.repository.ConceptoRepository;
 import co.edu.udistrital.rrhh.service.ConceptoService;

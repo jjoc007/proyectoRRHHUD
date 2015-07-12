@@ -1,11 +1,8 @@
 package co.edu.udistrital.rrhh.service.impl;
 import co.edu.udistrital.rrhh.domain.Concepto;
 import co.edu.udistrital.rrhh.repository.ConceptoRepository;
-import co.edu.udistrital.rrhh.service.ConceptoService;
 import co.edu.udistrital.rrhh.service.PrestacionService;
 import co.edu.udistrital.rrhh.web.util.Constantes;
-
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -36,7 +36,7 @@ public interface LiquidacionService {
 			Empleado empleado, Date periodo, Double valorPago);
 		
 	
-	public Integer recuperarAfiliacion(Integer empleado, String tipoEntidad);
+	public Integer recuperarAfiliacion(Integer cedulaEmpleado, String tipoEntidad);
 	
 	
 	public abstract void realizarAporte(Integer entidad, String tipo, Date periodo,

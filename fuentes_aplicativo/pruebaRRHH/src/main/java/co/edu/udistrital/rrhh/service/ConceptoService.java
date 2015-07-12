@@ -1,5 +1,4 @@
 package co.edu.udistrital.rrhh.service;
-import co.edu.udistrital.rrhh.domain.Cargo;
 import co.edu.udistrital.rrhh.domain.Concepto;
 
 import java.util.List;

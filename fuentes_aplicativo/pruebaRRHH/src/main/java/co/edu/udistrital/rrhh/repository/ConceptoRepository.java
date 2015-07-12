@@ -1,6 +1,7 @@
 package co.edu.udistrital.rrhh.repository;
 import java.util.List;
 
+import co.edu.udistrital.rrhh.domain.Cargo;
 import co.edu.udistrital.rrhh.domain.Concepto;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,5 +17,9 @@ public interface ConceptoRepository extends JpaRepository<Concepto, Integer>, Jp
 	
 	@Query("select c from Concepto c where c.conTipoPercepcion = :paramConTipoPer")
 	public List<Concepto> findByTipoPer(@Param("paramConTipoPer") String paramConTipoPer);
+	
+	@Query(value ="SELECT c FROM Concepto c WHERE c.conEstado = :estado")
+	public List<Concepto> findAllConceptoAct(
+			@Param("estado") String estado);
 	
 }

@@ -3,6 +3,7 @@ import co.edu.udistrital.rrhh.domain.Concepto;
 import co.edu.udistrital.rrhh.service.ConceptoService;
 import co.edu.udistrital.rrhh.web.util.CampoValor;
 import co.edu.udistrital.rrhh.web.util.ComponentsGenerator;
+import co.edu.udistrital.rrhh.web.util.Constantes;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
 
 import java.io.Serializable;
@@ -84,7 +85,8 @@ public class ConceptoBean implements Serializable {
     }
 
 	public String findAllConceptoes() {
-        allConceptoes = conceptoService.findAllConceptoes();
+       // allConceptoes = conceptoService.findAllConceptoes();
+		allConceptoes = conceptoService.findAllConceptoAct(Constantes.GENERAL_ESTADO_INACTIVO);
         dataVisible = !allConceptoes.isEmpty();
         return null;
     }
@@ -443,7 +445,8 @@ public class ConceptoBean implements Serializable {
     }
 
 	public String delete() {
-        conceptoService.deleteConcepto(concepto);
+		conceptoService.ActEstadoConcepto(concepto);  // Actualiza el estado a 'Inactivo'
+        //conceptoService.deleteConcepto(concepto);
         FacesMessage facesMessage = MessageFactory.getMessage("message_successfully_deleted", "Concepto");
         FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         reset();

@@ -1,4 +1,5 @@
 package co.edu.udistrital.rrhh.service;
+import co.edu.udistrital.rrhh.domain.Cargo;
 import co.edu.udistrital.rrhh.domain.Concepto;
 
 import java.util.List;
@@ -15,6 +16,10 @@ public interface ConceptoService {
 
 
 	public abstract Concepto findConcepto(Integer id);
+	
+	public abstract void  ActEstadoConcepto(Concepto concepto); // Cambio de Estado de Concepto
+	
+	public List<Concepto> findAllConceptoAct (String estado);// Buscar Concepto Activos
 
 
 	public abstract List<Concepto> findAllConceptoes();

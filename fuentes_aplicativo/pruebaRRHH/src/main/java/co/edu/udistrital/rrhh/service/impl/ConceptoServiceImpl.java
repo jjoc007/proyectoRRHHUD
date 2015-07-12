@@ -1,7 +1,9 @@
 package co.edu.udistrital.rrhh.service.impl;
+import co.edu.udistrital.rrhh.domain.Cargo;
 import co.edu.udistrital.rrhh.domain.Concepto;
 import co.edu.udistrital.rrhh.repository.ConceptoRepository;
 import co.edu.udistrital.rrhh.service.ConceptoService;
+import co.edu.udistrital.rrhh.web.util.Constantes;
 
 import java.util.List;
 
@@ -22,6 +24,17 @@ public class ConceptoServiceImpl implements ConceptoService {
 
 	public void deleteConcepto(Concepto concepto) {
         conceptoReprository.delete(concepto);
+    }
+	
+	// Cambio de Estado de Cargp
+	public void  ActEstadoConcepto(Concepto concepto) {
+		concepto.setConEstado(Constantes.GENERAL_ESTADO_INACTIVO);
+		saveConcepto(concepto);
+    }
+	
+	// Buscar cargos Activos
+	public List<Concepto> findAllConceptoAct(String estado) {    
+        return conceptoReprository.findAllConceptoAct(Constantes.GENERAL_ESTADO_ACTIVO);
     }
 
 	public Concepto findConcepto(Integer id) {

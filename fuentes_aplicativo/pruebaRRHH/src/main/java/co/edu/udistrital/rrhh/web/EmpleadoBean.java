@@ -105,7 +105,8 @@ public class EmpleadoBean implements Serializable{
     }
 
 	public String findAllEmpleadoes() {
-        allEmpleadoes = empleadoService.findAllEmpleadoes();
+       // allEmpleadoes = empleadoService.findAllEmpleadoes();
+        allEmpleadoes = empleadoService.findAllEmpleadosAct(Constantes.ESTADO_EMPL_ACTIVO);
         dataVisible = !allEmpleadoes.isEmpty();
         return null;
     }
@@ -587,7 +588,8 @@ public class EmpleadoBean implements Serializable{
     }
 
 	public String delete() {
-        empleadoService.deleteEmpleado(empleado);
+        // empleadoService.deleteEmpleado(empleado);
+        empleadoService.ActEstado(empleado); // Actualiza el estado a 'Inactivo'
         FacesMessage facesMessage = MessageFactory.getMessage("message_successfully_deleted", "Empleado");
         FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         reset();

@@ -13,7 +13,8 @@ public interface EmpleadoService {
 
 	public abstract void deleteEmpleado(Empleado empleado);
 
-
+	public abstract void  ActEstado(Empleado empleado) ; // Cambio de Estado de Empleado
+	
 	public abstract Empleado findEmpleado(Integer id);
 
 

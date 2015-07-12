@@ -48,6 +48,13 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         empleadoReprository.delete(empleado);
     }
 
+	
+	// Cambio de Estado de Empleado
+	public void  ActEstado(Empleado empleado)  {
+		empleado.setEmpEstado(Constantes.GENERAL_ESTADO_INACTIVO); ;
+		saveEmpleado(empleado);
+    }
+	
 	public Empleado findEmpleado(Integer id) {
         return empleadoReprository.findOne(id);
     }

@@ -2,13 +2,13 @@ package co.edu.udistrital.rrhh.web.util;
 
 public class Constantes {
 
-	public static final String TIPO_CONCEPTO_DEVENGO = "0";
-	public static final String TIPO_CONCEPTO_DEDUCIDO = "1";
-	public static final String TIPO_CONCEPTO_OTROS = "2";
-	public static final int[] PERIODO_DEFECTO = new int[]{01,01,2015}; // DD/MM/AAAA
+	public static final String TIPO_CONCEPTO_DEVENGO = "DEVENGO";
+	public static final String TIPO_CONCEPTO_DEDUCIDO = "DEDUCIDO";
+	public static final String TIPO_CONCEPTO_OTROS = "OTROS";
+	public static final int[] PERIODO_DEFECTO = new int[]{1,5,2015}; // DD/MM/AAAA
 	
-	public static final String TIPO_CONCEPTO_PORCENTAJE = "0";
-	public static final String TIPO_CONCEPTO_VALOR = "1";
+	public static final String TIPO_CONCEPTO_PORCENTAJE = "P";
+	public static final String TIPO_CONCEPTO_VALOR = "V";
 	
 	public static final String PROV_PAGADA = "P";
 	public static final String PROV_NO_APLICA = "N";
@@ -26,6 +26,7 @@ public class Constantes {
 	public static final String APORTE_CESANTIAS = "CESANTIAS";
 	
 	public static final String ESTADO_EMPL_ACTIVO = "A";
+	public static final String ESTADO_EMPL_INACTIVO = "I";
 		
 	public static final int CONCEPTO_SMLV = 1;
 	public static final int CONCEPTO_TRANSPORTE = 2;

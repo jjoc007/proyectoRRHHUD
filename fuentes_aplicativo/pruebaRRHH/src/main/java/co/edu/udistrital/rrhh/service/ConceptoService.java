@@ -28,6 +28,7 @@ public interface ConceptoService {
 
 	public abstract Concepto updateConcepto(Concepto concepto);
 	
+	
 	public abstract List<Concepto> findByTipoPer(String paramConTipoPer);
 	
 

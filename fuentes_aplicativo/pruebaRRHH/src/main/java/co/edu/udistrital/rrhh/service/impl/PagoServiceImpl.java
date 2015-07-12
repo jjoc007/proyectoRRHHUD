@@ -19,6 +19,13 @@ public class PagoServiceImpl implements PagoService {
 	@Autowired
     PagoRepository pagoReprository;
 	
+	
+	public List<Pago> findPagos(Integer cedulaEmpleado, Date periodo,
+			 String tipoPer){
+		
+		return pagoReprository.findPagos(cedulaEmpleado, periodo, tipoPer);
+	}
+	
 	@Override
 	public Calendar traerPeriodoActualPago(){
 		

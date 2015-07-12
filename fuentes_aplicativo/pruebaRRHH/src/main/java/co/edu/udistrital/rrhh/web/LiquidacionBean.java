@@ -93,8 +93,8 @@ public class LiquidacionBean implements Serializable {
 
 	public void liquidar() throws ParseException {
 
-		Calendar periodo = pagoService.traerPeriodoActualPago();;
-		periodo.set(2015, 1, 1, 0, 0, 0);
+		Calendar periodo = pagoService.traerPeriodoActualPago();
+		//periodo.set(2015, 1, 1, 0, 0, 0);
 
 		System.out.println("calendario " + periodo.getTime());
 

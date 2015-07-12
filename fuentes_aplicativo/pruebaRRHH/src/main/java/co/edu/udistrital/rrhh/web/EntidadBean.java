@@ -226,6 +226,20 @@ public class EntidadBean implements Serializable{
         entTipoCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(entTipoCreateInputMessage);
         
+        OutputLabel entEstadoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        entEstadoCreateOutput.setFor("entEstadoCreateInput");
+        entEstadoCreateOutput.setId("entEstadoCreateOutput");
+        entEstadoCreateOutput.setValue("Estado:");
+        htmlPanelGrid.getChildren().add(entEstadoCreateOutput);
+        
+        htmlPanelGrid.getChildren().add(ComponentsGenerator.getAutocompleteEstadoActual("entEstadoCreateInput", "#{entidadBean.entidad.entEstado}"));
+        
+        Message entEstadoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        entEstadoCreateInputMessage.setId("entEstadoreateInputMessage");
+        entEstadoCreateInputMessage.setFor("entEstadoCreateInput");
+        entEstadoCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(entEstadoCreateInputMessage);
+        
         return htmlPanelGrid;
     }
 

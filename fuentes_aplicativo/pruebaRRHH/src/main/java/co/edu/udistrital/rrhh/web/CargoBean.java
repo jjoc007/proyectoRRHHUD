@@ -2,6 +2,7 @@ package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Cargo;
 import co.edu.udistrital.rrhh.service.CargoService;
 import co.edu.udistrital.rrhh.web.util.ComponentsGenerator;
+import co.edu.udistrital.rrhh.web.util.Constantes;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
 
 import java.io.Serializable;
@@ -84,7 +85,8 @@ public class CargoBean implements Serializable {
     }
 
 	public String findAllCargoes() {
-        allCargoes = cargoService.findAllCargoes();
+      //  allCargoes = cargoService.findAllCargoes();
+        allCargoes = cargoService.findAllCargoAct(Constantes.GENERAL_ESTADO_INACTIVO);
         dataVisible = !allCargoes.isEmpty();
         return null;
     }
@@ -351,13 +353,15 @@ public class CargoBean implements Serializable {
     }
 
 	public String delete() {
-        cargoService.deleteCargo(cargo);
+		cargoService.ActEstadoCargo(cargo);  // Actualiza el estado a 'Inactivo'
+		//cargoService.deleteCargo(cargo);
         FacesMessage facesMessage = MessageFactory.getMessage("message_successfully_deleted", "Cargo");
         FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         reset();
         return findAllCargoes();
     }
-
+     
+	
 	public void reset() {
         cargo = null;
         createDialogVisible = false;

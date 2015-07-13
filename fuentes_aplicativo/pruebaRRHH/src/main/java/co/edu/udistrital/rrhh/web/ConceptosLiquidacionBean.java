@@ -176,6 +176,7 @@ public class ConceptosLiquidacionBean implements Serializable  {
 	
 	public Calendar obtenerPeriodo() {
 		periodo = pagoService.traerPeriodoActualPago();
+		periodo.add(Calendar.MONTH, 1);
 		return periodo;
 	}
 

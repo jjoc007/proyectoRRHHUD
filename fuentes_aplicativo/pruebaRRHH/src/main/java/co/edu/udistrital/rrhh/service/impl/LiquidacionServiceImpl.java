@@ -13,6 +13,10 @@ import co.edu.udistrital.rrhh.service.PagoService;
 import co.edu.udistrital.rrhh.service.ProvisionService;
 import co.edu.udistrital.rrhh.web.util.Constantes;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -135,7 +139,12 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 
 			}
 			
-		   calcularSalarioEmpleado(empleadoAux, periodo.getTime());
+		   try {
+			generarArchivoPlano(empleadoAux, periodo.getTime());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		}
 	};
 
@@ -385,5 +394,28 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		realizarAporte(1, Constantes.APORTE_PENSION, periodo, pension);
 
 	}
+	
+	public void generarArchivoPlano(Empleado empleado, Date periodo) throws IOException{
+		
+		Double devengos = 0.0;
+		Double deducidos = 0.0;
+		Double salario = 0.0;
+		
+		String ruta = Constantes.RUTA_ARCHIVO_PLANO;
+		        File archivo = new File(ruta);
+		        devengos = calcularTotalDevengados(empleado, periodo);
+				deducidos = calcularTotalDeducciones(empleado.getEmpCedula(), periodo);
+		        salario = calcularSalarioEmpleado(empleado, periodo);
+		        
+		        BufferedWriter bw;
+		        if(archivo.exists()) {
+		            bw = new BufferedWriter(new FileWriter(archivo));
+		            bw.write(empleado.getEmpCedula());
+		        } else {
+		            bw = new BufferedWriter(new FileWriter(archivo));
+		            bw.write(empleado.getEmpCedula());
+		        }
+		        bw.close();
+		    }
 
 }

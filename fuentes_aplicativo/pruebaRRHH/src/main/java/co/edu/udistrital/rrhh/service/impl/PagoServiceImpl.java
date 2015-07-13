@@ -34,7 +34,6 @@ public class PagoServiceImpl implements PagoService {
 		if(periodoEncontrado != null){
 			
 			periodoActual.setTime(periodoEncontrado);
-			periodoActual.add(Calendar.MONTH, 1);
 
 		}else {
 			

@@ -51,4 +51,6 @@ public class Constantes {
 	public static final String 	TIPO_ENTIDAD_ARP = "A";
 	public static final String 	TIPO_ENTIDAD_CAJA_COMPENSACION = "O";
 	
+	public static final String RUTA_ARCHIVO_PLANO = "E:/liquidacionNomina.txt";
+	
 }

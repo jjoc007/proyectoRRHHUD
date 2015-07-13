@@ -55,11 +55,8 @@ public class ConceptoServiceImpl implements ConceptoService {
 	public Concepto updateConcepto(Concepto concepto) {
         return conceptoReprository.save(concepto);
     }
-	
-	public List<Concepto> findByTipoPer(String paramConTipoPer) {
-        return conceptoReprository.findByTipoPer(paramConTipoPer);
-        
-    }
 
-	
+	public List<Concepto> findAllConceptoLiq(String estado, List<Integer> conceptos, List<String> tipoPer){
+		return conceptoReprository.findAllConceptoLiq(estado, conceptos, tipoPer);
+	}
 }

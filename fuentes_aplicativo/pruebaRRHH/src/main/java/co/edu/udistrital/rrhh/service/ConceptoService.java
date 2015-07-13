@@ -3,6 +3,7 @@ import co.edu.udistrital.rrhh.domain.Concepto;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.roo.addon.layers.service.RooService;
 
 @RooService(domainTypes = { co.edu.udistrital.rrhh.domain.Concepto.class })
@@ -33,7 +34,5 @@ public interface ConceptoService {
 	public abstract Concepto updateConcepto(Concepto concepto);
 	
 	
-	public abstract List<Concepto> findByTipoPer(String paramConTipoPer);
-	
-
+	public List<Concepto> findAllConceptoLiq(String estado, List<Integer> conceptos, List<String> tipoPer);
 }

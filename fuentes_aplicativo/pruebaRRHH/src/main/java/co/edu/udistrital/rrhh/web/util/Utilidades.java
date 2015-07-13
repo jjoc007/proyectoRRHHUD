@@ -20,6 +20,12 @@ public class Utilidades {
 		return "";
 	}	
 
+	public static String dateFormat(Date fecha){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM");  
+		if(fecha != null)
+			return sdf.format(fecha);
+		return "";
+	}
 
 
 }

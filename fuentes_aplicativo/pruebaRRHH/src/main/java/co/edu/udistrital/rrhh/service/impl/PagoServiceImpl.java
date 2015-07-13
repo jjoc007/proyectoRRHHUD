@@ -32,11 +32,16 @@ public class PagoServiceImpl implements PagoService {
 		Calendar periodoActual = Calendar.getInstance();
 		Date periodoEncontrado = pagoReprository.findPeriodoPago();
 		if(periodoEncontrado != null){
+			
 			periodoActual.setTime(periodoEncontrado);
+			periodoActual.add(Calendar.MONTH, 1);
+
 		}else {
+			
 			periodoActual.set(Calendar.DAY_OF_MONTH, Constantes.PERIODO_DEFECTO[0]);
 			periodoActual.set(Calendar.MONTH, Constantes.PERIODO_DEFECTO[1]);
 			periodoActual.set(Calendar.YEAR, Constantes.PERIODO_DEFECTO[2]);
+			
 		}
 		
 		return periodoActual;

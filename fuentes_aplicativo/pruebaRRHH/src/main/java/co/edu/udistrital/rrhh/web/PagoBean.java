@@ -58,7 +58,7 @@ public class PagoBean implements Serializable  {
 	@PostConstruct
     public void init() {
         columns = new ArrayList<String>();
-        columns.add("pagEmpleado");
+        columns.add("pagoEmpleado");
         columns.add("pagValorPago");
         columns.add("conConcepto");
     }
@@ -131,23 +131,23 @@ public class PagoBean implements Serializable  {
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
-        OutputLabel pagEmpleadoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        pagEmpleadoCreateOutput.setFor("pagEmpleadoCreateInput");
-        pagEmpleadoCreateOutput.setId("pagEmpleadoCreateOutput");
-        pagEmpleadoCreateOutput.setValue("Pag Empleado:");
-        htmlPanelGrid.getChildren().add(pagEmpleadoCreateOutput);
+        OutputLabel pagoEmpleadoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        pagoEmpleadoCreateOutput.setFor("pagoEmpleadoCreateInput");
+        pagoEmpleadoCreateOutput.setId("pagoEmpleadoCreateOutput");
+        pagoEmpleadoCreateOutput.setValue("Pag Empleado:");
+        htmlPanelGrid.getChildren().add(pagoEmpleadoCreateOutput);
         
-        Spinner pagEmpleadoCreateInput = (Spinner) application.createComponent(Spinner.COMPONENT_TYPE);
-        pagEmpleadoCreateInput.setId("pagEmpleadoCreateInput");
-        pagEmpleadoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{pagoBean.pago.pagEmpleado}", Integer.class));
-        pagEmpleadoCreateInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(pagEmpleadoCreateInput);
+        Spinner pagoEmpleadoCreateInput = (Spinner) application.createComponent(Spinner.COMPONENT_TYPE);
+        pagoEmpleadoCreateInput.setId("pagoEmpleadoCreateInput");
+        pagoEmpleadoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{pagoBean.pago.pagoEmpleado}", Integer.class));
+        pagoEmpleadoCreateInput.setRequired(true);
+        htmlPanelGrid.getChildren().add(pagoEmpleadoCreateInput);
         
-        Message pagEmpleadoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        pagEmpleadoCreateInputMessage.setId("pagEmpleadoCreateInputMessage");
-        pagEmpleadoCreateInputMessage.setFor("pagEmpleadoCreateInput");
-        pagEmpleadoCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(pagEmpleadoCreateInputMessage);
+        Message pagoEmpleadoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        pagoEmpleadoCreateInputMessage.setId("pagoEmpleadoCreateInputMessage");
+        pagoEmpleadoCreateInputMessage.setFor("pagoEmpleadoCreateInput");
+        pagoEmpleadoCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(pagoEmpleadoCreateInputMessage);
         
         OutputLabel pagValorPagoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         pagValorPagoCreateOutput.setFor("pagValorPagoCreateInput");
@@ -215,24 +215,24 @@ public class PagoBean implements Serializable  {
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
-        OutputLabel pagEmpleadoEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        pagEmpleadoEditOutput.setFor("pagEmpleadoEditInput");
-        pagEmpleadoEditOutput.setId("pagEmpleadoEditOutput");
-        pagEmpleadoEditOutput.setValue("Pag Empleado:");
-        htmlPanelGrid.getChildren().add(pagEmpleadoEditOutput);
+        OutputLabel pagoEmpleadoEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        pagoEmpleadoEditOutput.setFor("pagoEmpleadoEditInput");
+        pagoEmpleadoEditOutput.setId("pagoEmpleadoEditOutput");
+        pagoEmpleadoEditOutput.setValue("Pag Empleado:");
+        htmlPanelGrid.getChildren().add(pagoEmpleadoEditOutput);
         
-        Spinner pagEmpleadoEditInput = (Spinner) application.createComponent(Spinner.COMPONENT_TYPE);
-        pagEmpleadoEditInput.setId("pagEmpleadoEditInput");
-        pagEmpleadoEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{pagoBean.pago.pagEmpleado}", Integer.class));
-        pagEmpleadoEditInput.setRequired(true);
+        Spinner pagoEmpleadoEditInput = (Spinner) application.createComponent(Spinner.COMPONENT_TYPE);
+        pagoEmpleadoEditInput.setId("pagoEmpleadoEditInput");
+        pagoEmpleadoEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{pagoBean.pago.pagoEmpleado}", Integer.class));
+        pagoEmpleadoEditInput.setRequired(true);
         
-        htmlPanelGrid.getChildren().add(pagEmpleadoEditInput);
+        htmlPanelGrid.getChildren().add(pagoEmpleadoEditInput);
         
-        Message pagEmpleadoEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        pagEmpleadoEditInputMessage.setId("pagEmpleadoEditInputMessage");
-        pagEmpleadoEditInputMessage.setFor("pagEmpleadoEditInput");
-        pagEmpleadoEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(pagEmpleadoEditInputMessage);
+        Message pagoEmpleadoEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        pagoEmpleadoEditInputMessage.setId("pagoEmpleadoEditInputMessage");
+        pagoEmpleadoEditInputMessage.setFor("pagoEmpleadoEditInput");
+        pagoEmpleadoEditInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(pagoEmpleadoEditInputMessage);
         
         OutputLabel pagTipoEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         pagTipoEditOutput.setFor("pagTipoEditInput");
@@ -339,14 +339,14 @@ public class PagoBean implements Serializable  {
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
-        HtmlOutputText pagEmpleadoLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        pagEmpleadoLabel.setId("pagEmpleadoLabel");
-        pagEmpleadoLabel.setValue("Pag Empleado:");
-        htmlPanelGrid.getChildren().add(pagEmpleadoLabel);
+        HtmlOutputText pagoEmpleadoLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
+        pagoEmpleadoLabel.setId("pagoEmpleadoLabel");
+        pagoEmpleadoLabel.setValue("Pag Empleado:");
+        htmlPanelGrid.getChildren().add(pagoEmpleadoLabel);
         
-        HtmlOutputText pagEmpleadoValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        pagEmpleadoValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{pagoBean.pago.pagEmpleado}", String.class));
-        htmlPanelGrid.getChildren().add(pagEmpleadoValue);
+        HtmlOutputText pagoEmpleadoValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
+        pagoEmpleadoValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{pagoBean.pago.pagoEmpleado}", String.class));
+        htmlPanelGrid.getChildren().add(pagoEmpleadoValue);
         
         HtmlOutputText pagTipoLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
         pagTipoLabel.setId("pagTipoLabel");

@@ -4,11 +4,13 @@ import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.domain.Pago;
 import co.edu.udistrital.rrhh.service.ConceptoService;
 import co.edu.udistrital.rrhh.service.EmpleadoService;
+import co.edu.udistrital.rrhh.service.PagoService;
 import co.edu.udistrital.rrhh.web.util.Constantes;
+import co.edu.udistrital.rrhh.web.util.Utilidades;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -35,8 +37,13 @@ public class ConceptosLiquidacionBean implements Serializable  {
 	@Autowired
 	ConceptoService conceptoService; 
 	
-	private List<Empleado> allEmpleadoes;
+	@Autowired
+	PagoService pagoService; 
+	
+	private List<Empleado> allEmpleados;
 	private List<Empleado> allEmpleadosWithPagos;
+	public Calendar periodo;
+	public String periodoLiquidar;
 	
 	
 	private boolean createDialogVisible = false;
@@ -48,43 +55,68 @@ public class ConceptosLiquidacionBean implements Serializable  {
 	
 	
 	public String findAllEmpleadoes() {
-        allEmpleadoes = empleadoService.findAllEmpleadoes();
+        allEmpleados = empleadoService.findAllEmpleadosAct(Constantes.ESTADO_EMPL_ACTIVO);
         fillPagosEmpleado();
-        dataVisible = !allEmpleadoes.isEmpty();
+        dataVisible = !allEmpleados.isEmpty();
         return null;
     }
 	
 
 	public void fillPagosEmpleado(){
-		
-		
-		//busca todos los conceptos que sean devengados y deducidos
+			
 		List<Concepto> conceptos =  new ArrayList<Concepto>();
 		allEmpleadosWithPagos = new ArrayList<Empleado>();
-		conceptos.addAll(conceptoService.findByTipoPer(Constantes.TIPO_CONCEPTO_DEVENGO));
-		conceptos.addAll(conceptoService.findByTipoPer(Constantes.TIPO_CONCEPTO_DEDUCIDO));
+		
+		List<Integer> conceptosCons =  new ArrayList<Integer>();
+		List<String> tipoPer =  new ArrayList<String>();
+		
+		conceptosCons.add(Constantes.CONCEPTO_TRANSPORTE);
+		conceptosCons.add(Constantes.CONCEPTO_SALUD);
+		conceptosCons.add(Constantes.CONCEPTO_PENSION);
+		conceptosCons.add(Constantes.CONCEPTO_CESANTIAS);
+		conceptosCons.add(Constantes.CONCEPTO_INTERESES_CESANTIAS);
+		conceptosCons.add(Constantes.CONCEPTO_PRIMA);
+		conceptosCons.add(Constantes.CONCEPTO_VACACIONES);
+		
+		tipoPer.add(Constantes.TIPO_CONCEPTO_DEVENGO);
+		tipoPer.add(Constantes.TIPO_CONCEPTO_DEDUCIDO);
+		
+		//Busca todos los conceptos que sean de tipo devengo y deducido		
+		conceptos = conceptoService.findAllConceptoLiq(Constantes.GENERAL_ESTADO_ACTIVO, conceptosCons, tipoPer);
 		
 		System.out.println("cantidad de conceptos: "+conceptos.size());
 		
-		for (Empleado empleadoAux: allEmpleadoes){
+		obtenerPeriodo();
+		
+		for (Empleado empleadoAux: allEmpleados){
 
 			List<Pago> pagosPorEmpleado =  new ArrayList<Pago>();
 			
 			for(Concepto conceptoAux: conceptos){
 
-				pagosPorEmpleado.add(new Pago(empleadoAux, conceptoAux, new Date(),	0.0D, "P", null));
+				pagosPorEmpleado.add(new Pago(empleadoAux, conceptoAux, periodo.getTime(),	0.0D, Constantes.PAGO_ACTIVO, null));
 				
 			}
 			
 			empleadoAux.setPagos(pagosPorEmpleado);
 			System.out.println("cantidad pagos: "+pagosPorEmpleado.size());
 			allEmpleadosWithPagos.add(empleadoAux);
+
 		}
-		
-		System.out.println("!!!");
-		
+			
 	}
 	
+	public void guardarPagos(){
+		
+		for (Empleado empleadoaux : allEmpleadosWithPagos){
+			
+			for (Pago pagoaux : empleadoaux.getPagos()){
+				
+				pagoService.savePago(pagoaux);
+				
+			}	
+		}
+	}
 	public boolean isDataVisible() {
         return dataVisible;
     }
@@ -112,6 +144,7 @@ public class ConceptosLiquidacionBean implements Serializable  {
 
 	public String displayCreateDialog() {
         createDialogVisible = true;
+        obtenerPeriodo();
         return "conceptosLiquidacion";
     }
 
@@ -122,16 +155,14 @@ public class ConceptosLiquidacionBean implements Serializable  {
 	public void handleDialogClose(CloseEvent event) {
         reset();
     }
-
 	
-	
-	public List<Empleado> getAllEmpleadoes() {
-		return allEmpleadoes;
+	public List<Empleado> getAllEmpleados() {
+		return allEmpleados;
 	}
 
 
-	public void setAllEmpleadoes(List<Empleado> allEmpleadoes) {
-		this.allEmpleadoes = allEmpleadoes;
+	public void setAllEmpleados(List<Empleado> allEmpleadoes) {
+		this.allEmpleados = allEmpleadoes;
 	}
 
 	public List<Empleado> getAllEmpleadosWithPagos() {
@@ -142,9 +173,21 @@ public class ConceptosLiquidacionBean implements Serializable  {
 	public void setAllEmpleadosWithPagos(List<Empleado> allEmpleadosWithPagos) {
 		this.allEmpleadosWithPagos = allEmpleadosWithPagos;
 	}
+	
+	public Calendar obtenerPeriodo() {
+		periodo = pagoService.traerPeriodoActualPago();
+		return periodo;
+	}
 
 
+	public String getPeriodoLiquidar() {
+		periodoLiquidar = Utilidades.dateFormat(periodo.getTime());
+		return periodoLiquidar;
+	}
 
+	public void setPeriodoLiquidar(String periodoLiquidar) {
+		this.periodoLiquidar = periodoLiquidar;
+	}
 
 	private static final long serialVersionUID = 1L;
 }

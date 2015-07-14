@@ -1,13 +1,5 @@
-﻿-- phpMyAdmin SQL Dump
--- version 3.2.0.1
--- http://www.phpmyadmin.net
---
--- Servidor: localhost
--- Tiempo de generación: 14-07-2015 a las 02:15:02
--- Versión del servidor: 5.1.37
--- Versión de PHP: 5.3.0
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+﻿create database rrhhdb;
+use rrhhdb;
 
 --
 -- Base de datos: `rrhhdb`

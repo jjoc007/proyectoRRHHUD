@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 09-07-2015 a las 00:33:45
+-- Tiempo de generación: 14-07-2015 a las 02:15:02
 -- Versión del servidor: 5.1.37
 -- Versión de PHP: 5.3.0
 
@@ -16,36 +16,19 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `afiliacion`
---
-
-CREATE TABLE IF NOT EXISTS `afiliacion` (
-  `afi_empleado` int(11) NOT NULL,
-  `afi_entidad` int(11) NOT NULL,
-  KEY `afi_empleado` (`afi_empleado`),
-  KEY `afi_entidad` (`afi_entidad`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Volcar la base de datos para la tabla `afiliacion`
---
-
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `aporte`
 --
 
 CREATE TABLE IF NOT EXISTS `aporte` (
-  `apo_codigo` int(11)  NOT NULL auto_increment,
+  `apo_codigo` int(11) NOT NULL AUTO_INCREMENT,
   `apo_entidad` int(11) NOT NULL,
   `apo_tipo` varchar(20) NOT NULL,
   `apo_periodo` datetime NOT NULL,
   `apo_valor` double NOT NULL,
+  `apo_valorEmpresa` double NOT NULL,
   PRIMARY KEY (`apo_codigo`),
   KEY `apo_entidad` (`apo_entidad`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
 -- Volcar la base de datos para la tabla `aporte`
@@ -59,16 +42,20 @@ CREATE TABLE IF NOT EXISTS `aporte` (
 --
 
 CREATE TABLE IF NOT EXISTS `cargo` (
-  `car_cogigo` int(11) NOT NULL auto_increment,
+  `car_cogigo` int(11) NOT NULL AUTO_INCREMENT,
   `car_nombre` varchar(50) NOT NULL,
+  `car_descripcion` text NOT NULL,
   `car_salario` double NOT NULL,
   `car_estado` varchar(1) NOT NULL,
   PRIMARY KEY (`car_cogigo`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Volcar la base de datos para la tabla `cargo`
 --
+
+INSERT INTO `cargo` (`car_cogigo`, `car_nombre`, `car_descripcion`, `car_salario`, `car_estado`) VALUES
+(1, 'junior', 'pequeño', 100000, 'A');
 
 -- --------------------------------------------------------
 
@@ -77,19 +64,24 @@ CREATE TABLE IF NOT EXISTS `cargo` (
 --
 
 CREATE TABLE IF NOT EXISTS `concepto` (
-  `con_codigo` int(11) NOT NULL,
+  `con_codigo` int(11) NOT NULL AUTO_INCREMENT,
   `con_nombre` varchar(50) NOT NULL,
   `con_descripcion` text,
   `con_tipo` varchar(20) NOT NULL,
   `con_tipoPercepcion` varchar(20) NOT NULL,
   `con_valor` double NOT NULL,
   `con_estado` varchar(1) NOT NULL,
+  `con_valorEmpresa` double NOT NULL,
   PRIMARY KEY (`con_codigo`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Volcar la base de datos para la tabla `concepto`
 --
+
+INSERT INTO `concepto` (`con_codigo`, `con_nombre`, `con_descripcion`, `con_tipo`, `con_tipoPercepcion`, `con_valor`, `con_estado`, `con_valorEmpresa`) VALUES
+(1, 'concepto priuebna', 'sadfas', 'P', 'DEVENGO', 10, 'A', 10),
+(2, 'ocncepto 2', 'asdfdsa', 'P', 'DEVENGO', 10, 'A', 10);
 
 -- --------------------------------------------------------
 
@@ -117,6 +109,9 @@ CREATE TABLE IF NOT EXISTS `empleado` (
 -- Volcar la base de datos para la tabla `empleado`
 --
 
+INSERT INTO `empleado` (`emp_cedula`, `emp_nombre`, `emp_fechaIngreso`, `emp_fechaSalida`, `emp_cuentaPago`, `emp_estado`, `cargo`, `emp_ent_salud`, `emp_ent_pen`, `emp_ent_ces`, `emp_ent_arl`, `emp_ent_cajacom`) VALUES
+(123, 'tatiana', '2015-07-14 00:00:00', NULL, 232432423, 'A', 1, 1, 2, 3, 4, 5);
+
 -- --------------------------------------------------------
 
 --
@@ -124,20 +119,24 @@ CREATE TABLE IF NOT EXISTS `empleado` (
 --
 
 CREATE TABLE IF NOT EXISTS `entidad` (
-  `ent_codigo` int(11) NOT NULL,
+  `ent_codigo` int(11) NOT NULL AUTO_INCREMENT,
   `ent_nombre` varchar(50) NOT NULL,
   `ent_cuenta` int(11) NOT NULL,
-  `ent_aporteEmpleado` double NOT NULL,
-  `ent_aporteEmpresa` double NOT NULL,
   `ent_estado` varchar(1) NOT NULL,
   `ent_tipo` varchar(2) NOT NULL,
   PRIMARY KEY (`ent_codigo`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Volcar la base de datos para la tabla `entidad`
 --
 
+INSERT INTO `entidad` (`ent_codigo`, `ent_nombre`, `ent_cuenta`, `ent_estado`, `ent_tipo`) VALUES
+(1, 'compensar salud', 123456, 'A', 'S'),
+(2, 'porvenir', 23432423, 'A', 'P'),
+(3, 'proteccion', 9843843, 'A', 'C'),
+(4, 'mapfre', 65453, 'A', 'A'),
+(5, 'compensar CC', 3234987, 'A', 'O');
 
 -- --------------------------------------------------------
 
@@ -155,11 +154,14 @@ CREATE TABLE IF NOT EXISTS `historicocargo` (
   PRIMARY KEY (`his_codigo`),
   KEY `his_empleado` (`his_empleado`),
   KEY `his_cargo` (`his_cargo`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Volcar la base de datos para la tabla `historicocargo`
 --
+
+INSERT INTO `historicocargo` (`his_codigo`, `his_empleado`, `his_cargo`, `his_fechaInicio`, `his_fechaFin`, `his_estado`) VALUES
+(3, 123, 1, '2015-07-14 00:58:41', NULL, 'A');
 
 -- --------------------------------------------------------
 
@@ -177,10 +179,30 @@ CREATE TABLE IF NOT EXISTS `pago` (
   PRIMARY KEY (`pag_codigo`),
   KEY `pag_empleado` (`pag_empleado`),
   KEY `pag_concepto` (`pag_concepto`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Volcar la base de datos para la tabla `pago`
+--
+
+INSERT INTO `pago` (`pag_codigo`, `pag_empleado`, `pag_concepto`, `pag_periodo`, `pag_valorPago`, `pag_estado`) VALUES
+(1, 123, 1, '2015-07-01 01:07:16', 1000, 'A');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `proceso`
+--
+
+CREATE TABLE IF NOT EXISTS `proceso` (
+  `pro_codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `pro_nombre` varchar(40) NOT NULL,
+  `pro_periodo` date NOT NULL,
+  PRIMARY KEY (`pro_codigo`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Volcar la base de datos para la tabla `proceso`
 --
 
 
@@ -220,7 +242,13 @@ CREATE TABLE IF NOT EXISTS `rol` (
   `rol_estado` varchar(1) NOT NULL,
   PRIMARY KEY (`rol_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-------------------------------------------------------
+
+--
+-- Volcar la base de datos para la tabla `rol`
+--
+
+
+-- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `usuario`
@@ -238,3 +266,6 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
+-- Volcar la base de datos para la tabla `usuario`
+--
+

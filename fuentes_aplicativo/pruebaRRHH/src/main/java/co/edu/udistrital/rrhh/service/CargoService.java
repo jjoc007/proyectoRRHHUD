@@ -1,5 +1,6 @@
 package co.edu.udistrital.rrhh.service;
 import co.edu.udistrital.rrhh.domain.Cargo;
+import co.edu.udistrital.rrhh.web.util.NominaException;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface CargoService {
 
 	public abstract void deleteCargo(Cargo cargo);
 
-	public abstract void  ActEstadoCargo(Cargo cargo); // Cambio de Estado de Cargos
+	public abstract void  ActEstadoCargo(Cargo cargo) throws NominaException; // Cambio de Estado de Cargos
 	
 	public List<Cargo> findAllCargoAct (String estado);// Buscar cargos Activos
 
@@ -26,7 +27,7 @@ public interface CargoService {
 	public abstract List<Cargo> findCargoEntries(int firstResult, int maxResults);
 
 
-	public abstract void saveCargo(Cargo cargo);
+	public abstract void saveCargo(Cargo cargo) throws NominaException;
 
 
 	public abstract Cargo updateCargo(Cargo cargo);

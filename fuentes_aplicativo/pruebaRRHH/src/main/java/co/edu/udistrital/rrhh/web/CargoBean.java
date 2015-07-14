@@ -5,6 +5,7 @@ import co.edu.udistrital.rrhh.web.util.CampoValor;
 import co.edu.udistrital.rrhh.web.util.ComponentsGenerator;
 import co.edu.udistrital.rrhh.web.util.Constantes;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
+import co.edu.udistrital.rrhh.web.util.NominaException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -261,30 +262,53 @@ public class CargoBean implements Serializable {
     }
 
 	public String persist() {
-        String message = "";
-        if (cargo.getCarCogigo() != null) {
-            cargoService.updateCargo(cargo);
-            message = "message_successfully_updated";
-        } else {
-            cargoService.saveCargo(cargo);
-            message = "message_successfully_created";
-        }
-        RequestContext context = RequestContext.getCurrentInstance();
-        context.execute("createDialogWidget.hide()");
-        context.execute("editDialogWidget.hide()");
-        
-        FacesMessage facesMessage = MessageFactory.getMessage(message, "Cargo");
-        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-        reset();
-        return findAllCargoes();
-    }
+		String message = "";
+		try {
+			if (cargo.getCarCogigo() != null) {
+
+				cargoService.saveCargo(cargo);
+
+				message = "message_successfully_updated";
+			} else {
+				cargoService.saveCargo(cargo);
+				message = "message_successfully_created";
+			}
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("createDialogWidget.hide()");
+			context.execute("editDialogWidget.hide()");
+
+			FacesMessage facesMessage = MessageFactory.getMessage(message, "Cargo");
+			FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+			reset();
+			return findAllCargoes();
+
+		} catch (NominaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			FacesMessage facesMessage = MessageFactory.getMessage(e.getMessage(), "Cargo");
+			FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+			return null;
+		}
+	}
 
 	public String delete() {
-		cargoService.ActEstadoCargo(cargo);  // Actualiza el estado a 'Inactivo'
-		//cargoService.deleteCargo(cargo);
-        FacesMessage facesMessage = MessageFactory.getMessage("message_successfully_deleted", "Cargo");
-        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-        reset();
+		try {
+			cargoService.ActEstadoCargo(cargo);
+			
+			//cargoService.deleteCargo(cargo);
+	        FacesMessage facesMessage = MessageFactory.getMessage("message_successfully_deleted", "Cargo");
+	        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+	        reset();
+			
+		} catch (NominaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			 FacesMessage facesMessage = MessageFactory.getMessage(e.getMessage(), "Cargo");
+		        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+		        reset();
+		}  // Actualiza el estado a 'Inactivo'
+		
         return findAllCargoes();
     }
      

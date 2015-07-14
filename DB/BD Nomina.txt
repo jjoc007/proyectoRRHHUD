@@ -54,9 +54,6 @@ CREATE TABLE IF NOT EXISTS `cargo` (
 -- Volcar la base de datos para la tabla `cargo`
 --
 
-INSERT INTO `cargo` (`car_cogigo`, `car_nombre`, `car_descripcion`, `car_salario`, `car_estado`) VALUES
-(1, 'junior', 'pequeño', 100000, 'A');
-
 -- --------------------------------------------------------
 
 --
@@ -78,11 +75,6 @@ CREATE TABLE IF NOT EXISTS `concepto` (
 --
 -- Volcar la base de datos para la tabla `concepto`
 --
-
-INSERT INTO `concepto` (`con_codigo`, `con_nombre`, `con_descripcion`, `con_tipo`, `con_tipoPercepcion`, `con_valor`, `con_estado`, `con_valorEmpresa`) VALUES
-(1, 'concepto priuebna', 'sadfas', 'P', 'DEVENGO', 10, 'A', 10),
-(2, 'ocncepto 2', 'asdfdsa', 'P', 'DEVENGO', 10, 'A', 10);
-
 -- --------------------------------------------------------
 
 --
@@ -108,10 +100,6 @@ CREATE TABLE IF NOT EXISTS `empleado` (
 --
 -- Volcar la base de datos para la tabla `empleado`
 --
-
-INSERT INTO `empleado` (`emp_cedula`, `emp_nombre`, `emp_fechaIngreso`, `emp_fechaSalida`, `emp_cuentaPago`, `emp_estado`, `cargo`, `emp_ent_salud`, `emp_ent_pen`, `emp_ent_ces`, `emp_ent_arl`, `emp_ent_cajacom`) VALUES
-(123, 'tatiana', '2015-07-14 00:00:00', NULL, 232432423, 'A', 1, 1, 2, 3, 4, 5);
-
 -- --------------------------------------------------------
 
 --
@@ -130,14 +118,6 @@ CREATE TABLE IF NOT EXISTS `entidad` (
 --
 -- Volcar la base de datos para la tabla `entidad`
 --
-
-INSERT INTO `entidad` (`ent_codigo`, `ent_nombre`, `ent_cuenta`, `ent_estado`, `ent_tipo`) VALUES
-(1, 'compensar salud', 123456, 'A', 'S'),
-(2, 'porvenir', 23432423, 'A', 'P'),
-(3, 'proteccion', 9843843, 'A', 'C'),
-(4, 'mapfre', 65453, 'A', 'A'),
-(5, 'compensar CC', 3234987, 'A', 'O');
-
 -- --------------------------------------------------------
 
 --
@@ -159,10 +139,6 @@ CREATE TABLE IF NOT EXISTS `historicocargo` (
 --
 -- Volcar la base de datos para la tabla `historicocargo`
 --
-
-INSERT INTO `historicocargo` (`his_codigo`, `his_empleado`, `his_cargo`, `his_fechaInicio`, `his_fechaFin`, `his_estado`) VALUES
-(3, 123, 1, '2015-07-14 00:58:41', NULL, 'A');
-
 -- --------------------------------------------------------
 
 --
@@ -184,10 +160,6 @@ CREATE TABLE IF NOT EXISTS `pago` (
 --
 -- Volcar la base de datos para la tabla `pago`
 --
-
-INSERT INTO `pago` (`pag_codigo`, `pag_empleado`, `pag_concepto`, `pag_periodo`, `pag_valorPago`, `pag_estado`) VALUES
-(1, 123, 1, '2015-07-01 01:07:16', 1000, 'A');
-
 -- --------------------------------------------------------
 
 --

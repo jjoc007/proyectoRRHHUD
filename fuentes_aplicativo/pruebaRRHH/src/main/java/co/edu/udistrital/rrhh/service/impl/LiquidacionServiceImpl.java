@@ -241,7 +241,6 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		  
 		 }
 		 
-		 System.out.println("deducciones:"+cedulaEmpleado+" periodo "+periodo+totalDeducciones);
 		return totalDeducciones;
 
 	}

@@ -1,9 +1,12 @@
 package co.edu.udistrital.rrhh.domain;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -43,14 +46,6 @@ public class Entidad {
     @NotNull
     private Integer entCuenta;
 
-	@Column(name = "ent_aporteEmpleado", precision = 22)
-    @NotNull
-    private Double entAporteEmpleado;
-
-	@Column(name = "ent_aporteEmpresa", precision = 22)
-    @NotNull
-    private Double entAporteEmpresa;
-
 	@Column(name = "ent_estado", length = 1)
     @NotNull
     private String entEstado;
@@ -75,22 +70,6 @@ public class Entidad {
         this.entCuenta = entCuenta;
     }
 
-	public Double getEntAporteEmpleado() {
-        return entAporteEmpleado;
-    }
-
-	public void setEntAporteEmpleado(Double entAporteEmpleado) {
-        this.entAporteEmpleado = entAporteEmpleado;
-    }
-
-	public Double getEntAporteEmpresa() {
-        return entAporteEmpresa;
-    }
-
-	public void setEntAporteEmpresa(Double entAporteEmpresa) {
-        this.entAporteEmpresa = entAporteEmpresa;
-    }
-
 	public String getEntEstado() {
         return entEstado;
     }
@@ -110,6 +89,66 @@ public class Entidad {
 	public void setEntTipo(String entTipo) {
 		this.entTipo = entTipo;
 	}
+	
+	@OneToMany(mappedBy = "entidadSalud")
+    private List<Empleado> empleadosSalud;
+	
+	@OneToMany(mappedBy = "entidadPension")
+    private List<Empleado> empleadosPension;
+	
+	@OneToMany(mappedBy = "entidadCesantias")
+    private List<Empleado> empleadosCesantias;
+	
+	@OneToMany(mappedBy = "entidadArp")
+    private List<Empleado> empleadosArp;
+	
+	@OneToMany(mappedBy = "entidadCajaCompensacion")
+    private List<Empleado> empleadosCajaComp;
+
+	public List<Empleado> getEmpleadosSalud() {
+		return empleadosSalud;
+	}
+
+	public void setEmpleadosSalud(List<Empleado> empleadosSalud) {
+		this.empleadosSalud = empleadosSalud;
+	}
+
+	public List<Empleado> getEmpleadosPension() {
+		return empleadosPension;
+	}
+
+	public void setEmpleadosPension(List<Empleado> empleadosPension) {
+		this.empleadosPension = empleadosPension;
+	}
+
+	public List<Empleado> getEmpleadosCesantias() {
+		return empleadosCesantias;
+	}
+
+	public void setEmpleadosCesantias(List<Empleado> empleadosCesantias) {
+		this.empleadosCesantias = empleadosCesantias;
+	}
+
+	public List<Empleado> getEmpleadosArp() {
+		return empleadosArp;
+	}
+
+	public void setEmpleadosArp(List<Empleado> empleadosArp) {
+		this.empleadosArp = empleadosArp;
+	}
+
+	public List<Empleado> getEmpleadosCajaComp() {
+		return empleadosCajaComp;
+	}
+
+	public void setEmpleadosCajaComp(List<Empleado> empleadosCajaComp) {
+		this.empleadosCajaComp = empleadosCajaComp;
+	}
+	
+	
+	
+	
+	
 	
 	
 }

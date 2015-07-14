@@ -3,6 +3,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -28,6 +30,10 @@ public class Cargo {
 	@Column(name = "car_nombre", length = 50)
     @NotNull
     private String carNombre;
+	
+	@Column(name = "car_descripcion", length = 50)
+    @NotNull
+    private String carDescripcion;
 
 	@Column(name = "car_salario", precision = 22)
     @NotNull
@@ -73,6 +79,7 @@ public class Cargo {
 
 	@Id
     @Column(name = "car_cogigo")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer carCogigo;
 
 	public Integer getCarCogigo() {
@@ -104,4 +111,12 @@ public class Cargo {
 		
 		return Utilidades.doubleFormated(carSalario);
 	}
-}
+
+	public String getCarDescripcion() {
+		return carDescripcion;
+	}
+
+	public void setCarDescripcion(String carDescripcion) {
+		this.carDescripcion = carDescripcion;
+	}
+	}

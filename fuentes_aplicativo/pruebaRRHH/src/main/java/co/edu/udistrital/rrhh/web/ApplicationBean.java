@@ -48,20 +48,6 @@ public class ApplicationBean {
         Submenu submenu;
         MenuItem item;
         
-        submenu = new Submenu();
-        submenu.setId("afiliacionSubmenu");
-        submenu.setLabel("Afiliacion");
-       
-        item = new MenuItem();
-        item.setId("listAfiliacionMenuItem");
-        item.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{messages.label_list}", String.class));
-        item.setActionExpression(expressionFactory.createMethodExpression(elContext, "#{afiliacionBean.displayList}", String.class, new Class[0]));
-        item.setIcon("ui-icon ui-icon-folder-open");
-        item.setAjax(false);
-        item.setAsync(false);
-        item.setUpdate(":dataForm:data");
-        submenu.getChildren().add(item);
-        menuModel.addSubmenu(submenu);
         
         submenu = new Submenu();
         submenu.setId("aporteSubmenu");

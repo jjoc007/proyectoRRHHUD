@@ -40,6 +40,10 @@ public class Aporte {
     @NotNull
     private Double apoValor;
 
+	@Column(name = "apo_valorEmpresa")
+    @NotNull
+    private Double apoValorEmpresa;
+	
 	public Integer getApoEntidad() {
         return apoEntidad;
     }
@@ -88,4 +92,14 @@ public class Aporte {
 	public void setApoCodigo(Integer id) {
         this.apoCodigo = id;
     }
+
+	public Double getApoValorEmpresa() {
+		return apoValorEmpresa;
+	}
+
+	public void setApoValorEmpresa(Double apoValorEmpresa) {
+		this.apoValorEmpresa = apoValorEmpresa;
+	}
+	
+	
 }

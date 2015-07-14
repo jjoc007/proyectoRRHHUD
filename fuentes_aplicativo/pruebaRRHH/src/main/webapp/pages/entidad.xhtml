@@ -30,10 +30,6 @@
             <f:facet name="header">
               <h:outputText value="Actions" />
             </f:facet>
-            <p:commandButton id="viewButton" icon="ui-icon-zoomin" update=":viewForm:viewPanelGrid" oncomplete="viewDialogWidget.show()" title="#{messages.label_view}">
-              <f:setPropertyActionListener value="#{entidad}" target="#{entidadBean.entidad}" />
-            </p:commandButton>
-            <p:tooltip for="viewButton" value="#{messages.label_view}" showEffect="fade" hideEffect="fade" />
             <p:commandButton id="editButton" icon="ui-icon-pencil" update=":editForm:editPanelGrid" action="#{entidadBean.onEdit}" oncomplete="editDialogWidget.show()" title="#{messages.label_edit}">
               <f:setPropertyActionListener value="#{entidad}" target="#{entidadBean.entidad}" />
             </p:commandButton>

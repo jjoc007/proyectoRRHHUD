@@ -22,9 +22,9 @@
         <p:dataTable id="list" value="#{cargoBean.allCargoes}" var="cargo" rendered="#{cargoBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10">
           <p:columns value="#{cargoBean.columns}" var="column" columnIndexVar="colIndex">
             <f:facet name="header">
-              <h:outputText value="#{applicationBean.getColumnName(column)}" />
+              <h:outputText value="#{column.nombreCampo}" />
             </f:facet>
-            <h:outputText value="#{cargo[column]}" />
+            <h:outputText value="#{cargo[column.nombreTabla]}" />
           </p:columns>
           <p:column styleClass="action-column">
             <f:facet name="header">

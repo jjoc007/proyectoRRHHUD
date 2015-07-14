@@ -43,4 +43,10 @@ public class EntidadServiceImpl implements EntidadService {
 	public Entidad updateEntidad(Entidad entidad) {
         return entidadReprository.save(entidad);
     }
+
+	@Override
+	public List<Entidad> findAllEntidadesByTipo(String tipo) {
+		// TODO Auto-generated method stub
+		return entidadReprository.findAllEntidadesByTipo(tipo);
+	}
 }

@@ -64,8 +64,6 @@ public class EntidadBean implements Serializable{
         columns = new ArrayList<String>();
         columns.add("entNombre");
         columns.add("entCuenta");
-        columns.add("entAporteEmpleado");
-        columns.add("entAporteEmpresa");
     }
 
 	public String getName() {
@@ -111,7 +109,7 @@ public class EntidadBean implements Serializable{
 
 	public HtmlPanelGrid getEditPanelGrid() {
         if (editPanelGrid == null) {
-            editPanelGrid = populateEditPanel();
+            editPanelGrid = populateCreatePanel();
         }
         return editPanelGrid;
     }
@@ -163,7 +161,7 @@ public class EntidadBean implements Serializable{
         entCuentaCreateOutput.setValue("Ent Cuenta:");
         htmlPanelGrid.getChildren().add(entCuentaCreateOutput);
         
-        Spinner entCuentaCreateInput = (Spinner) application.createComponent(Spinner.COMPONENT_TYPE);
+        InputText entCuentaCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
         entCuentaCreateInput.setId("entCuentaCreateInput");
         entCuentaCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{entidadBean.entidad.entCuenta}", Integer.class));
         entCuentaCreateInput.setRequired(true);
@@ -176,41 +174,6 @@ public class EntidadBean implements Serializable{
         entCuentaCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(entCuentaCreateInputMessage);
         
-        OutputLabel entAporteEmpleadoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        entAporteEmpleadoCreateOutput.setFor("entAporteEmpleadoCreateInput");
-        entAporteEmpleadoCreateOutput.setId("entAporteEmpleadoCreateOutput");
-        entAporteEmpleadoCreateOutput.setValue("Ent Aporte Empleado:");
-        htmlPanelGrid.getChildren().add(entAporteEmpleadoCreateOutput);
-        
-        InputText entAporteEmpleadoCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        entAporteEmpleadoCreateInput.setId("entAporteEmpleadoCreateInput");
-        entAporteEmpleadoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{entidadBean.entidad.entAporteEmpleado}", Double.class));
-        entAporteEmpleadoCreateInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(entAporteEmpleadoCreateInput);
-        
-        Message entAporteEmpleadoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        entAporteEmpleadoCreateInputMessage.setId("entAporteEmpleadoCreateInputMessage");
-        entAporteEmpleadoCreateInputMessage.setFor("entAporteEmpleadoCreateInput");
-        entAporteEmpleadoCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(entAporteEmpleadoCreateInputMessage);
-        
-        OutputLabel entAporteEmpresaCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        entAporteEmpresaCreateOutput.setFor("entAporteEmpresaCreateInput");
-        entAporteEmpresaCreateOutput.setId("entAporteEmpresaCreateOutput");
-        entAporteEmpresaCreateOutput.setValue("Ent Aporte Empresa:");
-        htmlPanelGrid.getChildren().add(entAporteEmpresaCreateOutput);
-        
-        InputText entAporteEmpresaCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        entAporteEmpresaCreateInput.setId("entAporteEmpresaCreateInput");
-        entAporteEmpresaCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{entidadBean.entidad.entAporteEmpresa}", Double.class));
-        entAporteEmpresaCreateInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(entAporteEmpresaCreateInput);
-        
-        Message entAporteEmpresaCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        entAporteEmpresaCreateInputMessage.setId("entAporteEmpresaCreateInputMessage");
-        entAporteEmpresaCreateInputMessage.setFor("entAporteEmpresaCreateInput");
-        entAporteEmpresaCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(entAporteEmpresaCreateInputMessage);
         
         OutputLabel entTipoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         entTipoCreateOutput.setFor("entTipoCreateInput");
@@ -243,142 +206,9 @@ public class EntidadBean implements Serializable{
         return htmlPanelGrid;
     }
 
-	public HtmlPanelGrid populateEditPanel() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        javax.faces.application.Application application = facesContext.getApplication();
-        ExpressionFactory expressionFactory = application.getExpressionFactory();
-        ELContext elContext = facesContext.getELContext();
-        
-        HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
-        
-        OutputLabel entNombreEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        entNombreEditOutput.setFor("entNombreEditInput");
-        entNombreEditOutput.setId("entNombreEditOutput");
-        entNombreEditOutput.setValue("Ent Nombre:");
-        htmlPanelGrid.getChildren().add(entNombreEditOutput);
-        
-        InputTextarea entNombreEditInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
-        entNombreEditInput.setId("entNombreEditInput");
-        entNombreEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{entidadBean.entidad.entNombre}", String.class));
-        LengthValidator entNombreEditInputValidator = new LengthValidator();
-        entNombreEditInputValidator.setMaximum(50);
-        entNombreEditInput.addValidator(entNombreEditInputValidator);
-        entNombreEditInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(entNombreEditInput);
-        
-        Message entNombreEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        entNombreEditInputMessage.setId("entNombreEditInputMessage");
-        entNombreEditInputMessage.setFor("entNombreEditInput");
-        entNombreEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(entNombreEditInputMessage);
-        
-        OutputLabel entCuentaEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        entCuentaEditOutput.setFor("entCuentaEditInput");
-        entCuentaEditOutput.setId("entCuentaEditOutput");
-        entCuentaEditOutput.setValue("Ent Cuenta:");
-        htmlPanelGrid.getChildren().add(entCuentaEditOutput);
-        
-        Spinner entCuentaEditInput = (Spinner) application.createComponent(Spinner.COMPONENT_TYPE);
-        entCuentaEditInput.setId("entCuentaEditInput");
-        entCuentaEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{entidadBean.entidad.entCuenta}", Integer.class));
-        entCuentaEditInput.setRequired(true);
-        
-        htmlPanelGrid.getChildren().add(entCuentaEditInput);
-        
-        Message entCuentaEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        entCuentaEditInputMessage.setId("entCuentaEditInputMessage");
-        entCuentaEditInputMessage.setFor("entCuentaEditInput");
-        entCuentaEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(entCuentaEditInputMessage);
-        
-        OutputLabel entAporteEmpleadoEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        entAporteEmpleadoEditOutput.setFor("entAporteEmpleadoEditInput");
-        entAporteEmpleadoEditOutput.setId("entAporteEmpleadoEditOutput");
-        entAporteEmpleadoEditOutput.setValue("Ent Aporte Empleado:");
-        htmlPanelGrid.getChildren().add(entAporteEmpleadoEditOutput);
-        
-        InputText entAporteEmpleadoEditInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        entAporteEmpleadoEditInput.setId("entAporteEmpleadoEditInput");
-        entAporteEmpleadoEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{entidadBean.entidad.entAporteEmpleado}", Double.class));
-        entAporteEmpleadoEditInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(entAporteEmpleadoEditInput);
-        
-        Message entAporteEmpleadoEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        entAporteEmpleadoEditInputMessage.setId("entAporteEmpleadoEditInputMessage");
-        entAporteEmpleadoEditInputMessage.setFor("entAporteEmpleadoEditInput");
-        entAporteEmpleadoEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(entAporteEmpleadoEditInputMessage);
-        
-        OutputLabel entAporteEmpresaEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        entAporteEmpresaEditOutput.setFor("entAporteEmpresaEditInput");
-        entAporteEmpresaEditOutput.setId("entAporteEmpresaEditOutput");
-        entAporteEmpresaEditOutput.setValue("Ent Aporte Empresa:");
-        htmlPanelGrid.getChildren().add(entAporteEmpresaEditOutput);
-        
-        InputText entAporteEmpresaEditInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        entAporteEmpresaEditInput.setId("entAporteEmpresaEditInput");
-        entAporteEmpresaEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{entidadBean.entidad.entAporteEmpresa}", Double.class));
-        entAporteEmpresaEditInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(entAporteEmpresaEditInput);
-        
-        Message entAporteEmpresaEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        entAporteEmpresaEditInputMessage.setId("entAporteEmpresaEditInputMessage");
-        entAporteEmpresaEditInputMessage.setFor("entAporteEmpresaEditInput");
-        entAporteEmpresaEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(entAporteEmpresaEditInputMessage);
-        
-        return htmlPanelGrid;
-    }
+	public HtmlPanelGrid populateEditPanel() {return null;}
 
-	public HtmlPanelGrid populateViewPanel() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        javax.faces.application.Application application = facesContext.getApplication();
-        ExpressionFactory expressionFactory = application.getExpressionFactory();
-        ELContext elContext = facesContext.getELContext();
-        
-        HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
-        
-        HtmlOutputText entNombreLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        entNombreLabel.setId("entNombreLabel");
-        entNombreLabel.setValue("Ent Nombre:");
-        htmlPanelGrid.getChildren().add(entNombreLabel);
-        
-        InputTextarea entNombreValue = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
-        entNombreValue.setId("entNombreValue");
-        entNombreValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{entidadBean.entidad.entNombre}", String.class));
-        entNombreValue.setReadonly(true);
-        entNombreValue.setDisabled(true);
-        htmlPanelGrid.getChildren().add(entNombreValue);
-        
-        HtmlOutputText entCuentaLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        entCuentaLabel.setId("entCuentaLabel");
-        entCuentaLabel.setValue("Ent Cuenta:");
-        htmlPanelGrid.getChildren().add(entCuentaLabel);
-        
-        HtmlOutputText entCuentaValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        entCuentaValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{entidadBean.entidad.entCuenta}", String.class));
-        htmlPanelGrid.getChildren().add(entCuentaValue);
-        
-        HtmlOutputText entAporteEmpleadoLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        entAporteEmpleadoLabel.setId("entAporteEmpleadoLabel");
-        entAporteEmpleadoLabel.setValue("Ent Aporte Empleado:");
-        htmlPanelGrid.getChildren().add(entAporteEmpleadoLabel);
-        
-        HtmlOutputText entAporteEmpleadoValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        entAporteEmpleadoValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{entidadBean.entidad.entAporteEmpleado}", String.class));
-        htmlPanelGrid.getChildren().add(entAporteEmpleadoValue);
-        
-        HtmlOutputText entAporteEmpresaLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        entAporteEmpresaLabel.setId("entAporteEmpresaLabel");
-        entAporteEmpresaLabel.setValue("Ent Aporte Empresa:");
-        htmlPanelGrid.getChildren().add(entAporteEmpresaLabel);
-        
-        HtmlOutputText entAporteEmpresaValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        entAporteEmpresaValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{entidadBean.entidad.entAporteEmpresa}", String.class));
-        htmlPanelGrid.getChildren().add(entAporteEmpresaValue);
-        
-        return htmlPanelGrid;
-    }
+	public HtmlPanelGrid populateViewPanel() {return null;}
 
 	public Entidad getEntidad() {
         if (entidad == null) {

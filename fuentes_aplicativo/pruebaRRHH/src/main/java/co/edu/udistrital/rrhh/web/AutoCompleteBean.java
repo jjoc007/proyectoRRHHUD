@@ -14,9 +14,12 @@ import org.springframework.roo.addon.jsf.managedbean.RooJsfManagedBean;
 import org.springframework.roo.addon.serializable.RooSerializable;
 
 import co.edu.udistrital.rrhh.domain.Cargo;
+import co.edu.udistrital.rrhh.domain.Entidad;
 import co.edu.udistrital.rrhh.domain.Rol;
 import co.edu.udistrital.rrhh.service.CargoService;
+import co.edu.udistrital.rrhh.service.EntidadService;
 import co.edu.udistrital.rrhh.service.RolService;
+import co.edu.udistrital.rrhh.web.util.Constantes;
 
 @Configurable
 @ManagedBean(name = "autoCompleteBean")
@@ -31,6 +34,10 @@ public class AutoCompleteBean implements Serializable {
 	
 	@Autowired
 	CargoService cargoService; 
+	
+
+	@Autowired
+	EntidadService entidadService; 
 	
 	public AutoCompleteBean() {
 		// TODO Auto-generated constructor stub
@@ -57,6 +64,64 @@ public class AutoCompleteBean implements Serializable {
         }
         return suggestions;
     }
+	
+	
+	public List<Entidad> completeEntidadesSalud(String query) {
+        List<Entidad> suggestions = new ArrayList<Entidad>();
+        for (Entidad entidad : entidadService.findAllEntidadesByTipo(Constantes.TIPO_ENTIDAD_SALUD)) {
+            String t27clasemercadoStr = String.valueOf(entidad.getEntNombre());
+            if (t27clasemercadoStr.toLowerCase().startsWith(query.toLowerCase())) {
+                suggestions.add(entidad);
+            }
+        }
+        return suggestions;
+    }
+	
+	
+	public List<Entidad> completeEntidadesCajaCompensacion(String query) {
+        List<Entidad> suggestions = new ArrayList<Entidad>();
+        for (Entidad entidad : entidadService.findAllEntidadesByTipo(Constantes.TIPO_ENTIDAD_CAJA_COMPENSACION)) {
+            String t27clasemercadoStr = String.valueOf(entidad.getEntNombre());
+            if (t27clasemercadoStr.toLowerCase().startsWith(query.toLowerCase())) {
+                suggestions.add(entidad);
+            }
+        }
+        return suggestions;
+    }
+	
+	public List<Entidad> completeEntidadesPension(String query) {
+        List<Entidad> suggestions = new ArrayList<Entidad>();
+        for (Entidad entidad : entidadService.findAllEntidadesByTipo(Constantes.TIPO_ENTIDAD_PENSION)) {
+            String t27clasemercadoStr = String.valueOf(entidad.getEntNombre());
+            if (t27clasemercadoStr.toLowerCase().startsWith(query.toLowerCase())) {
+                suggestions.add(entidad);
+            }
+        }
+        return suggestions;
+    }
+	
+	public List<Entidad> completeEntidadesCesantias(String query) {
+        List<Entidad> suggestions = new ArrayList<Entidad>();
+        for (Entidad entidad : entidadService.findAllEntidadesByTipo(Constantes.TIPO_ENTIDAD_CESANTIAS)) {
+            String t27clasemercadoStr = String.valueOf(entidad.getEntNombre());
+            if (t27clasemercadoStr.toLowerCase().startsWith(query.toLowerCase())) {
+                suggestions.add(entidad);
+            }
+        }
+        return suggestions;
+    }
+	
+	public List<Entidad> completeEntidadesArl(String query) {
+        List<Entidad> suggestions = new ArrayList<Entidad>();
+        for (Entidad entidad : entidadService.findAllEntidadesByTipo(Constantes.TIPO_ENTIDAD_ARL)) {
+            String t27clasemercadoStr = String.valueOf(entidad.getEntNombre());
+            if (t27clasemercadoStr.toLowerCase().startsWith(query.toLowerCase())) {
+                suggestions.add(entidad);
+            }
+        }
+        return suggestions;
+    }
+	
 	
 	private static final long serialVersionUID = 1L;
 }

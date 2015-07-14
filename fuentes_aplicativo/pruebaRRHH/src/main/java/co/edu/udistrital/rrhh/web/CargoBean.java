@@ -1,6 +1,7 @@
 package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Cargo;
 import co.edu.udistrital.rrhh.service.CargoService;
+import co.edu.udistrital.rrhh.web.util.CampoValor;
 import co.edu.udistrital.rrhh.web.util.ComponentsGenerator;
 import co.edu.udistrital.rrhh.web.util.Constantes;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
@@ -51,7 +52,7 @@ public class CargoBean implements Serializable {
 
 	private boolean dataVisible = false;
 
-	private List<String> columns;
+	private List<CampoValor> columns;
 
 	private HtmlPanelGrid createPanelGrid;
 
@@ -63,16 +64,17 @@ public class CargoBean implements Serializable {
 
 	@PostConstruct
     public void init() {
-        columns = new ArrayList<String>();
-        columns.add("carNombre");
-        columns.add("carSalario");
+        columns = new ArrayList<CampoValor>();
+        columns.add(new CampoValor("Nombre ", "carNombre"));
+        columns.add(new CampoValor("Descripcion ", "carDescripcion"));
+        columns.add(new CampoValor("Salario", "carSalario"));
     }
 
 	public String getName() {
         return name;
     }
 
-	public List<String> getColumns() {
+	public List<CampoValor> getColumns() {
         return columns;
     }
 
@@ -112,7 +114,7 @@ public class CargoBean implements Serializable {
 
 	public HtmlPanelGrid getEditPanelGrid() {
         if (editPanelGrid == null) {
-            editPanelGrid = populateEditPanel();
+            editPanelGrid = populateCreatePanel();
         }
         return editPanelGrid;
     }
@@ -139,23 +141,7 @@ public class CargoBean implements Serializable {
         
         // Codigo del cargo 
         
-        OutputLabel carCogigoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        carCogigoCreateOutput.setFor("carCogigoCreateInput");
-        carCogigoCreateOutput.setId("carCogigoCreateOutput");
-        carCogigoCreateOutput.setValue("Codigo:");
-        htmlPanelGrid.getChildren().add(carCogigoCreateOutput);
-        
-        InputText carCogigoCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        carCogigoCreateInput.setId("carCogigoCreateInput");
-        carCogigoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{cargoBean.cargo.carCogigo}", String.class));
-        carCogigoCreateInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(carCogigoCreateInput);
-        
-        Message carCogigoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        carCogigoCreateInputMessage.setId("carCogigoCreateInputMessage");
-        carCogigoCreateInputMessage.setFor("carCogigoCreateInput");
-        carCogigoCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(carCogigoCreateInputMessage);
+       
         
         // 
         OutputLabel carNombreCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
@@ -164,7 +150,7 @@ public class CargoBean implements Serializable {
         carNombreCreateOutput.setValue("Nombre:");
         htmlPanelGrid.getChildren().add(carNombreCreateOutput);
         
-        InputTextarea carNombreCreateInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
+        InputText carNombreCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
         carNombreCreateInput.setId("carNombreCreateInput");
         carNombreCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{cargoBean.cargo.carNombre}", String.class));
         LengthValidator carNombreCreateInputValidator = new LengthValidator();
@@ -178,6 +164,25 @@ public class CargoBean implements Serializable {
         carNombreCreateInputMessage.setFor("carNombreCreateInput");
         carNombreCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(carNombreCreateInputMessage);
+        
+        OutputLabel carDescripcionCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        carDescripcionCreateOutput.setFor("carDescripcionCreateInput");
+        carDescripcionCreateOutput.setId("carDescripcionCreateOutput");
+        carDescripcionCreateOutput.setValue("Descripcion: ");
+        htmlPanelGrid.getChildren().add(carDescripcionCreateOutput);
+        
+        InputText carDescripcionCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
+        carDescripcionCreateInput.setId("carDescripcionCreateInput");
+        carDescripcionCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{cargoBean.cargo.carDescripcion}", String.class));
+        carDescripcionCreateInput.setRequired(true);
+        htmlPanelGrid.getChildren().add(carDescripcionCreateInput);
+        
+        Message carDescripcionCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        carDescripcionCreateInputMessage.setId("carDescripcionCreateInputMessage");
+        carDescripcionCreateInputMessage.setFor("carDescripcionCreateInput");
+        carDescripcionCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(carDescripcionCreateInputMessage);
+        
         
         OutputLabel carSalarioCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         carSalarioCreateOutput.setFor("carSalarioCreateInput");
@@ -216,87 +221,9 @@ public class CargoBean implements Serializable {
         return htmlPanelGrid;
     }
 
-	public HtmlPanelGrid populateEditPanel() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        javax.faces.application.Application application = facesContext.getApplication();
-        ExpressionFactory expressionFactory = application.getExpressionFactory();
-        ELContext elContext = facesContext.getELContext();
-        
-        HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
-        
-        OutputLabel carNombreEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        carNombreEditOutput.setFor("carNombreEditInput");
-        carNombreEditOutput.setId("carNombreEditOutput");
-        carNombreEditOutput.setValue("Nombre:");
-        htmlPanelGrid.getChildren().add(carNombreEditOutput);
-        
-        InputTextarea carNombreEditInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
-        carNombreEditInput.setId("carNombreEditInput");
-        carNombreEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{cargoBean.cargo.carNombre}", String.class));
-        LengthValidator carNombreEditInputValidator = new LengthValidator();
-        carNombreEditInputValidator.setMaximum(50);
-        carNombreEditInput.addValidator(carNombreEditInputValidator);
-        carNombreEditInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(carNombreEditInput);
-        
-        Message carNombreEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        carNombreEditInputMessage.setId("carNombreEditInputMessage");
-        carNombreEditInputMessage.setFor("carNombreEditInput");
-        carNombreEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(carNombreEditInputMessage);
-        
-        OutputLabel carSalarioEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        carSalarioEditOutput.setFor("carSalarioEditInput");
-        carSalarioEditOutput.setId("carSalarioEditOutput");
-        carSalarioEditOutput.setValue("Salario:");
-        htmlPanelGrid.getChildren().add(carSalarioEditOutput);
-        
-        InputText carSalarioEditInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        carSalarioEditInput.setId("carSalarioEditInput");
-        carSalarioEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{cargoBean.cargo.carSalario}", Double.class));
-        carSalarioEditInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(carSalarioEditInput);
-        
-        Message carSalarioEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        carSalarioEditInputMessage.setId("carSalarioEditInputMessage");
-        carSalarioEditInputMessage.setFor("carSalarioEditInput");
-        carSalarioEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(carSalarioEditInputMessage);
-        
-        return htmlPanelGrid;
-    }
+	public HtmlPanelGrid populateEditPanel() {return null;}
 
-	public HtmlPanelGrid populateViewPanel() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        javax.faces.application.Application application = facesContext.getApplication();
-        ExpressionFactory expressionFactory = application.getExpressionFactory();
-        ELContext elContext = facesContext.getELContext();
-        
-        HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
-        
-        HtmlOutputText carNombreLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        carNombreLabel.setId("carNombreLabel");
-        carNombreLabel.setValue("Nombre:");
-        htmlPanelGrid.getChildren().add(carNombreLabel);
-        
-        InputTextarea carNombreValue = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
-        carNombreValue.setId("carNombreValue");
-        carNombreValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{cargoBean.cargo.carNombre}", String.class));
-        carNombreValue.setReadonly(true);
-        carNombreValue.setDisabled(true);
-        htmlPanelGrid.getChildren().add(carNombreValue);
-        
-        HtmlOutputText carSalarioLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        carSalarioLabel.setId("carSalarioLabel");
-        carSalarioLabel.setValue("Salario:");
-        htmlPanelGrid.getChildren().add(carSalarioLabel);
-        
-        HtmlOutputText carSalarioValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        carSalarioValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{cargoBean.cargo.carSalario}", String.class));
-        htmlPanelGrid.getChildren().add(carSalarioValue);
-        
-        return htmlPanelGrid;
-    }
+	public HtmlPanelGrid populateViewPanel() {return null;}
 
 	public Cargo getCargo() {
         if (cargo == null) {

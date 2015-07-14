@@ -19,8 +19,10 @@ import org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
 
 import co.edu.udistrital.rrhh.domain.Cargo;
+import co.edu.udistrital.rrhh.domain.Entidad;
 import co.edu.udistrital.rrhh.domain.Rol;
 import co.edu.udistrital.rrhh.web.converter.CargoConverter;
+import co.edu.udistrital.rrhh.web.converter.EntidadConverter;
 import co.edu.udistrital.rrhh.web.converter.RolConverter;
 
 public class ComponentsGenerator {
@@ -73,6 +75,41 @@ public class ComponentsGenerator {
 		return autoCompleteLineaGenerico;
 	}
 	
+	public static AutoComplete getAutocompleteEntidad(String idComponent, String valueExpression,String tipoEntidad){
+
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		javax.faces.application.Application application = facesContext.getApplication();
+		ExpressionFactory expressionFactory = application.getExpressionFactory();
+		ELContext elContext = facesContext.getELContext();
+
+		AutoComplete autoCompleteLineaGenerico = (AutoComplete) application.createComponent(AutoComplete.COMPONENT_TYPE);
+		autoCompleteLineaGenerico.setId(idComponent);
+		autoCompleteLineaGenerico.setValueExpression("value", expressionFactory.createValueExpression(elContext, valueExpression, Entidad.class));
+		
+		if(tipoEntidad.equals(Constantes.TIPO_ENTIDAD_SALUD)){
+			autoCompleteLineaGenerico.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{autoCompleteBean.completeEntidadesSalud}", List.class, new Class[] { String.class }));
+		}else if(tipoEntidad.equals(Constantes.TIPO_ENTIDAD_ARL)){
+			autoCompleteLineaGenerico.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{autoCompleteBean.completeEntidadesArl}", List.class, new Class[] { String.class }));
+		}else if(tipoEntidad.equals(Constantes.TIPO_ENTIDAD_CAJA_COMPENSACION)){
+			autoCompleteLineaGenerico.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{autoCompleteBean.completeEntidadesCajaCompensacion}", List.class, new Class[] { String.class }));
+		}else if(tipoEntidad.equals(Constantes.TIPO_ENTIDAD_CESANTIAS)){
+			autoCompleteLineaGenerico.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{autoCompleteBean.completeEntidadesCesantias}", List.class, new Class[] { String.class }));
+		}else if(tipoEntidad.equals(Constantes.TIPO_ENTIDAD_PENSION)){
+			autoCompleteLineaGenerico.setCompleteMethod(expressionFactory.createMethodExpression(elContext, "#{autoCompleteBean.completeEntidadesPension}", List.class, new Class[] { String.class }));
+		} 
+		
+		autoCompleteLineaGenerico.setDropdown(true);
+		autoCompleteLineaGenerico.setValueExpression("var", expressionFactory.createValueExpression(elContext, "car", String.class));
+		autoCompleteLineaGenerico.setValueExpression("itemLabel", expressionFactory.createValueExpression(elContext, "#{car.entNombre}", String.class));
+		autoCompleteLineaGenerico.setValueExpression("itemValue", expressionFactory.createValueExpression(elContext, "#{car}", Entidad.class));
+		autoCompleteLineaGenerico.setScrollHeight(300);
+		autoCompleteLineaGenerico.setConverter(new EntidadConverter());
+		autoCompleteLineaGenerico.setRequired(false);
+
+		return autoCompleteLineaGenerico;
+	}
+	
+	
 
 	//menus
 	public static SelectOneMenu getAutocompleteEstadoActual(String idComponent, String valueExpression){
@@ -112,7 +149,7 @@ public class ComponentsGenerator {
 
 		SelectOneMenu menuGenerico =(SelectOneMenu) application.createComponent(SelectOneMenu.COMPONENT_TYPE);
 		menuGenerico.setId(idComponent);
-		menuGenerico.setValueExpression("value", expressionFactory.createValueExpression(elContext, valueExpression, BigDecimal.class));
+		menuGenerico.setValueExpression("value", expressionFactory.createValueExpression(elContext, valueExpression, String.class));
 
 		UISelectItem item1 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
 		item1.setItemLabel("Devengo");
@@ -144,7 +181,7 @@ public class ComponentsGenerator {
 
 		SelectOneMenu menuGenerico =(SelectOneMenu) application.createComponent(SelectOneMenu.COMPONENT_TYPE);
 		menuGenerico.setId(idComponent);
-		menuGenerico.setValueExpression("value", expressionFactory.createValueExpression(elContext, valueExpression, BigDecimal.class));
+		menuGenerico.setValueExpression("value", expressionFactory.createValueExpression(elContext, valueExpression, String.class));
 
 		UISelectItem item1 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
 		item1.setItemLabel("Porcentaje");
@@ -186,8 +223,8 @@ public class ComponentsGenerator {
 		item3.setItemValue(Constantes.TIPO_ENTIDAD_CESANTIAS);
 
 		UISelectItem item4 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
-		item4.setItemLabel("ARP");
-		item4.setItemValue(Constantes.TIPO_ENTIDAD_ARP);
+		item4.setItemLabel("ARL");
+		item4.setItemValue(Constantes.TIPO_ENTIDAD_ARL);
 
 		UISelectItem item5 = (UISelectItem) application.createComponent(UISelectItem.COMPONENT_TYPE);
 		item5.setItemLabel("Caja de compensacion");

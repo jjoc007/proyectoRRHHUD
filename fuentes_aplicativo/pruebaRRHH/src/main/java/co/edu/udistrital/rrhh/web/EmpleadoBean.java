@@ -3,6 +3,7 @@ import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.domain.Historicocargo;
 import co.edu.udistrital.rrhh.service.EmpleadoService;
 import co.edu.udistrital.rrhh.service.HistoricocargoService;
+import co.edu.udistrital.rrhh.web.util.CampoValor;
 import co.edu.udistrital.rrhh.web.util.ComponentsGenerator;
 import co.edu.udistrital.rrhh.web.util.Constantes;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
@@ -60,7 +61,7 @@ public class EmpleadoBean implements Serializable{
 
 	private boolean dataVisible = false;
 
-	private List<String> columns;
+	private List<CampoValor> columns;
 
 	private HtmlPanelGrid createPanelGrid;
 
@@ -76,23 +77,29 @@ public class EmpleadoBean implements Serializable{
 	private AutoComplete autocompleteCargo;
 	private SelectOneMenu selectEstadoEmpleado;
 	private Calendar fechaIngreso;
+	
+	private AutoComplete autocompleteSalud;
+	private AutoComplete autocompletePension;
+	private AutoComplete autocompleteArl;
+	private AutoComplete autocompleteCesantias;
+	private AutoComplete autocompleteCaja;
+	
 
 	@PostConstruct
     public void init() {
-        columns = new ArrayList<String>();
-        columns.add("empCedula");
-        columns.add("empNombre");
-        columns.add("empFechaIngreso");
-        columns.add("empFechaSalida");
-        columns.add("empCuentaPago");
-        columns.add("empEstado");
+        columns = new ArrayList<CampoValor>();
+        columns.add(new CampoValor("Cedula", "empCedula"));
+        columns.add(new CampoValor("Nombre", "empNombre"));
+        columns.add(new CampoValor("Fecha Ingreso", "formatedFechaIngreso"));
+        columns.add(new CampoValor("Nro. Cuenta", "empCuentaPago"));
+        
     }
 
 	public String getName() {
         return name;
     }
 
-	public List<String> getColumns() {
+	public List<CampoValor> getColumns() {
         return columns;
     }
 
@@ -619,9 +626,6 @@ public class EmpleadoBean implements Serializable{
 		this.selectEstadoEmpleado = selectEstadoEmpleado;
 	}
 
-	
-
-
 	public Calendar getFechaIngreso() {
 		if(fechaIngreso==null){
 			
@@ -633,6 +637,73 @@ public class EmpleadoBean implements Serializable{
 
 	public void setFechaIngreso(Calendar fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
+	}
+
+
+
+
+	public AutoComplete getAutocompleteSalud() {
+		
+		if(autocompleteSalud == null){
+			autocompleteSalud=ComponentsGenerator.getAutocompleteEntidad("autoCompleteSaludInput", "#{empleadoBean.empleado.entidadSalud}", Constantes.TIPO_ENTIDAD_SALUD);
+		}
+		
+		return autocompleteSalud;
+	}
+
+	public void setAutocompleteSalud(AutoComplete autocompleteSalud) {
+		this.autocompleteSalud = autocompleteSalud;
+	}
+
+	public AutoComplete getAutocompletePension() {
+		
+		if(autocompletePension == null){
+			autocompletePension=ComponentsGenerator.getAutocompleteEntidad("autoCompletePensionInput", "#{empleadoBean.empleado.entidadPension}", Constantes.TIPO_ENTIDAD_PENSION);
+		}
+		return autocompletePension;
+	}
+
+	public void setAutocompletePension(AutoComplete autocompletePension) {
+		this.autocompletePension = autocompletePension;
+	}
+
+	public AutoComplete getAutocompleteArl() {
+		
+		if(autocompleteArl == null){
+			autocompleteArl=ComponentsGenerator.getAutocompleteEntidad("autoCompleteArlInput", "#{empleadoBean.empleado.entidadArp}", Constantes.TIPO_ENTIDAD_ARL);
+		}
+		
+		return autocompleteArl;
+	}
+
+	public void setAutocompleteArl(AutoComplete autocompleteArl) {
+		this.autocompleteArl = autocompleteArl;
+	}
+
+	public AutoComplete getAutocompleteCesantias() {
+		
+		if(autocompleteCesantias == null){
+			autocompleteCesantias=ComponentsGenerator.getAutocompleteEntidad("autoCompleteCesantiasInput", "#{empleadoBean.empleado.entidadCesantias}", Constantes.TIPO_ENTIDAD_CESANTIAS);
+		}
+		
+		return autocompleteCesantias;
+	}
+
+	public void setAutocompleteCesantias(AutoComplete autocompleteCesantias) {
+		this.autocompleteCesantias = autocompleteCesantias;
+	}
+
+	public AutoComplete getAutocompleteCaja() {
+		
+		if(autocompleteCaja == null){
+			autocompleteCaja=ComponentsGenerator.getAutocompleteEntidad("autoCompleteCCInput", "#{empleadoBean.empleado.entidadCajaCompensacion}", Constantes.TIPO_ENTIDAD_CAJA_COMPENSACION);
+		}
+		
+		return autocompleteCaja;
+	}
+
+	public void setAutocompleteCaja(AutoComplete autocompleteCaja) {
+		this.autocompleteCaja = autocompleteCaja;
 	}
 
 

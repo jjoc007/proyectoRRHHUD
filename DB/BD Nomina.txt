@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `afiliacion` (
 --
 
 CREATE TABLE IF NOT EXISTS `aporte` (
-  `apo_codigo` int(11) NOT NULL,
+  `apo_codigo` int(11)  NOT NULL auto_increment,
   `apo_entidad` int(11) NOT NULL,
   `apo_tipo` varchar(20) NOT NULL,
   `apo_periodo` datetime NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `aporte` (
 --
 
 CREATE TABLE IF NOT EXISTS `cargo` (
-  `car_cogigo` int(11) NOT NULL,
+  `car_cogigo` int(11) NOT NULL auto_increment,
   `car_nombre` varchar(50) NOT NULL,
   `car_salario` double NOT NULL,
   `car_estado` varchar(1) NOT NULL,
@@ -105,6 +105,11 @@ CREATE TABLE IF NOT EXISTS `empleado` (
   `emp_cuentaPago` int(11) NOT NULL,
   `emp_estado` varchar(1) NOT NULL,
   `cargo` int(11) NOT NULL,
+  `emp_ent_salud` int(11) NOT NULL,
+  `emp_ent_pen` int(11) NOT NULL,
+  `emp_ent_ces` int(11) NOT NULL,
+  `emp_ent_arl` int(11) NOT NULL,
+  `emp_ent_cajacom` int(11) NOT NULL,
   PRIMARY KEY (`emp_cedula`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -125,6 +130,7 @@ CREATE TABLE IF NOT EXISTS `entidad` (
   `ent_aporteEmpleado` double NOT NULL,
   `ent_aporteEmpresa` double NOT NULL,
   `ent_estado` varchar(1) NOT NULL,
+  `ent_tipo` varchar(2) NOT NULL,
   PRIMARY KEY (`ent_codigo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -162,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `historicocargo` (
 --
 
 CREATE TABLE IF NOT EXISTS `pago` (
-  `pag_codigo` int(11) NOT NULL,
+  `pag_codigo` int(11) NOT NULL AUTO_INCREMENT,
   `pag_empleado` int(11) NOT NULL,
   `pag_concepto` int(11) NOT NULL,
   `pag_periodo` datetime NOT NULL,

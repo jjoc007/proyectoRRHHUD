@@ -25,5 +25,7 @@ public interface EntidadService {
 
 
 	public abstract Entidad updateEntidad(Entidad entidad);
+	
+	public abstract List<Entidad> findAllEntidadesByTipo(String tipo);
 
 }

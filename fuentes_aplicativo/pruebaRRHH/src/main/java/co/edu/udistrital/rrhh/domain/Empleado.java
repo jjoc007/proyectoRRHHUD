@@ -20,6 +20,8 @@ import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.entity.RooJpaEntity;
 import org.springframework.roo.addon.tostring.RooToString;
 
+import co.edu.udistrital.rrhh.web.util.Utilidades;
+
 @Entity
 @Table(name = "empleado")
 @RooJavaBean
@@ -72,7 +74,32 @@ public class Empleado {
 
 	@Transient
 	private boolean emp_liquida;
+	
+	@ManyToOne
+	@JoinColumn(name = "emp_ent_salud", referencedColumnName = "ent_codigo", nullable = false)
+    @NotNull
+    private Entidad entidadSalud;
 
+	@ManyToOne
+	@JoinColumn(name = "emp_ent_pen", referencedColumnName = "ent_codigo", nullable = false)
+    @NotNull
+    private Entidad entidadPension;
+	
+	@ManyToOne
+	@JoinColumn(name = "emp_ent_ces", referencedColumnName = "ent_codigo", nullable = false)
+    @NotNull
+    private Entidad entidadCesantias;
+	
+	@ManyToOne
+	@JoinColumn(name = "emp_ent_arl", referencedColumnName = "ent_codigo", nullable = false)
+    @NotNull
+    private Entidad entidadArp;
+	
+	@ManyToOne
+	@JoinColumn(name = "emp_ent_cajacom", referencedColumnName = "ent_codigo", nullable = false)
+    @NotNull
+    private Entidad entidadCajaCompensacion;
+	
 	public String getEmpNombre() {
         return empNombre;
     }
@@ -161,5 +188,50 @@ public class Empleado {
 		this.cargo = cargo;
 	}
 
+	public Entidad getEntidadSalud() {
+		return entidadSalud;
+	}
+
+	public void setEntidadSalud(Entidad entidadSalud) {
+		this.entidadSalud = entidadSalud;
+	}
+
+	public Entidad getEntidadPension() {
+		return entidadPension;
+	}
+
+	public void setEntidadPension(Entidad entidadPension) {
+		this.entidadPension = entidadPension;
+	}
+
+	public Entidad getEntidadCesantias() {
+		return entidadCesantias;
+	}
+
+	public void setEntidadCesantias(Entidad entidadCesantias) {
+		this.entidadCesantias = entidadCesantias;
+	}
+
+	public Entidad getEntidadArp() {
+		return entidadArp;
+	}
+
+	public void setEntidadArp(Entidad entidadArp) {
+		this.entidadArp = entidadArp;
+	}
+
+	public Entidad getEntidadCajaCompensacion() {
+		return entidadCajaCompensacion;
+	}
+
+	public void setEntidadCajaCompensacion(Entidad entidadCajaCompensacion) {
+		this.entidadCajaCompensacion = entidadCajaCompensacion;
+	}
+
+
+	public String getFormatedFechaIngreso(){
+		return Utilidades.dateFormated(empFechaIngreso);
+	}
+	
 	
 }

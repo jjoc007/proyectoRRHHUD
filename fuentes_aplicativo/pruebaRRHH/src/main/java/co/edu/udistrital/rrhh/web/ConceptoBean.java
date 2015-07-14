@@ -66,6 +66,7 @@ public class ConceptoBean implements Serializable {
         columns.add(new CampoValor("Nombre", "conNombre"));
         columns.add(new CampoValor("Descripcion", "conDescripcion"));
         columns.add(new CampoValor("valor","conValor"));
+        columns.add(new CampoValor("valor empresa","conValorEmpresa"));
     }
 
 	public String getName() {
@@ -136,16 +137,6 @@ public class ConceptoBean implements Serializable {
         ELContext elContext = facesContext.getELContext();
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
-        
-        htmlPanelGrid.getChildren().add(ComponentsGenerator.getBasicOutputLabel("conIdCreateInput", "conIdCreateOutput", "Codigo"));
-        
-        InputText conIdCreateInput = ComponentsGenerator.getBasicInputText("conIdCreateInput",  "#{conceptoBean.concepto.conCodigo}", ComponentsGenerator.INTEGER);
-        LengthValidator conIdCreateInputValidator = new LengthValidator();
-        conIdCreateInputValidator.setMaximum(50);
-        conIdCreateInput.addValidator(conIdCreateInputValidator);
-        htmlPanelGrid.getChildren().add(conIdCreateInput);
-        htmlPanelGrid.getChildren().add(ComponentsGenerator.getBasicMessage("conIdCreateInput", "conIdCreateInputMessage"));
-        
         
         OutputLabel conNombreCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         conNombreCreateOutput.setFor("conNombreCreateInput");
@@ -245,150 +236,33 @@ public class ConceptoBean implements Serializable {
         conValorCreateInputMessage.setFor("conValorCreateInput");
         conValorCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(conValorCreateInputMessage);
+
+        OutputLabel conValorEmpresaCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        conValorEmpresaCreateOutput.setFor("conValorEmpresaCreateInput");
+        conValorEmpresaCreateOutput.setId("conValorEmpresaCreateOutput");
+        conValorEmpresaCreateOutput.setValue("Valor Empresa:");
+        htmlPanelGrid.getChildren().add(conValorEmpresaCreateOutput);
+        
+        InputText conValorEmpresaCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
+        conValorEmpresaCreateInput.setId("conValorEmpresaCreateInput");
+        conValorEmpresaCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conValorEmpresa}", Double.class));
+        conValorEmpresaCreateInput.setRequired(true);
+        htmlPanelGrid.getChildren().add(conValorEmpresaCreateInput);
+        
+        Message conValorEmrpesaCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
+        conValorEmrpesaCreateInputMessage.setId("conValorEmpresaCreateInputMessage");
+        conValorEmrpesaCreateInputMessage.setFor("conValorEmpresaCreateInput");
+        conValorEmrpesaCreateInputMessage.setDisplay("icon");
+        htmlPanelGrid.getChildren().add(conValorEmrpesaCreateInputMessage);
+        
+        
         
         return htmlPanelGrid;
     }
 
-	public HtmlPanelGrid populateEditPanel() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        javax.faces.application.Application application = facesContext.getApplication();
-        ExpressionFactory expressionFactory = application.getExpressionFactory();
-        ELContext elContext = facesContext.getELContext();
-        
-        HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
-        
-        OutputLabel conNombreEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        conNombreEditOutput.setFor("conNombreEditInput");
-        conNombreEditOutput.setId("conNombreEditOutput");
-        conNombreEditOutput.setValue("Con Nombre:");
-        htmlPanelGrid.getChildren().add(conNombreEditOutput);
-        
-        InputTextarea conNombreEditInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
-        conNombreEditInput.setId("conNombreEditInput");
-        conNombreEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conNombre}", String.class));
-        LengthValidator conNombreEditInputValidator = new LengthValidator();
-        conNombreEditInputValidator.setMaximum(50);
-        conNombreEditInput.addValidator(conNombreEditInputValidator);
-        conNombreEditInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(conNombreEditInput);
-        
-        Message conNombreEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        conNombreEditInputMessage.setId("conNombreEditInputMessage");
-        conNombreEditInputMessage.setFor("conNombreEditInput");
-        conNombreEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(conNombreEditInputMessage);
-        
-        OutputLabel conDescripcionEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        conDescripcionEditOutput.setFor("conDescripcionEditInput");
-        conDescripcionEditOutput.setId("conDescripcionEditOutput");
-        conDescripcionEditOutput.setValue("Con Descripcion:");
-        htmlPanelGrid.getChildren().add(conDescripcionEditOutput);
-        
-        InputText conDescripcionEditInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        conDescripcionEditInput.setId("conDescripcionEditInput");
-        conDescripcionEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conDescripcion}", String.class));
-        conDescripcionEditInput.setRequired(false);
-        htmlPanelGrid.getChildren().add(conDescripcionEditInput);
-        
-        Message conDescripcionEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        conDescripcionEditInputMessage.setId("conDescripcionEditInputMessage");
-        conDescripcionEditInputMessage.setFor("conDescripcionEditInput");
-        conDescripcionEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(conDescripcionEditInputMessage);
-        
-        OutputLabel conTipoEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        conTipoEditOutput.setFor("conTipoEditInput");
-        conTipoEditOutput.setId("conTipoEditOutput");
-        conTipoEditOutput.setValue("Con Tipo:");
-        htmlPanelGrid.getChildren().add(conTipoEditOutput);
-        
-        InputText conTipoEditInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        conTipoEditInput.setId("conTipoEditInput");
-        conTipoEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conTipo}", String.class));
-        LengthValidator conTipoEditInputValidator = new LengthValidator();
-        conTipoEditInputValidator.setMaximum(20);
-        conTipoEditInput.addValidator(conTipoEditInputValidator);
-        conTipoEditInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(conTipoEditInput);
-        
-        Message conTipoEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        conTipoEditInputMessage.setId("conTipoEditInputMessage");
-        conTipoEditInputMessage.setFor("conTipoEditInput");
-        conTipoEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(conTipoEditInputMessage);
-        
-        OutputLabel conValorEditOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        conValorEditOutput.setFor("conValorEditInput");
-        conValorEditOutput.setId("conValorEditOutput");
-        conValorEditOutput.setValue("Con Valor:");
-        htmlPanelGrid.getChildren().add(conValorEditOutput);
-        
-        InputText conValorEditInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        conValorEditInput.setId("conValorEditInput");
-        conValorEditInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conValor}", Double.class));
-        conValorEditInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(conValorEditInput);
-        
-        Message conValorEditInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        conValorEditInputMessage.setId("conValorEditInputMessage");
-        conValorEditInputMessage.setFor("conValorEditInput");
-        conValorEditInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(conValorEditInputMessage);
-        
-        return htmlPanelGrid;
-    }
+	public HtmlPanelGrid populateEditPanel() {return null;}
 
-	public HtmlPanelGrid populateViewPanel() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        javax.faces.application.Application application = facesContext.getApplication();
-        ExpressionFactory expressionFactory = application.getExpressionFactory();
-        ELContext elContext = facesContext.getELContext();
-        
-        HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
-        
-        HtmlOutputText conNombreLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        conNombreLabel.setId("conNombreLabel");
-        conNombreLabel.setValue("Con Nombre:");
-        htmlPanelGrid.getChildren().add(conNombreLabel);
-        
-        InputTextarea conNombreValue = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
-        conNombreValue.setId("conNombreValue");
-        conNombreValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conNombre}", String.class));
-        conNombreValue.setReadonly(true);
-        conNombreValue.setDisabled(true);
-        htmlPanelGrid.getChildren().add(conNombreValue);
-        
-        HtmlOutputText conDescripcionLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        conDescripcionLabel.setId("conDescripcionLabel");
-        conDescripcionLabel.setValue("Con Descripcion:");
-        htmlPanelGrid.getChildren().add(conDescripcionLabel);
-        
-        HtmlOutputText conDescripcionValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        conDescripcionValue.setId("conDescripcionValue");
-        conDescripcionValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conDescripcion}", String.class));
-        htmlPanelGrid.getChildren().add(conDescripcionValue);
-        
-        HtmlOutputText conTipoLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        conTipoLabel.setId("conTipoLabel");
-        conTipoLabel.setValue("Con Tipo:");
-        htmlPanelGrid.getChildren().add(conTipoLabel);
-        
-        HtmlOutputText conTipoValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        conTipoValue.setId("conTipoValue");
-        conTipoValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conTipo}", String.class));
-        htmlPanelGrid.getChildren().add(conTipoValue);
-        
-        HtmlOutputText conValorLabel = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        conValorLabel.setId("conValorLabel");
-        conValorLabel.setValue("Con Valor:");
-        htmlPanelGrid.getChildren().add(conValorLabel);
-        
-        HtmlOutputText conValorValue = (HtmlOutputText) application.createComponent(HtmlOutputText.COMPONENT_TYPE);
-        conValorValue.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{conceptoBean.concepto.conValor}", String.class));
-        htmlPanelGrid.getChildren().add(conValorValue);
-        
-        return htmlPanelGrid;
-    }
+	public HtmlPanelGrid populateViewPanel() {return null;}
 
 	public Concepto getConcepto() {
         if (concepto == null) {

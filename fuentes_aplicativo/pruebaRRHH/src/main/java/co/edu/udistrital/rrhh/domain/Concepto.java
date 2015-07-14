@@ -3,6 +3,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -25,6 +27,7 @@ public class Concepto {
 
 	@Id
     @Column(name = "con_codigo")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer conCodigo;
 
 	public Integer getConCodigo() {
@@ -57,6 +60,10 @@ public class Concepto {
 	@Column(name = "con_valor", precision = 22)
     @NotNull
     private Double conValor;
+	
+	@Column(name = "con_valorEmpresa", precision = 22)
+    @NotNull
+    private Double conValorEmpresa;
 
 	@Column(name = "con_estado", length = 1)
     @NotNull
@@ -119,6 +126,14 @@ public class Concepto {
 
 	public void setPagos(Set<Pago> pagos) {
 		this.pagos = pagos;
+	}
+
+	public Double getConValorEmpresa() {
+		return conValorEmpresa;
+	}
+
+	public void setConValorEmpresa(Double conValorEmpresa) {
+		this.conValorEmpresa = conValorEmpresa;
 	}
 	
 	

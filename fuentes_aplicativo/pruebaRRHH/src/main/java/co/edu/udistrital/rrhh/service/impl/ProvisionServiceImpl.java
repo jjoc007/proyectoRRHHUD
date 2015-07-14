@@ -3,7 +3,6 @@ import co.edu.udistrital.rrhh.domain.Provision;
 import co.edu.udistrital.rrhh.repository.ProvisionRepository;
 import co.edu.udistrital.rrhh.service.ProvisionService;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +46,6 @@ public class ProvisionServiceImpl implements ProvisionService {
 	
 	public List<Provision> findProvisiones(Integer cedulaEmpleado, Integer concepto, String estado){
 		 return provisionReprository.findProvisiones(cedulaEmpleado, concepto, estado);
-	}
-	
-	public List<Provision> findProvisionesPeriodo(Date periodo){
-		 return provisionReprository.findProvisionesPeriodo(periodo);
 	}
 	
 }

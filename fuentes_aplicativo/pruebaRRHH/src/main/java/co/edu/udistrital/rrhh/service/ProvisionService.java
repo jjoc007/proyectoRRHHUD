@@ -1,7 +1,6 @@
 package co.edu.udistrital.rrhh.service;
 import co.edu.udistrital.rrhh.domain.Provision;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.roo.addon.layers.service.RooService;
@@ -31,8 +30,5 @@ public interface ProvisionService {
 
 	
 	public abstract List<Provision> findProvisiones(Integer cedulaEmpleado, Integer concepto, String estado);
-	
-	
-	public abstract List<Provision> findProvisionesPeriodo(Date periodo);
 	
 }

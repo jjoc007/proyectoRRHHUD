@@ -1,6 +1,8 @@
 package co.edu.udistrital.rrhh.service;
+import co.edu.udistrital.rrhh.domain.Concepto;
+import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.domain.Pago;
-import java.util.Calendar;
+
 import java.util.Date;
 import java.util.List;
 
@@ -33,10 +35,9 @@ public interface PagoService {
 	public abstract List<Pago> findPagos(Integer cedulaEmpleado, Date periodo,
 			 String tipoPer);
 	
-
-	Calendar traerPeriodoActualPago();
-	
-	
 	public abstract Pago findPago(Integer cedulaEmpleado, Integer concepto, Date periodo);
+	
+	
+	public abstract void realizarPago(Concepto concepto, String estado, Empleado empleado, Date periodo, Double valorPago);
 
 }

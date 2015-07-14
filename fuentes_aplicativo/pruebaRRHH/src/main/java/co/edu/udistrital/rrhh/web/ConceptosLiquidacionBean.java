@@ -77,15 +77,14 @@ public class ConceptosLiquidacionBean implements Serializable  {
 		conceptosCons.add(Constantes.CONCEPTO_INTERESES_CESANTIAS);
 		conceptosCons.add(Constantes.CONCEPTO_PRIMA);
 		conceptosCons.add(Constantes.CONCEPTO_VACACIONES);
+		conceptosCons.add(Constantes.CONCEPTO_CAJA_COMPENSACION);
 		
 		tipoPer.add(Constantes.TIPO_CONCEPTO_DEVENGO);
 		tipoPer.add(Constantes.TIPO_CONCEPTO_DEDUCIDO);
 		
 		//Busca todos los conceptos que sean de tipo devengo y deducido		
 		conceptos = conceptoService.findAllConceptoLiq(Constantes.GENERAL_ESTADO_ACTIVO, conceptosCons, tipoPer);
-		
-		System.out.println("cantidad de conceptos: "+conceptos.size());
-		
+				
 		obtenerPeriodo();
 		
 		for (Empleado empleadoAux: allEmpleados){
@@ -99,7 +98,6 @@ public class ConceptosLiquidacionBean implements Serializable  {
 			}
 			
 			empleadoAux.setPagos(pagosPorEmpleado);
-			System.out.println("cantidad pagos: "+pagosPorEmpleado.size());
 			allEmpleadosWithPagos.add(empleadoAux);
 
 		}
@@ -112,10 +110,14 @@ public class ConceptosLiquidacionBean implements Serializable  {
 			
 			for (Pago pagoaux : empleadoaux.getPagos()){
 				
-				pagoService.savePago(pagoaux);
+				if (pagoaux.getPagValorPago() != 0.0){
+					pagoService.savePago(pagoaux);
+				}
 				
 			}	
 		}
+		//Insertar registro en la tabla proceso Constantes.CONCEPTOS_LIQUIDACION y periodo.getTime()
+		
 	}
 	public boolean isDataVisible() {
         return dataVisible;
@@ -175,8 +177,7 @@ public class ConceptosLiquidacionBean implements Serializable  {
 	}
 	
 	public Calendar obtenerPeriodo() {
-		periodo = pagoService.traerPeriodoActualPago();
-		periodo.add(Calendar.MONTH, 1);
+		periodo = Utilidades.periodoLiquidacion();
 		return periodo;
 	}
 

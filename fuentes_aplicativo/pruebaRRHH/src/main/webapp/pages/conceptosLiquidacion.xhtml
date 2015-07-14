@@ -20,7 +20,9 @@
          <h:outputText id = "periodoLiquidar" value ="#{conceptosLiquidacionBean.periodoLiquidar}"/>
          <p:dataTable id="list" value="#{conceptosLiquidacionBean.allEmpleadosWithPagos}" var="empleado" rendered="#{conceptosLiquidacionBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10" editable="true" editMode="cell">
          
-
+ 		  <p:column rowspan="1" headerText="Cédula" >
+          	<h:outputText value="#{empleado.empCedula}" />
+          </p:column>
          
           <p:column rowspan="1" headerText="Nombre" >
           	<h:outputText value="#{empleado.empNombre}" />
@@ -57,11 +59,19 @@
             
                 
         </p:dataTable>
-        <p:commandButton id="guardarPagos" value="Guardar" action="#{conceptosLiquidacionBean.guardarPagos}"/>
+        <p:commandButton id="guardarPagos" value="Guardar" oncomplete="confirmDialogWidget.show()"/>
         
       </p:panel>
     </h:form>
    
+     <p:confirmDialog id="confirmDialog" widgetVar="confirmDialogWidget" message="#{messages.label_confirmacion}" showEffect="fade" hideEffect="explode" header="#{messages.label_advertencia}" severity="alarm">
+      <p:outputPanel id="confirmPanel">
+        <h:form id="confirmForm">
+          <p:commandButton id="saveYesButton" value="#{messages.label_yes}" action="#{conceptosLiquidacionBean.guardarPagos}" oncomplete="confirmDialogWidget.hide()" />
+          <p:commandButton id="saveNoButton" value="#{messages.label_no}" onclick="confirmDialogWidget.hide()" type="button" />
+        </h:form>
+      </p:outputPanel>
+    </p:confirmDialog>
     
    
   </ui:define>

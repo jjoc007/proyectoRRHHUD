@@ -3,11 +3,13 @@ package co.edu.udistrital.rrhh.service.impl;
 import co.edu.udistrital.rrhh.domain.Aporte;
 import co.edu.udistrital.rrhh.domain.Concepto;
 import co.edu.udistrital.rrhh.domain.Empleado;
+import co.edu.udistrital.rrhh.domain.Historicocargo;
 import co.edu.udistrital.rrhh.domain.Pago;
 import co.edu.udistrital.rrhh.domain.Provision;
 import co.edu.udistrital.rrhh.service.AporteService;
 import co.edu.udistrital.rrhh.service.ConceptoService;
 import co.edu.udistrital.rrhh.service.EmpleadoService;
+import co.edu.udistrital.rrhh.service.HistoricocargoService;
 import co.edu.udistrital.rrhh.service.LiquidacionService;
 import co.edu.udistrital.rrhh.service.PagoService;
 import co.edu.udistrital.rrhh.service.ProvisionService;
@@ -39,6 +41,8 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 	ConceptoService conceptoService;
 	@Autowired
 	EmpleadoService empleadoService;
+	@Autowired
+	HistoricocargoService historicocargoService;
 
 	public Pago pago;
 	public Aporte aporte;
@@ -49,20 +53,15 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		Integer numProviVacaciones;
 		Integer mes;
 		List<Provision> provisionesRep;
-		System.out.println("aqui");
-		provisionesRep = provisionService.findProvisionesPeriodo(periodo.getTime());
-		System.out.println("aqui2 provisiones"+provisionesRep.size());
-		if (provisionesRep.size() == 0){
+
+		//Verificar en la tabla Proceso
+
 			System.out
 			.println("No se puede realizar el proceso de liquidación ya que no existe liquidación de prestaciones");
-		}
-		System.out.println("aqui3");
-		provisionesRep = null;
+		
 		
 		for (Empleado empleadoAux : allEmpleados) {
-			System.out.println("aqui4");
-			realizarAporteSeguridadSocial(empleadoAux.getEmpCedula(), periodo.getTime());
-			System.out.println("aqui5");
+
 					provisionesRep = provisionService.findProvisiones(
 					empleadoAux.getEmpCedula(), Constantes.CONCEPTO_VACACIONES,
 					Constantes.PROV_ACTIVA);
@@ -72,7 +71,11 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 			else
 				numProviVacaciones = 0;
 
-			if (numProviVacaciones > 24) {
+			if  (numProviVacaciones >= 12) {
+				
+				System.out.println("Alerta el empleado "+empleadoAux.getEmpCedula()+" ya tiene "+numProviVacaciones+" meses acumulados sin tomar vacaciones");
+				
+			}else if (numProviVacaciones > 24) {
 
 				int cont = 0;
 
@@ -87,7 +90,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 					}
 				}
 
-			}
+			} 
 
 			if (empleadoAux.isEmp_vacaciones()) {
 
@@ -115,6 +118,26 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 				}
 
 			}
+			
+			if (empleadoAux.isEmp_liquida()) {
+
+				liquidaEmpleado(empleadoAux, periodo.getTime());
+				empleadoAux.setEmpFechaSalida(periodo.getTime());
+				empleadoAux.setEmpEstado(Constantes.ESTADO_EMPL_INACTIVO);
+				
+				for (Historicocargo histcargoaux : empleadoAux.getHistoricoCargos()){
+					
+					if (histcargoaux.getHisEstado().equals(Constantes.GENERAL_ESTADO_ACTIVO)){
+
+						histcargoaux.setHisEstado(Constantes.GENERAL_ESTADO_INACTIVO);
+						histcargoaux.setHisFechaFin(periodo.getTime());
+						historicocargoService.saveHistoricocargo(histcargoaux);
+					}
+					
+				}
+				empleadoService.saveEmpleado(empleadoAux);
+
+			}
 
 			mes = periodo.get(Calendar.MONTH);
 
@@ -130,15 +153,6 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 
 			}
 			
-			if (empleadoAux.isEmp_liquida()) {
-
-				liquidaEmpleado(empleadoAux, periodo.getTime());
-				empleadoAux.setEmpFechaSalida(periodo.getTime());
-				empleadoAux.setEmpEstado(Constantes.ESTADO_EMPL_INACTIVO);
-				empleadoService.saveEmpleado(empleadoAux);
-
-			}
-			
 		   try {
 			generarArchivoPlano(empleadoAux, periodo.getTime());
 		} catch (IOException e) {
@@ -146,6 +160,8 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 			e.printStackTrace();
 		}
 		}
+		
+		//Insertar en la tabla proceso con Constantes.LIQUIDACION_NOMINA y el periodo.getTime()
 	};
 
 	public void procesarPrima(Empleado empleado, Calendar periodo) {
@@ -163,11 +179,10 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 			provisionService.saveProvision(provisionAux);
 
 		}
-		Concepto concepto = conceptoService
-				.findConcepto(Constantes.CONCEPTO_PRIMA);
 		
-		realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado,
-				periodo.getTime(), prima);
+		Concepto concepto = conceptoService.findConcepto(Constantes.CONCEPTO_PRIMA);
+		
+		pagoService.realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado, periodo.getTime(), prima);
 
 	}
 
@@ -175,7 +190,6 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 
 		Double cesantias = 0.0;
 		Double interesesCesantias = 0.0;
-		//Integer entidad;
 
 		List<Provision> provisionesRep = provisionService.findProvisiones(
 				empleado.getEmpCedula(), Constantes.CONCEPTO_CESANTIAS,
@@ -189,10 +203,8 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 
 		}
 
-		// entidad = recuperarAfiliacion(cedulaEmpleado, "ENTIDAD_CESANTIAS");
-
-		realizarAporte(1, Constantes.APORTE_CESANTIAS, periodo.getTime(),
-				cesantias);
+		aporteService.realizarAporte(empleado.getEntidadCesantias().getEntCodigo(), Constantes.APORTE_CESANTIAS, periodo.getTime(),
+				cesantias, Constantes.APO_EMPRESA);
 
 		List<Provision> provisioneInte = provisionService
 				.findProvisiones(empleado.getEmpCedula(),
@@ -209,7 +221,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		Concepto concepto = conceptoService
 				.findConcepto(Constantes.CONCEPTO_INTERESES_CESANTIAS);
 		
-		realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado,
+		pagoService.realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado,
 				periodo.getTime(), interesesCesantias);
 
 	}
@@ -229,6 +241,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		  
 		 }
 		 
+		 System.out.println("deducciones:"+cedulaEmpleado+" periodo "+periodo+totalDeducciones);
 		return totalDeducciones;
 
 	}
@@ -260,37 +273,13 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		System.out.println("DEVENGADOS: "+calcularTotalDevengados(empleado, periodo)+" decucidos: "+calcularTotalDeducciones(empleado.getEmpCedula(), periodo)+" salario "+salario);
 		return salario;
 	}
-
-	public void realizarPago(Concepto concepto, String estado,
-			Empleado empleado, Date periodo, Double valorPago) {
-		
-		pago = new Pago();
-		
-		pago.setPagConcepto(concepto);
-		pago.setPagEstado(estado);
-		pago.setPagoEmpleado(empleado);
-		pago.setPagPeriodo(periodo);
-		pago.setPagValorPago(valorPago);
-		pagoService.savePago(pago);
-	}
+	
 
 	public Integer recuperarAfiliacion(Integer cedulaEmpleado, String tipoEntidad) {
 
 		Integer entidad = 0;
 		// entidad = recuperar la entidad
 		return entidad;
-	}
-
-	public void realizarAporte(Integer entidad, String tipo, Date periodo,
-			Double valor) {
-		
-		aporte = new Aporte();
-		aporte.setApoEntidad(entidad);
-		aporte.setApoTipo(tipo);
-		aporte.setApoPeriodo(periodo);
-		aporte.setApoValor(valor);
-
-		aporteService.saveAporte(aporte);
 	}
 
 	public void liquidaEmpleado(Empleado empleado, Date periodo) {
@@ -314,7 +303,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		concepto = conceptoService
 				.findConcepto(Constantes.CONCEPTO_VACACIONES);
 		
-		realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado,
+		pagoService.realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado,
 				periodo, vacaciones);
 
 		provisiones = null;
@@ -331,7 +320,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		concepto = conceptoService
 				.findConcepto(Constantes.CONCEPTO_CESANTIAS);
 		
-		realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado,
+		pagoService.realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado,
 				periodo, cesantias);
 		
 		provisiones = null;
@@ -350,8 +339,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		concepto = conceptoService
 				.findConcepto(Constantes.CONCEPTO_INTERESES_CESANTIAS);
 		
-		realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado,
-				periodo, interesCesantias);
+		pagoService.realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado, periodo, interesCesantias);
 		
 		provisiones = null;
 
@@ -367,33 +355,10 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		concepto = conceptoService
 				.findConcepto(Constantes.CONCEPTO_PRIMA);
 		
-		realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado,
-				periodo, prima);
+		pagoService.realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado, periodo, prima);
 
 	}
 	
-	public void realizarAporteSeguridadSocial(Integer cedulaEmpleado, Date periodo){
-		
-		Double salud = 0.0;
-		Double pension = 0.0;
-		
-		pago = pagoService.findPago(
-				cedulaEmpleado, Constantes.CONCEPTO_SALUD,
-				periodo);
-		
-		salud = pago.getPagValorPago();
-		
-		realizarAporte(1, Constantes.APORTE_SALUD, periodo, salud);
-		
-		pago = pagoService.findPago(
-				cedulaEmpleado, Constantes.CONCEPTO_PENSION,
-				periodo);
-		
-		pension = pago.getPagValorPago();
-		
-		realizarAporte(1, Constantes.APORTE_PENSION, periodo, pension);
-
-	}
 	
 	public void generarArchivoPlano(Empleado empleado, Date periodo) throws IOException{
 		

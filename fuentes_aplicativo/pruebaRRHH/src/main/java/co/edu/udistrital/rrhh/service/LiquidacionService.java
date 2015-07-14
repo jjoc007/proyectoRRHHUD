@@ -1,6 +1,5 @@
 package co.edu.udistrital.rrhh.service;
 
-import co.edu.udistrital.rrhh.domain.Concepto;
 import co.edu.udistrital.rrhh.domain.Empleado;
 
 import java.util.Calendar;
@@ -30,18 +29,7 @@ public interface LiquidacionService {
 
 	
 	public Double calcularSalarioEmpleado(Empleado empleado, Date periodo);
-	
 
-	public void realizarPago(Concepto concepto, String estado,
-			Empleado empleado, Date periodo, Double valorPago);
-		
-	
-	public Integer recuperarAfiliacion(Integer cedulaEmpleado, String tipoEntidad);
-	
-	
-	public abstract void realizarAporte(Integer entidad, String tipo, Date periodo,
-			Double valor);
-	
 	
 	public void liquidaEmpleado(Empleado empleado, Date periodo);
 }

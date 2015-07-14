@@ -1,4 +1,5 @@
 package co.edu.udistrital.rrhh.service.impl;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,4 +95,16 @@ public class AporteServiceImpl implements AporteService {
 	public Aporte updateAporte(Aporte aporte) {
         return aporteReprository.save(aporte);
     }
+	
+	public void realizarAporte(Integer entidad, String tipo, Date periodo, Double valor, Double valorEmpresa) {
+		
+		Aporte aporte = new Aporte();
+		aporte.setApoEntidad(entidad);
+		aporte.setApoTipo(tipo);
+		aporte.setApoPeriodo(periodo);
+		aporte.setApoValor(valor);
+		aporte.setApoValorEmpresa(valorEmpresa);
+
+		aporteReprository.save(aporte);
+	}
 }

@@ -1,6 +1,7 @@
 package co.edu.udistrital.rrhh.service;
 import co.edu.udistrital.rrhh.domain.Aporte;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.roo.addon.layers.service.RooService;
@@ -36,5 +37,8 @@ public interface AporteService {
 
 
 	Double calcularAporteARP(Double sueldoEmpleado);
+	
+	
+	public abstract void realizarAporte(Integer entidad, String tipo, Date periodo, Double valor, Double valorEmpresa);
 
 }

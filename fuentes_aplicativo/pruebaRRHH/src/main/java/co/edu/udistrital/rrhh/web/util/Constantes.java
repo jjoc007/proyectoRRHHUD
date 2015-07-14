@@ -5,7 +5,7 @@ public class Constantes {
 	public static final String TIPO_CONCEPTO_DEVENGO = "DEVENGO";
 	public static final String TIPO_CONCEPTO_DEDUCIDO = "DEDUCIDO";
 	public static final String TIPO_CONCEPTO_OTROS = "OTROS";
-	public static final int[] PERIODO_DEFECTO = new int[]{1,5,2015}; // DD/MM/AAAA
+	public static final int PERIODO_LIQUIDACION = 1; 
 	
 	public static final String TIPO_CONCEPTO_PORCENTAJE = "P";
 	public static final String TIPO_CONCEPTO_VALOR = "V";
@@ -40,6 +40,7 @@ public class Constantes {
 	public static final int CONCEPTO_INTERESES_CESANTIAS = 7;
 	public static final int CONCEPTO_PRIMA = 8;
 	public static final int CONCEPTO_VACACIONES = 9;
+	public static final int CONCEPTO_CAJA_COMPENSACION = 10;
 	
 	public static final String GENERAL_ESTADO_ACTIVO = "A";
 	public static final String GENERAL_ESTADO_INACTIVO = "I";
@@ -52,5 +53,12 @@ public class Constantes {
 	public static final String 	TIPO_ENTIDAD_CAJA_COMPENSACION = "O";
 	
 	public static final String RUTA_ARCHIVO_PLANO = "E:/liquidacionNomina.txt";
+	
+	//Nombres de los procesos
+	public static final String LIQUIDACION_PRESTACIONES = "LIQUIDACION_PRESTACIONES";
+	public static final String CONCEPTOS_LIQUIDACION = "CONCEPTOS_LIQUIDACION";
+	public static final String LIQUIDACION_NOMINA = "LIQUIDACION_NOMINA";
+	
+	public static final Double APO_EMPRESA = 0.0;
 	
 }

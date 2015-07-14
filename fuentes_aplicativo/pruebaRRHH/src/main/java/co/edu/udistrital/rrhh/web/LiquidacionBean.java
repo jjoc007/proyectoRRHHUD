@@ -97,16 +97,13 @@ public class LiquidacionBean implements Serializable {
 
 	public void liquidar() throws ParseException {
 
-		//Calendar periodo = pagoService.traerPeriodoActualPago();
-		//periodo.set(2015, 1, 1, 0, 0, 0);
-
 		System.out.println("calendario " + periodo.getTime());
 
 		liquidacionService.Liquidar(allEmpleados, periodo);
 	}
 	
 	public Calendar obtenerPeriodo() {
-		periodo = pagoService.traerPeriodoActualPago();
+		periodo = Utilidades.periodoLiquidacion();
 		return periodo;
 	}
 

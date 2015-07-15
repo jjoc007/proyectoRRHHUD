@@ -9,13 +9,15 @@
 <ui:composition template="../templates/layout.xhtml">
   <ui:define name="content">
     <h:form prependId="false" id="growlForm">
-      <p:growl id="growl" showDetail="false" />
+      <p:messages id="growl" showDetail="true" autoUpdate="true" closable="true" />
     </h:form>
     <h:form prependId="false" id="dataForm">
-      <p:panel id="data" toggleable="true" toggleSpeed="250">
-        <h:outputFormat id="noRecordsFound" value="#{messages.label_no_records_found}" >
-        </h:outputFormat>
-        <h:outputText id = "periodoLiquidar" value ="#{liquidacionBean.periodoLiquidar}"/>
+      <p:panel id="data" >
+        
+        <f:facet name="header">
+          <h:outputText value="Período a Liquidar #{liquidacionBean.periodoLiquidar}" />
+        </f:facet>
+        
         <p:dataTable id="list" value="#{liquidacionBean.allEmpleados}" var="empleado" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10">
        <p:column headerText="Empleado">
         <h:outputText value="#{empleado.empCedula}" />

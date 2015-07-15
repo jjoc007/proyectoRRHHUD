@@ -9,15 +9,14 @@
 <ui:composition template="../templates/layout.xhtml">
   <ui:define name="content">
     <h:form prependId="false" id="growlForm">
-      <p:growl id="growl" showDetail="false" />
+      <p:growl id="growl" showDetail="true" autoUpdate="true" closable="true"/>
     </h:form>
     <h:form prependId="false" id="dataForm">
-      <p:panel id="data" toggleable="true" toggleSpeed="250">
+      <p:panel id="data">
         <f:facet name="header">
-          <h:outputText value="Conceptos liquidacion" />
+          <h:outputText value="Conceptos Liquidación Período #{conceptosLiquidacionBean.periodoLiquidar}"/>
         </f:facet>
         
-         <h:outputText id = "periodoLiquidar" value ="#{conceptosLiquidacionBean.periodoLiquidar}"/>
          <p:dataTable id="list" value="#{conceptosLiquidacionBean.allEmpleadosWithPagos}" var="empleado" rendered="#{conceptosLiquidacionBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10" editable="true" editMode="cell">
          
  		  <p:column rowspan="1" headerText="Cédula" >

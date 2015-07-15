@@ -1,6 +1,7 @@
 package co.edu.udistrital.rrhh.service;
 
 import co.edu.udistrital.rrhh.domain.Empleado;
+import co.edu.udistrital.rrhh.web.util.NominaException;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -11,7 +12,7 @@ import org.springframework.roo.addon.layers.service.RooService;
 @RooService(domainTypes = { co.edu.udistrital.rrhh.domain.Empleado.class })
 public interface LiquidacionService {
 
-	public abstract void Liquidar(List<Empleado> allEmpleados, Calendar periodo);
+	public abstract void Liquidar(List<Empleado> allEmpleados, Calendar periodo) throws NominaException;
 	
 	
 	public abstract void procesarPrima(Empleado empleado, Calendar periodo);
@@ -32,4 +33,7 @@ public interface LiquidacionService {
 
 	
 	public void liquidaEmpleado(Empleado empleado, Date periodo);
+	
+	
+	public void generarArchivoPlano(StringBuffer contenidoArchivo, Date periodo);
 }

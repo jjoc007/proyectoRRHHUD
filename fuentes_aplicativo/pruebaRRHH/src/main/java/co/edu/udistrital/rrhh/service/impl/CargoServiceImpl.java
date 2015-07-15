@@ -40,11 +40,11 @@ public class CargoServiceImpl implements CargoService {
 	// Cambio de Estado de Cargp
 	public void  ActEstadoCargo(Cargo cargo) throws NominaException{
 
-		//valida que en historico dcargo no hallan registros con ese cargo activo,  con esto se demuestra que el cargo no esta en uso y se puede innactivar 
+		//valida que en historico de cargo no hallan registros con ese cargo activo,  con esto se demuestra que el cargo no esta en uso y se puede innactivar 
 		List<Historicocargo> historicos =  historicoCargoRepository.findHistoricoCargosActivosByCargo(cargo.getCarCogigo(), Constantes.GENERAL_ESTADO_ACTIVO);
 
 		if(historicos != null && historicos.size() > 0){
-			 throw new NominaException("Hay empeados asignados a este cargo ");
+			 throw new NominaException("Hay empleados asignados a este cargo");
 
 		}else{
 
@@ -73,7 +73,7 @@ public class CargoServiceImpl implements CargoService {
 		if(cargo.getCarSalario() >= conceptoSMLV.getConValor()){		
 			cargoReprository.save(cargo);
 		}else{
-			throw new NominaException("El salario delc argo debe ser mayor a: "+Utilidades.doubleFormated(conceptoSMLV.getConValor()));
+			throw new NominaException("El salario del cargo debe ser mayor a: "+Utilidades.doubleFormated(conceptoSMLV.getConValor()));
 		}
 	}
 

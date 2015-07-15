@@ -14,6 +14,8 @@ import co.edu.udistrital.rrhh.service.LiquidacionService;
 import co.edu.udistrital.rrhh.service.PagoService;
 import co.edu.udistrital.rrhh.service.ProvisionService;
 import co.edu.udistrital.rrhh.web.util.Constantes;
+import co.edu.udistrital.rrhh.web.util.NominaException;
+import co.edu.udistrital.rrhh.web.util.Utilidades;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -48,21 +50,25 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 	public Aporte aporte;
 	public Provision provision;
 
-	public void Liquidar(List<Empleado> allEmpleados, Calendar periodo) {
+	public void Liquidar(List<Empleado> allEmpleados, Calendar periodo) throws NominaException {
 
 		Integer numProviVacaciones;
 		Integer mes;
 		List<Provision> provisionesRep;
+		StringBuffer contenidoArchivo = new StringBuffer("CEDULA;NOMBRE;CUENTA;TOTAL DEVENGOS; TOTAL DEDUCIDOS;SALARIO \n");
 
 		//Verificar en la tabla Proceso
 
-			System.out
-			.println("No se puede realizar el proceso de liquidación ya que no existe liquidación de prestaciones");
-		
-		
+		//	throw new NominaException("No se puede realizar el proceso de liquidación ya que no existe liquidación de prestaciones");
+
+
+		/*	System.out
+			.println("No se puede realizar el proceso de liquidación ya que no existe liquidación de prestaciones");*/
+
+
 		for (Empleado empleadoAux : allEmpleados) {
 
-					provisionesRep = provisionService.findProvisiones(
+			provisionesRep = provisionService.findProvisiones(
 					empleadoAux.getEmpCedula(), Constantes.CONCEPTO_VACACIONES,
 					Constantes.PROV_ACTIVA);
 
@@ -72,9 +78,10 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 				numProviVacaciones = 0;
 
 			if  (numProviVacaciones >= 12) {
-				
-				System.out.println("Alerta el empleado "+empleadoAux.getEmpCedula()+" ya tiene "+numProviVacaciones+" meses acumulados sin tomar vacaciones");
-				
+
+				throw new NominaException("Alerta el empleado "+empleadoAux.getEmpCedula()+" ya tiene "+numProviVacaciones+" meses acumulados sin tomar vacaciones");
+				//System.out.println("Alerta el empleado "+empleadoAux.getEmpCedula()+" ya tiene "+numProviVacaciones+" meses acumulados sin tomar vacaciones");
+
 			}else if (numProviVacaciones > 24) {
 
 				int cont = 0;
@@ -96,10 +103,8 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 
 				if (numProviVacaciones <= 12) {
 
-					System.out
-							.println("El empleado: "
-									+ empleadoAux.getEmpCedula()
-									+ " NO puede tomar vacaciones no cumple con los periodos necesarios");
+					throw new NominaException("El empleado: "+ empleadoAux.getEmpCedula()
+							+ " NO puede tomar vacaciones no cumple con los periodos necesarios");
 				} else {
 
 					int cont = 0;
@@ -118,22 +123,22 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 				}
 
 			}
-			
+
 			if (empleadoAux.isEmp_liquida()) {
 
 				liquidaEmpleado(empleadoAux, periodo.getTime());
 				empleadoAux.setEmpFechaSalida(periodo.getTime());
 				empleadoAux.setEmpEstado(Constantes.ESTADO_EMPL_INACTIVO);
-				
+
 				for (Historicocargo histcargoaux : empleadoAux.getHistoricoCargos()){
-					
+
 					if (histcargoaux.getHisEstado().equals(Constantes.GENERAL_ESTADO_ACTIVO)){
 
 						histcargoaux.setHisEstado(Constantes.GENERAL_ESTADO_INACTIVO);
 						histcargoaux.setHisFechaFin(periodo.getTime());
 						historicocargoService.saveHistoricocargo(histcargoaux);
 					}
-					
+
 				}
 				empleadoService.saveEmpleado(empleadoAux);
 
@@ -152,15 +157,12 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 				procesarPrima(empleadoAux, periodo);
 
 			}
-			
-		   try {
-			generarArchivoPlano(empleadoAux, periodo.getTime());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+				contenidoArchivo.append(empleadoAux.getEmpCedula()+";"+empleadoAux.getEmpNombre()+";"+empleadoAux.getEmpCuentaPago()+";"+calcularTotalDevengados(empleadoAux, periodo.getTime())+";"+calcularTotalDeducciones(empleadoAux.getEmpCedula(), periodo.getTime())+";"+calcularSalarioEmpleado(empleadoAux, periodo.getTime())+"\n");
 		}
 		
+		generarArchivoPlano(contenidoArchivo, periodo.getTime());
+
 		//Insertar en la tabla proceso con Constantes.LIQUIDACION_NOMINA y el periodo.getTime()
 	};
 
@@ -173,15 +175,15 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 				Constantes.PROV_ACTIVA);
 
 		for (Provision provisionAux : provisionesRep) {
-			
+
 			prima += provisionAux.getProValor();
 			provisionAux.setProEstado(Constantes.PROV_PAGADA);
 			provisionService.saveProvision(provisionAux);
 
 		}
-		
+
 		Concepto concepto = conceptoService.findConcepto(Constantes.CONCEPTO_PRIMA);
-		
+
 		pagoService.realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado, periodo.getTime(), prima);
 
 	}
@@ -220,7 +222,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		}
 		Concepto concepto = conceptoService
 				.findConcepto(Constantes.CONCEPTO_INTERESES_CESANTIAS);
-		
+
 		pagoService.realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado,
 				periodo.getTime(), interesesCesantias);
 
@@ -228,51 +230,51 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 
 	public Double calcularTotalDeducciones(Integer cedulaEmpleado,
 			Date periodo) {
-		
+
 		Double totalDeducciones = 0.0;
 
-		
-		 List<Pago> pagoRep = pagoService.findPagos(cedulaEmpleado,
-		 periodo, Constantes.TIPO_CONCEPTO_DEDUCIDO);
-		  
-		 for(Pago pagoAux: pagoRep){
-		  
-		  totalDeducciones += pagoAux.getPagValorPago();
-		  
-		 }
-		 
+
+		List<Pago> pagoRep = pagoService.findPagos(cedulaEmpleado,
+				periodo, Constantes.TIPO_CONCEPTO_DEDUCIDO);
+
+		for(Pago pagoAux: pagoRep){
+
+			totalDeducciones += pagoAux.getPagValorPago();
+
+		}
+
 		return totalDeducciones;
 
 	}
 
 	public Double calcularTotalDevengados(Empleado empleado, Date periodo) {
-		
+
 		Double totalDevengados = 0.0;
-		
+
 		List<Pago> pagoRep = pagoService.findPagos(empleado.getEmpCedula(), periodo,
-				 Constantes.TIPO_CONCEPTO_DEVENGO);
-		  
-		 for(Pago pagoAux: pagoRep){
-		 
-		 totalDevengados += pagoAux.getPagValorPago();
-		  
-		  }
-		
+				Constantes.TIPO_CONCEPTO_DEVENGO);
+
+		for(Pago pagoAux: pagoRep){
+
+			totalDevengados += pagoAux.getPagValorPago();
+
+		}
+
 		totalDevengados += empleado.getCargo().getCarSalario();
 
 		return totalDevengados;
 	}
 
 	public Double calcularSalarioEmpleado(Empleado empleado, Date periodo) {
-		
+
 		Double salario = 0.0;
 		salario = calcularTotalDevengados(empleado, periodo)
 				- calcularTotalDeducciones(empleado.getEmpCedula(), periodo);
-		
+
 		System.out.println("DEVENGADOS: "+calcularTotalDevengados(empleado, periodo)+" decucidos: "+calcularTotalDeducciones(empleado.getEmpCedula(), periodo)+" salario "+salario);
 		return salario;
 	}
-	
+
 
 	public Integer recuperarAfiliacion(Integer cedulaEmpleado, String tipoEntidad) {
 
@@ -282,13 +284,13 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 	}
 
 	public void liquidaEmpleado(Empleado empleado, Date periodo) {
-		
+
 		Concepto concepto = new Concepto();
 		Double prima = 0.0;		
 		Double interesCesantias = 0.0;	
 		Double cesantias = 0.0;
 		Double vacaciones  = 0.0;
-		
+
 		List<Provision> provisiones = provisionService.findProvisiones(
 				empleado.getEmpCedula(), Constantes.CONCEPTO_VACACIONES,
 				Constantes.PROV_ACTIVA);
@@ -301,12 +303,12 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 
 		concepto = conceptoService
 				.findConcepto(Constantes.CONCEPTO_VACACIONES);
-		
+
 		pagoService.realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado,
 				periodo, vacaciones);
 
 		provisiones = null;
-		
+
 		provisiones = provisionService.findProvisiones(empleado.getEmpCedula(),
 				Constantes.CONCEPTO_CESANTIAS, Constantes.PROV_ACTIVA);
 
@@ -315,13 +317,13 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 			provisionAux.setProEstado(Constantes.PROV_PAGADA);
 			provisionService.saveProvision(provisionAux);
 		}
-		
+
 		concepto = conceptoService
 				.findConcepto(Constantes.CONCEPTO_CESANTIAS);
-		
+
 		pagoService.realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado,
 				periodo, cesantias);
-		
+
 		provisiones = null;
 
 		provisiones = provisionService
@@ -334,52 +336,52 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 			provisionAux.setProEstado(Constantes.PROV_PAGADA);
 			provisionService.saveProvision(provisionAux);
 		}
-		
+
 		concepto = conceptoService
 				.findConcepto(Constantes.CONCEPTO_INTERESES_CESANTIAS);
-		
+
 		pagoService.realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado, periodo, interesCesantias);
-		
+
 		provisiones = null;
 
 		provisiones = provisionService.findProvisiones(empleado.getEmpCedula(),
 				Constantes.CONCEPTO_PRIMA, Constantes.PROV_ACTIVA);
 
 		for (Provision provisionAux : provisiones) {
-            prima += provisionAux.getProValor();
+			prima += provisionAux.getProValor();
 			provisionAux.setProEstado(Constantes.PROV_PAGADA);
 			provisionService.saveProvision(provisionAux);
 		}
-		
+
 		concepto = conceptoService
 				.findConcepto(Constantes.CONCEPTO_PRIMA);
-		
+
 		pagoService.realizarPago(concepto, Constantes.PAGO_ACTIVO, empleado, periodo, prima);
 
 	}
-	
-	
-	public void generarArchivoPlano(Empleado empleado, Date periodo) throws IOException{
-		
-		Double devengos = 0.0;
-		Double deducidos = 0.0;
-		Double salario = 0.0;
-		
-		String ruta = Constantes.RUTA_ARCHIVO_PLANO;
-		        File archivo = new File(ruta);
-		        devengos = calcularTotalDevengados(empleado, periodo);
-				deducidos = calcularTotalDeducciones(empleado.getEmpCedula(), periodo);
-		        salario = calcularSalarioEmpleado(empleado, periodo);
-		        
-		        BufferedWriter bw;
-		        if(archivo.exists()) {
-		            bw = new BufferedWriter(new FileWriter(archivo));
-		            bw.write(empleado.getEmpCedula());
-		        } else {
-		            bw = new BufferedWriter(new FileWriter(archivo));
-		            bw.write(empleado.getEmpCedula());
-		        }
-		        bw.close();
-		    }
+
+
+	public void generarArchivoPlano(StringBuffer contenidoArchivo, Date periodo){
+
+
+		BufferedWriter out = null;   
+		try {   
+			out = new BufferedWriter(new FileWriter(Constantes.RUTA_ARCHIVO_PLANO+Utilidades.dateFormatedToFile(periodo)+".txt", true));   
+			out.write(contenidoArchivo.toString()+"\r"); 
+
+		} catch (IOException e) {   
+			// error processing code   
+		} finally {   
+			if (out != null) {   
+				try {
+					out.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}   
+			}   
+		}
+
+	}
 
 }

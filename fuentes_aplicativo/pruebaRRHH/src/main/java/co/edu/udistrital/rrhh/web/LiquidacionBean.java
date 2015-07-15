@@ -1,11 +1,12 @@
 package co.edu.udistrital.rrhh.web;
 
-
 import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.service.EmpleadoService;
 import co.edu.udistrital.rrhh.service.LiquidacionService;
 import co.edu.udistrital.rrhh.service.PagoService;
 import co.edu.udistrital.rrhh.web.util.Constantes;
+import co.edu.udistrital.rrhh.web.util.MessageFactory;
+import co.edu.udistrital.rrhh.web.util.NominaException;
 import co.edu.udistrital.rrhh.web.util.Utilidades;
 
 import java.io.Serializable;
@@ -15,8 +16,10 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.event.CloseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +36,10 @@ public class LiquidacionBean implements Serializable {
 
 	@Autowired
 	EmpleadoService empleadoService;
-	
+
 	@Autowired
 	LiquidacionService liquidacionService;
-	
+
 	@Autowired
 	PagoService pagoService;
 
@@ -95,18 +98,26 @@ public class LiquidacionBean implements Serializable {
 		this.columns = columns;
 	}
 
-	public void liquidar() throws ParseException {
+	public void liquidar(){
+		try {
+			System.out.println("calendario " + periodo.getTime());
 
-		System.out.println("calendario " + periodo.getTime());
+			liquidacionService.Liquidar(allEmpleados, periodo);
 
-		liquidacionService.Liquidar(allEmpleados, periodo);
+		} catch (NominaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+			FacesMessage facesMessage = MessageFactory.getMessage(
+					e.getMessage(), "Cargo");
+			FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+		}
 	}
-	
+
 	public Calendar obtenerPeriodo() {
 		periodo = Utilidades.periodoLiquidacion();
 		return periodo;
 	}
-
 
 	public String getPeriodoLiquidar() {
 		periodoLiquidar = Utilidades.dateFormat(periodo.getTime());
@@ -117,5 +128,4 @@ public class LiquidacionBean implements Serializable {
 		this.periodoLiquidar = periodoLiquidar;
 	}
 
-	
 }

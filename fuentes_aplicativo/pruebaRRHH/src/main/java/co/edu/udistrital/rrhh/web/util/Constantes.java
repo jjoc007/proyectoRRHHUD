@@ -52,7 +52,7 @@ public class Constantes {
 	public static final String 	TIPO_ENTIDAD_ARL = "A";
 	public static final String 	TIPO_ENTIDAD_CAJA_COMPENSACION = "O";
 	
-	public static final String RUTA_ARCHIVO_PLANO = "E:/liquidacionNomina.txt";
+	public static final String RUTA_ARCHIVO_PLANO = "E:\\liquidacionNomina";
 	
 	//Nombres de los procesos
 	public static final String LIQUIDACION_PRESTACIONES = "LIQUIDACION_PRESTACIONES";

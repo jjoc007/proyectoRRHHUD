@@ -1,10 +1,13 @@
 package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Aporte;
 import co.edu.udistrital.rrhh.service.AporteService;
+import co.edu.udistrital.rrhh.web.util.CampoValor;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.el.ELContext;
 import javax.el.ExpressionFactory;
@@ -15,6 +18,7 @@ import javax.faces.component.html.HtmlOutputText;
 import javax.faces.component.html.HtmlPanelGrid;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.LengthValidator;
+
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.message.Message;
 import org.primefaces.component.outputlabel.OutputLabel;
@@ -46,7 +50,7 @@ public class AporteBean implements Serializable {
 
 	private boolean dataVisible = false;
 
-	private List<String> columns;
+	private List<CampoValor> columns;
 
 	private HtmlPanelGrid createPanelGrid;
 
@@ -58,18 +62,19 @@ public class AporteBean implements Serializable {
 
 	@PostConstruct
     public void init() {
-        columns = new ArrayList<String>();
-        columns.add("apoEntidad");
-        columns.add("apoTipo");
-        columns.add("apoPeriodo");
-        columns.add("apoValor");
+		columns = new ArrayList<CampoValor>();
+        columns.add(new CampoValor("Entidad", "apoEntidad"));
+        columns.add(new CampoValor("Tipo", "apoTipo"));
+        columns.add(new CampoValor("Periodo", "apoPeriodo"));
+        columns.add(new CampoValor("Valor", "apoValor"));
+        
     }
 
 	public String getName() {
         return name;
     }
 
-	public List<String> getColumns() {
+	public List<CampoValor> getColumns() {
         return columns;
     }
 

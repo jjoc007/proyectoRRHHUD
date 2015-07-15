@@ -52,6 +52,7 @@ public class ApplicationBean {
         submenu = new Submenu();
         submenu.setId("aporteSubmenu");
         submenu.setLabel("Aporte");
+        /*-- No debe crear Aporte
         item = new MenuItem();
         item.setId("createAporteMenuItem");
         item.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{messages.label_create}", String.class));
@@ -61,6 +62,7 @@ public class ApplicationBean {
         item.setAsync(false);
         item.setUpdate(":dataForm:data");
         submenu.getChildren().add(item);
+         */
         item = new MenuItem();
         item.setId("listAporteMenuItem");
         item.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{messages.label_list}", String.class));

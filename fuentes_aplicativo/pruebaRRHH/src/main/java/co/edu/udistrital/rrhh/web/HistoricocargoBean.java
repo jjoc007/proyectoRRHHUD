@@ -23,7 +23,7 @@ public class HistoricocargoBean implements Serializable {
 	@Autowired
     HistoricocargoService historicocargoService;
 
-	private String name = "Historicocargoes";
+	private String name = "Historico Cargos";
 
 	private Historicocargo historicocargo;
 

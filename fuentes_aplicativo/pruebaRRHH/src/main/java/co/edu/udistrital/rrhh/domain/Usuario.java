@@ -98,4 +98,14 @@ public class Usuario {
 	public void setUsuUsuario(String id) {
         this.usuUsuario = id;
     }
+	
+	public String getNombreRol() {
+		
+		if(this.usuRol!= null){
+			
+			return this.usuRol.getRolNombre();
+		}
+		
+        return "";
+    }
 }

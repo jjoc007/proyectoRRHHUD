@@ -228,9 +228,20 @@ public class Empleado {
 		this.entidadCajaCompensacion = entidadCajaCompensacion;
 	}
 
-
 	public String getFormatedFechaIngreso(){
 		return Utilidades.dateFormated(empFechaIngreso);
+	}
+	
+	public String getCargoNombre(){
+		
+		if(this.cargo != null){
+			
+			return cargo.getCarNombre();
+			
+		}
+		
+		return "";
+		
 	}
 	
 	

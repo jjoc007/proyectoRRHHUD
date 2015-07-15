@@ -1,7 +1,9 @@
 package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Usuario;
 import co.edu.udistrital.rrhh.service.UsuarioService;
+import co.edu.udistrital.rrhh.web.util.CampoValor;
 import co.edu.udistrital.rrhh.web.util.ComponentsGenerator;
+import co.edu.udistrital.rrhh.web.util.Constantes;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
 
 import java.io.Serializable;
@@ -53,7 +55,7 @@ public class UsuarioBean implements Serializable {
 
 	private boolean dataVisible = false;
 
-	private List<String> columns;
+	private List<CampoValor> columns;
 
 	private HtmlPanelGrid createPanelGrid;
 
@@ -65,18 +67,17 @@ public class UsuarioBean implements Serializable {
 
 	@PostConstruct
     public void init() {
-        columns = new ArrayList<String>();
-        columns.add("usuNombre");
-        columns.add("usuClave");
-        columns.add("usuEstado");
-        columns.add("usuCorreo");
+        columns = new ArrayList<CampoValor>();
+        columns.add( new CampoValor("Nombre", "usuNombre") );
+        columns.add( new CampoValor("Rol", "nombreRol") );
+        columns.add(new CampoValor("Correo", "usuCorreo"));
     }
 
 	public String getName() {
         return name;
     }
 
-	public List<String> getColumns() {
+	public List<CampoValor> getColumns() {
         return columns;
     }
 
@@ -89,7 +90,7 @@ public class UsuarioBean implements Serializable {
     }
 
 	public String findAllUsuarios() {
-        allUsuarios = usuarioService.findAllUsuarios();
+        allUsuarios = usuarioService.findAllUsuariosActivos();
         dataVisible = !allUsuarios.isEmpty();
         return null;
     }
@@ -164,10 +165,10 @@ public class UsuarioBean implements Serializable {
         OutputLabel usuNombreCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         usuNombreCreateOutput.setFor("usuNombreCreateInput");
         usuNombreCreateOutput.setId("usuNombreCreateOutput");
-        usuNombreCreateOutput.setValue("Usu Nombre:");
+        usuNombreCreateOutput.setValue("Nombre:");
         htmlPanelGrid.getChildren().add(usuNombreCreateOutput);
         
-        InputTextarea usuNombreCreateInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
+        InputText usuNombreCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
         usuNombreCreateInput.setId("usuNombreCreateInput");
         usuNombreCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuNombre}", String.class));
         LengthValidator usuNombreCreateInputValidator = new LengthValidator();
@@ -185,7 +186,7 @@ public class UsuarioBean implements Serializable {
         OutputLabel usuClaveCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         usuClaveCreateOutput.setFor("usuClaveCreateInput");
         usuClaveCreateOutput.setId("usuClaveCreateOutput");
-        usuClaveCreateOutput.setValue("Usu Clave:");
+        usuClaveCreateOutput.setValue("Clave:");
         htmlPanelGrid.getChildren().add(usuClaveCreateOutput);
         
         Password usuClaveCreateInput = (Password) application.createComponent(Password.COMPONENT_TYPE);
@@ -204,27 +205,6 @@ public class UsuarioBean implements Serializable {
         usuClaveCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(usuClaveCreateInputMessage);
         
-        OutputLabel usuEstadoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        usuEstadoCreateOutput.setFor("usuEstadoCreateInput");
-        usuEstadoCreateOutput.setId("usuEstadoCreateOutput");
-        usuEstadoCreateOutput.setValue("Usu Estado:");
-        htmlPanelGrid.getChildren().add(usuEstadoCreateOutput);
-        
-        InputText usuEstadoCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        usuEstadoCreateInput.setId("usuEstadoCreateInput");
-        usuEstadoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuEstado}", String.class));
-        LengthValidator usuEstadoCreateInputValidator = new LengthValidator();
-        usuEstadoCreateInputValidator.setMaximum(1);
-        usuEstadoCreateInput.addValidator(usuEstadoCreateInputValidator);
-        usuEstadoCreateInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(usuEstadoCreateInput);
-        
-        Message usuEstadoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        usuEstadoCreateInputMessage.setId("usuEstadoCreateInputMessage");
-        usuEstadoCreateInputMessage.setFor("usuEstadoCreateInput");
-        usuEstadoCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(usuEstadoCreateInputMessage);
-        
         
         OutputLabel usuRolCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         usuRolCreateOutput.setFor("usuRolCreateInput");
@@ -240,13 +220,10 @@ public class UsuarioBean implements Serializable {
         usuRolCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(usuRolCreateInputMessage);
         
-        
-        
-        
         OutputLabel usuCorreoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         usuCorreoCreateOutput.setFor("usuCorreoCreateInput");
         usuCorreoCreateOutput.setId("usuCorreoCreateOutput");
-        usuCorreoCreateOutput.setValue("Usu Correo:");
+        usuCorreoCreateOutput.setValue("Correo:");
         htmlPanelGrid.getChildren().add(usuCorreoCreateOutput);
         
         InputText usuCorreoCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
@@ -313,6 +290,7 @@ public class UsuarioBean implements Serializable {
 
 	public String persist() {
         String message = "";
+        usuario.setUsuEstado(Constantes.GENERAL_ESTADO_ACTIVO);
         if (usuario.getUsuUsuario() != null) {
             usuarioService.updateUsuario(usuario);
             message = "message_successfully_updated";

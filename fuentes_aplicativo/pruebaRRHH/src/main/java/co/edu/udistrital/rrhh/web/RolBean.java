@@ -1,6 +1,8 @@
 package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Rol;
 import co.edu.udistrital.rrhh.service.RolService;
+import co.edu.udistrital.rrhh.web.util.CampoValor;
+import co.edu.udistrital.rrhh.web.util.Constantes;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
 
 import java.io.Serializable;
@@ -41,7 +43,7 @@ public class RolBean implements Serializable {
 	@Autowired
     RolService rolService;
 
-	private String name = "Rols";
+	private String name = "Roles";
 
 	private Rol rol;
 
@@ -49,7 +51,7 @@ public class RolBean implements Serializable {
 
 	private boolean dataVisible = false;
 
-	private List<String> columns;
+	private List<CampoValor> columns;
 
 	private HtmlPanelGrid createPanelGrid;
 
@@ -61,17 +63,17 @@ public class RolBean implements Serializable {
 
 	@PostConstruct
     public void init() {
-        columns = new ArrayList<String>();
-        columns.add("rolNombre");
-        columns.add("rolDescripcion");
-        columns.add("rolEstado");
+        columns = new ArrayList<CampoValor>();
+        columns.add(new CampoValor("Nombre", "rolNombre"));
+        columns.add(new CampoValor("Descripcion", "rolDescripcion"));
+
     }
 
 	public String getName() {
         return name;
     }
 
-	public List<String> getColumns() {
+	public List<CampoValor> getColumns() {
         return columns;
     }
 
@@ -84,7 +86,7 @@ public class RolBean implements Serializable {
     }
 
 	public String findAllRols() {
-        allRols = rolService.findAllRols();
+        allRols = rolService.findAllRolesActivos();
         dataVisible = !allRols.isEmpty();
         return null;
     }
@@ -135,32 +137,13 @@ public class RolBean implements Serializable {
         
         HtmlPanelGrid htmlPanelGrid = (HtmlPanelGrid) application.createComponent(HtmlPanelGrid.COMPONENT_TYPE);
         
-        OutputLabel rolIdCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        rolIdCreateOutput.setFor("rolIdCreateInput");
-        rolIdCreateOutput.setId("rolIdCreateOutput");
-        rolIdCreateOutput.setValue("Codigo:");
-        htmlPanelGrid.getChildren().add(rolIdCreateOutput);
-        
-        InputText rolIdCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        rolIdCreateInput.setId("rolIdCreateInput");
-        rolIdCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{rolBean.rol.rolId}", Integer.class));
-        rolIdCreateInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(rolIdCreateInput);
-        
-        Message rolIdCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        rolIdCreateInputMessage.setId("rolIdCreateInputMessage");
-        rolIdCreateInputMessage.setFor("rolIdCreateInput");
-        rolIdCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(rolIdCreateInputMessage);
-        
-        
         OutputLabel rolNombreCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         rolNombreCreateOutput.setFor("rolNombreCreateInput");
         rolNombreCreateOutput.setId("rolNombreCreateOutput");
-        rolNombreCreateOutput.setValue("Rol Nombre:");
+        rolNombreCreateOutput.setValue("Nombre:");
         htmlPanelGrid.getChildren().add(rolNombreCreateOutput);
         
-        InputTextarea rolNombreCreateInput = (InputTextarea) application.createComponent(InputTextarea.COMPONENT_TYPE);
+        InputText rolNombreCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
         rolNombreCreateInput.setId("rolNombreCreateInput");
         rolNombreCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{rolBean.rol.rolNombre}", String.class));
         LengthValidator rolNombreCreateInputValidator = new LengthValidator();
@@ -178,7 +161,7 @@ public class RolBean implements Serializable {
         OutputLabel rolDescripcionCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         rolDescripcionCreateOutput.setFor("rolDescripcionCreateInput");
         rolDescripcionCreateOutput.setId("rolDescripcionCreateOutput");
-        rolDescripcionCreateOutput.setValue("Rol Descripcion:");
+        rolDescripcionCreateOutput.setValue("Descripcion:");
         htmlPanelGrid.getChildren().add(rolDescripcionCreateOutput);
         
         InputText rolDescripcionCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
@@ -192,27 +175,6 @@ public class RolBean implements Serializable {
         rolDescripcionCreateInputMessage.setFor("rolDescripcionCreateInput");
         rolDescripcionCreateInputMessage.setDisplay("icon");
         htmlPanelGrid.getChildren().add(rolDescripcionCreateInputMessage);
-        
-        OutputLabel rolEstadoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
-        rolEstadoCreateOutput.setFor("rolEstadoCreateInput");
-        rolEstadoCreateOutput.setId("rolEstadoCreateOutput");
-        rolEstadoCreateOutput.setValue("Rol Estado:");
-        htmlPanelGrid.getChildren().add(rolEstadoCreateOutput);
-        
-        InputText rolEstadoCreateInput = (InputText) application.createComponent(InputText.COMPONENT_TYPE);
-        rolEstadoCreateInput.setId("rolEstadoCreateInput");
-        rolEstadoCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{rolBean.rol.rolEstado}", String.class));
-        LengthValidator rolEstadoCreateInputValidator = new LengthValidator();
-        rolEstadoCreateInputValidator.setMaximum(1);
-        rolEstadoCreateInput.addValidator(rolEstadoCreateInputValidator);
-        rolEstadoCreateInput.setRequired(true);
-        htmlPanelGrid.getChildren().add(rolEstadoCreateInput);
-        
-        Message rolEstadoCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
-        rolEstadoCreateInputMessage.setId("rolEstadoCreateInputMessage");
-        rolEstadoCreateInputMessage.setFor("rolEstadoCreateInput");
-        rolEstadoCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(rolEstadoCreateInputMessage);
         
         return htmlPanelGrid;
     }
@@ -258,7 +220,9 @@ public class RolBean implements Serializable {
 
 	public String persist() {
         String message = "";
+        rol.setRolEstado(Constantes.GENERAL_ESTADO_ACTIVO);
         if (rol.getRolId() != null) {
+        	rol.setRolEstado(Constantes.GENERAL_ESTADO_ACTIVO);
             rolService.updateRol(rol);
             message = "message_successfully_updated";
         } else {

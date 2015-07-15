@@ -23,7 +23,8 @@ public interface RolService {
 
 	public abstract void saveRol(Rol rol);
 
-
 	public abstract Rol updateRol(Rol rol);
+	
+	public abstract List<Rol> findAllRolesActivos();
 
 }

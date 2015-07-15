@@ -25,5 +25,7 @@ public interface UsuarioService {
 
 
 	public abstract Usuario updateUsuario(Usuario usuario);
+	
+	public abstract List<Usuario> findAllUsuariosActivos();
 
 }

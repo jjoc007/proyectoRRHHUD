@@ -36,20 +36,18 @@
           
           <p:column styleClass="action-column">
             <f:facet name="header">
-              <h:outputText value="Actions" />
+              <h:outputText value="Acciones" />
             </f:facet>
             <p:commandButton id="editButton" icon="ui-icon-pencil" update=":createForm:createPanelGrid" action="#{empleadoBean.onEdit}" oncomplete="createDialogWidget.show()" title="#{messages.label_edit}">
               <f:setPropertyActionListener value="#{empleado}" target="#{empleadoBean.empleado}" />
             </p:commandButton>
             <p:tooltip for="editButton" value="#{messages.label_edit}" showEffect="fade" hideEffect="fade" />
-            <p:commandButton id="deleteButton" icon="ui-icon-trash" oncomplete="deleteDialogWidget.show()" title="#{messages.label_delete}">
-              <f:setPropertyActionListener value="#{empleado}" target="#{empleadoBean.empleado}" />
-            </p:commandButton>
-            <p:tooltip for="deleteButton" value="#{messages.label_delete}" showEffect="fade" hideEffect="fade" />
           </p:column>
         </p:dataTable>
       </p:panel>
     </h:form>
+    <p:dialog id="editDialog"  widgetVar="editDialogWidget">
+    </p:dialog>
     <p:dialog id="createDialog" header="#{messages.label_create} Empleado" modal="true" widgetVar="createDialogWidget" dynamic="true" visible="#{empleadoBean.createDialogVisible}" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
       <p:ajax event="close" update=":dataForm:data" listener="#{empleadoBean.handleDialogClose}" />
       <p:outputPanel id="createPanel">
@@ -70,10 +68,6 @@
          	 
          	  <h:outputText value="cargo" />
          	  <p:autoComplete id="autoCompleteCargoInput" binding="#{empleadoBean.autocompleteCargo}" />
-         	 
-         	  <h:outputText value="Estado" />
-         	 <p:selectOneMenu id="SelectEstadoEmp" binding="#{empleadoBean.selectEstadoEmpleado}" />
-         	 
          	 
          	 
          	 <h:outputText value="Salud" />

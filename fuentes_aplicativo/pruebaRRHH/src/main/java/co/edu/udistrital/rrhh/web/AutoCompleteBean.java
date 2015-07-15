@@ -45,7 +45,7 @@ public class AutoCompleteBean implements Serializable {
 	
 	public List<Rol> completeRol(String query) {
         List<Rol> suggestions = new ArrayList<Rol>();
-        for (Rol rol : rolService.findAllRols()) {
+        for (Rol rol : rolService.findAllRolesActivos()) {
             String t27clasemercadoStr = String.valueOf(rol.getRolNombre());
             if (t27clasemercadoStr.toLowerCase().startsWith(query.toLowerCase())) {
                 suggestions.add(rol);
@@ -56,7 +56,7 @@ public class AutoCompleteBean implements Serializable {
 	
 	public List<Cargo> completeCargo(String query) {
         List<Cargo> suggestions = new ArrayList<Cargo>();
-        for (Cargo cargo : cargoService.findAllCargoes()) {
+        for (Cargo cargo : cargoService.findAllCargoAct(Constantes.GENERAL_ESTADO_ACTIVO)) {
             String t27clasemercadoStr = String.valueOf(cargo.getCarNombre());
             if (t27clasemercadoStr.toLowerCase().startsWith(query.toLowerCase())) {
                 suggestions.add(cargo);

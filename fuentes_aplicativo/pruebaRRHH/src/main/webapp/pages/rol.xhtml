@@ -22,13 +22,13 @@
         <p:dataTable id="list" value="#{rolBean.allRols}" var="rol" rendered="#{rolBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10">
           <p:columns value="#{rolBean.columns}" var="column" columnIndexVar="colIndex">
             <f:facet name="header">
-              <h:outputText value="#{applicationBean.getColumnName(column)}" />
+              <h:outputText value="#{column.nombreCampo}" />
             </f:facet>
-            <h:outputText value="#{rol[column]}" />
+            <h:outputText value="#{rol[column.nombreTabla]}" />
           </p:columns>
           <p:column styleClass="action-column">
             <f:facet name="header">
-              <h:outputText value="Actions" />
+              <h:outputText value="Acciones" />
             </f:facet>
             <p:commandButton id="editButton" icon="ui-icon-pencil" update=":editForm:editPanelGrid" action="#{rolBean.onEdit}" oncomplete="editDialogWidget.show()" title="#{messages.label_edit}">
               <f:setPropertyActionListener value="#{rol}" target="#{rolBean.rol}" />

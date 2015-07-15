@@ -17,7 +17,7 @@
           <h:outputText value="#{cargoBean.name}" />
         </f:facet>
         <h:outputFormat id="noRecordsFound" value="#{messages.label_no_records_found}" rendered="#{!cargoBean.dataVisible}">
-          <f:param value="Cargoes" />
+          <f:param value="Cargos" />
         </h:outputFormat>
         <p:dataTable id="list" value="#{cargoBean.allCargoes}" var="cargo" rendered="#{cargoBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10">
           <p:columns value="#{cargoBean.columns}" var="column" columnIndexVar="colIndex">
@@ -28,12 +28,8 @@
           </p:columns>
           <p:column styleClass="action-column">
             <f:facet name="header">
-              <h:outputText value="Actions" />
+              <h:outputText value="Acciones" />
             </f:facet>
-            <p:commandButton id="viewButton" icon="ui-icon-zoomin" update=":viewForm:viewPanelGrid" oncomplete="viewDialogWidget.show()" title="#{messages.label_view}">
-              <f:setPropertyActionListener value="#{cargo}" target="#{cargoBean.cargo}" />
-            </p:commandButton>
-            <p:tooltip for="viewButton" value="#{messages.label_view}" showEffect="fade" hideEffect="fade" />
             <p:commandButton id="editButton" icon="ui-icon-pencil" update=":editForm:editPanelGrid" action="#{cargoBean.onEdit}" oncomplete="editDialogWidget.show()" title="#{messages.label_edit}">
               <f:setPropertyActionListener value="#{cargo}" target="#{cargoBean.cargo}" />
             </p:commandButton>

@@ -2,6 +2,7 @@ package co.edu.udistrital.rrhh.service.impl;
 import co.edu.udistrital.rrhh.domain.Usuario;
 import co.edu.udistrital.rrhh.repository.UsuarioRepository;
 import co.edu.udistrital.rrhh.service.UsuarioService;
+import co.edu.udistrital.rrhh.web.util.Constantes;
 
 import java.util.List;
 
@@ -21,7 +22,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
 	public void deleteUsuario(Usuario usuario) {
-        usuarioReprository.delete(usuario);
+		usuario.setUsuEstado(Constantes.GENERAL_ESTADO_INACTIVO);
+        usuarioReprository.save(usuario);
     }
 
 	public Usuario findUsuario(Integer id) {
@@ -43,4 +45,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public Usuario updateUsuario(Usuario usuario) {
         return usuarioReprository.save(usuario);
     }
+
+	@Override
+	public List<Usuario> findAllUsuariosActivos() {
+		// TODO Auto-generated method stub
+		return usuarioReprository.findAllUsuariosActivos();
+	}
 }

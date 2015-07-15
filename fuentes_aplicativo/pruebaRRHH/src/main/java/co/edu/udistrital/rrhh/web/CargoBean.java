@@ -45,7 +45,7 @@ public class CargoBean implements Serializable {
 	@Autowired
     CargoService cargoService;
 
-	private String name = "Cargoes";
+	private String name = "Cargos";
 
 	private Cargo cargo;
 

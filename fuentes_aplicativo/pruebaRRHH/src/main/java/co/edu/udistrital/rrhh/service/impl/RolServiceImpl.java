@@ -2,7 +2,10 @@ package co.edu.udistrital.rrhh.service.impl;
 import co.edu.udistrital.rrhh.domain.Rol;
 import co.edu.udistrital.rrhh.repository.RolReprository;
 import co.edu.udistrital.rrhh.service.RolService;
+import co.edu.udistrital.rrhh.web.util.Constantes;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +22,8 @@ public class RolServiceImpl implements RolService {
     }
 
 	public void deleteRol(Rol rol) {
-        rolReprository.delete(rol);
+		rol.setRolEstado(Constantes.GENERAL_ESTADO_INACTIVO);
+        rolReprository.save(rol);
     }
 
 	public Rol findRol(Integer id) {
@@ -41,4 +45,10 @@ public class RolServiceImpl implements RolService {
 	public Rol updateRol(Rol rol) {
         return rolReprository.save(rol);
     }
+
+	@Override
+	public List<Rol> findAllRolesActivos() {
+		// TODO Auto-generated method stub
+		return rolReprository.findAllRolActivos();
+	}
 }

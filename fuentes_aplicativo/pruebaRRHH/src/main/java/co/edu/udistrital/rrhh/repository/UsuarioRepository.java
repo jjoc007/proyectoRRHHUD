@@ -1,6 +1,7 @@
 package co.edu.udistrital.rrhh.repository;
 import java.util.List;
 
+import co.edu.udistrital.rrhh.domain.Cargo;
 import co.edu.udistrital.rrhh.domain.Usuario;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,5 +21,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>, JpaS
 	public List<Object> findUsuarioByUserAndPassword(
 			@Param("user") String usuario,
 			@Param("pass") String password);
+	
+	@Query(value ="SELECT c FROM Usuario c WHERE c.usuEstado = 'A'")
+	public List<Usuario> findAllUsuariosActivos();
 	
 }

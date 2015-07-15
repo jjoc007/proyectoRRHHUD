@@ -48,7 +48,7 @@
     </h:form>
     <p:dialog id="editDialog"  widgetVar="editDialogWidget">
     </p:dialog>
-    <p:dialog id="createDialog" header="#{messages.label_create} Empleado" modal="true" widgetVar="createDialogWidget" dynamic="true" visible="#{empleadoBean.createDialogVisible}" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
+    <p:dialog id="createDialog" header="#{messages.label_create} Empleado" modal="false" widgetVar="createDialogWidget" dynamic="true" visible="#{empleadoBean.createDialogVisible}" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
       <p:ajax event="close" update=":dataForm:data" listener="#{empleadoBean.handleDialogClose}" />
       <p:outputPanel id="createPanel">
         <h:form id="createForm" enctype="multipart/form-data">
@@ -93,7 +93,7 @@
     </p:dialog>
    
    
-    <p:confirmDialog id="deleteDialog" widgetVar="deleteDialogWidget" message="#{messages.label_delete_record}" showEffect="fade" hideEffect="explode" header="#{messages.label_confirm_deletion}" severity="alarm">
+    <p:confirmDialog global="true" id="deleteDialog" widgetVar="deleteDialogWidget" message="#{messages.label_delete_record}" showEffect="fade" hideEffect="explode" header="#{messages.label_confirm_deletion}" severity="alarm">
       <p:outputPanel id="deletePanel">
         <h:form id="deleteForm">
           <p:commandButton id="deleteYesButton" value="#{messages.label_yes}" action="#{empleadoBean.delete}" update=":dataForm:data :growlForm:growl" oncomplete="deleteDialogWidget.hide()" />

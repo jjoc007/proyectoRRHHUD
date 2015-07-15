@@ -63,7 +63,7 @@
       </p:panel>
     </h:form>
    
-     <p:confirmDialog id="confirmDialog" widgetVar="confirmDialogWidget" message="#{messages.label_confirmacion}" showEffect="fade" hideEffect="explode" header="#{messages.label_advertencia}" severity="alarm">
+     <p:confirmDialog global="true" id="confirmDialog" widgetVar="confirmDialogWidget" message="#{messages.label_confirmacion}" showEffect="fade" hideEffect="explode" header="#{messages.label_advertencia}" severity="alarm">
       <p:outputPanel id="confirmPanel">
         <h:form id="confirmForm">
           <p:commandButton id="saveYesButton" value="#{messages.label_yes}" action="#{conceptosLiquidacionBean.guardarPagos}" oncomplete="confirmDialogWidget.hide()" />

@@ -42,7 +42,7 @@
         </p:dataTable>
       </p:panel>
     </h:form>
-    <p:dialog id="createDialog" header="#{messages.label_create} Cargo" modal="true" widgetVar="createDialogWidget" dynamic="true" visible="#{cargoBean.createDialogVisible}" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
+    <p:dialog id="createDialog" header="#{messages.label_create} Cargo" modal="false" widgetVar="createDialogWidget" dynamic="true" visible="#{cargoBean.createDialogVisible}" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
       <p:ajax event="close" update=":dataForm:data" listener="#{cargoBean.handleDialogClose}" />
       <p:outputPanel id="createPanel">
         <h:form id="createForm" enctype="multipart/form-data">
@@ -70,7 +70,7 @@
         </h:form>
       </p:outputPanel>
     </p:dialog>
-    <p:confirmDialog id="deleteDialog" widgetVar="deleteDialogWidget" message="#{messages.label_delete_record}" showEffect="fade" hideEffect="explode" header="#{messages.label_confirm_deletion}" severity="alarm">
+    <p:confirmDialog global="true" id="deleteDialog" widgetVar="deleteDialogWidget" message="#{messages.label_delete_record}" showEffect="fade" hideEffect="explode" header="#{messages.label_confirm_deletion}" severity="alarm">
       <p:outputPanel id="deletePanel">
         <h:form id="deleteForm">
           <p:commandButton id="deleteYesButton" value="#{messages.label_yes}" action="#{cargoBean.delete}" update=":dataForm:data :growlForm:growl" oncomplete="deleteDialogWidget.hide()" />

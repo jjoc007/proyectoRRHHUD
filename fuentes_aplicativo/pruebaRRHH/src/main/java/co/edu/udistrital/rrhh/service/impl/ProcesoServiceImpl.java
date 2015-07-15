@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import co.edu.udistrital.rrhh.domain.Proceso;
 import co.edu.udistrital.rrhh.repository.ProcesoRepository;
 import co.edu.udistrital.rrhh.service.ProcesoService;
-import co.edu.udistrital.rrhh.web.util.Constantes;
 
 @Service
 @Transactional
@@ -41,5 +40,25 @@ public class ProcesoServiceImpl implements ProcesoService {
 	@Override
 	public Proceso findProceso(Integer id) {
 		 return procesoReprository.findOne(id);
+	}
+	
+	public void insertarProceso(String nombre, Date periodo){
+		
+		Proceso proceso = new Proceso();
+		proceso.setProNombre(nombre);
+		proceso.setProPeriodo(periodo);
+		procesoReprository.save(proceso);
+		
+	}
+	
+	public Proceso consultarProceso(String nombre, Date periodo){
+		
+		return procesoReprository.consultarProceso(nombre, periodo);
+		
+	}
+	
+	public Proceso consultarProcesobyName(String nombre){
+		
+		return procesoReprository.consultarProcesobyName(nombre);
 	}
 }

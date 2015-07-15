@@ -1,6 +1,7 @@
 package co.edu.udistrital.rrhh.service;
 import co.edu.udistrital.rrhh.domain.Proceso;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.roo.addon.layers.service.RooService;
@@ -19,5 +20,12 @@ public interface ProcesoService {
 	public abstract void saveProceso(Proceso proceso);
 
 	public abstract Proceso updateProceso(Proceso proceso);
+	
+	public abstract void insertarProceso(String nombre, Date periodo);
+	
+	public abstract Proceso consultarProceso(String nombre, Date periodo);
+	
+	public abstract Proceso consultarProcesobyName(String nombre);
+		
 
 }

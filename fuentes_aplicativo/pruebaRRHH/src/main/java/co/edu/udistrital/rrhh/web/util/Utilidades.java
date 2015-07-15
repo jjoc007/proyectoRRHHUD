@@ -5,8 +5,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import co.edu.udistrital.rrhh.domain.Proceso;
+import co.edu.udistrital.rrhh.service.ProcesoService;
+
 public class Utilidades {
 
+	@Autowired
+	static ProcesoService procesoService;
+	
+	public static Proceso proceso = new Proceso();
 
 	public static String doubleFormated(Double number){
 		DecimalFormat df = new DecimalFormat("$ ###,###,###.##");
@@ -37,9 +46,11 @@ public class Utilidades {
 
 	public static Calendar periodoLiquidacion(){
 		
-		//Recuperar de la tabla proceso el valor de PERIODO_LIQUIDACION = 1
-		Calendar periodoLiq =  Calendar.getInstance();
+		//Recuperar de la tabla proceso el periodo actual
 		
+		//proceso = procesoService.consultarProcesobyName(Constantes.PERIODO_LIQUIDACION);
+		Calendar periodoLiq =  Calendar.getInstance();
+		//periodoLiq.setTime(proceso.getProPeriodo());
 		periodoLiq.set(Calendar.DAY_OF_MONTH, 1);
 		periodoLiq.set(Calendar.MONTH, 1);
 		periodoLiq.set(Calendar.YEAR, 2015);

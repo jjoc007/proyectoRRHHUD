@@ -5,7 +5,7 @@ public class Constantes {
 	public static final String TIPO_CONCEPTO_DEVENGO = "DEVENGO";
 	public static final String TIPO_CONCEPTO_DEDUCIDO = "DEDUCIDO";
 	public static final String TIPO_CONCEPTO_OTROS = "OTROS";
-	public static final int PERIODO_LIQUIDACION = 1; 
+	public static final String PERIODO_LIQUIDACION = "PERIODO_LIQUIDACION"; 
 	
 	public static final String TIPO_CONCEPTO_PORCENTAJE = "P";
 	public static final String TIPO_CONCEPTO_VALOR = "V";

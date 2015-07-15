@@ -5,6 +5,7 @@ import co.edu.udistrital.rrhh.domain.Concepto;
 import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.domain.Historicocargo;
 import co.edu.udistrital.rrhh.domain.Pago;
+import co.edu.udistrital.rrhh.domain.Proceso;
 import co.edu.udistrital.rrhh.domain.Provision;
 import co.edu.udistrital.rrhh.service.AporteService;
 import co.edu.udistrital.rrhh.service.ConceptoService;
@@ -12,13 +13,13 @@ import co.edu.udistrital.rrhh.service.EmpleadoService;
 import co.edu.udistrital.rrhh.service.HistoricocargoService;
 import co.edu.udistrital.rrhh.service.LiquidacionService;
 import co.edu.udistrital.rrhh.service.PagoService;
+import co.edu.udistrital.rrhh.service.ProcesoService;
 import co.edu.udistrital.rrhh.service.ProvisionService;
 import co.edu.udistrital.rrhh.web.util.Constantes;
 import co.edu.udistrital.rrhh.web.util.NominaException;
 import co.edu.udistrital.rrhh.web.util.Utilidades;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
@@ -45,26 +46,41 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 	EmpleadoService empleadoService;
 	@Autowired
 	HistoricocargoService historicocargoService;
+	@Autowired
+	ProcesoService procesoService;
 
 	public Pago pago;
 	public Aporte aporte;
 	public Provision provision;
+	public Proceso proceso = new Proceso();
 
 	public void Liquidar(List<Empleado> allEmpleados, Calendar periodo) throws NominaException {
 
 		Integer numProviVacaciones;
 		Integer mes;
 		List<Provision> provisionesRep;
-		StringBuffer contenidoArchivo = new StringBuffer("CEDULA;NOMBRE;CUENTA;TOTAL DEVENGOS; TOTAL DEDUCIDOS;SALARIO \n");
+		
+		StringBuffer contenidoArchivo = new StringBuffer("CEDULA;NOMBRE;CUENTA;TOTAL DEVENGOS; TOTAL DEDUCIDOS;SALARIO \r\n");
 
-		//Verificar en la tabla Proceso
-
-		//	throw new NominaException("No se puede realizar el proceso de liquidación ya que no existe liquidación de prestaciones");
-
-
-		/*	System.out
-			.println("No se puede realizar el proceso de liquidación ya que no existe liquidación de prestaciones");*/
-
+		//Verificar proceso de liquidacion de prestaciones
+		proceso = procesoService.consultarProceso(Constantes.LIQUIDACION_PRESTACIONES, periodo.getTime());
+		System.out.println(Constantes.LIQUIDACION_PRESTACIONES+" "+ periodo.getTime());
+		if (proceso == null){
+			
+			throw new NominaException("No se puede realizar el proceso de liquidación, NO existe liquidación de prestaciones para el período "+Utilidades.dateFormat(periodo.getTime()));
+			
+		}
+		
+		proceso = null;
+		
+		//Verificar proceso de liquidacion nomina
+		proceso = procesoService.consultarProceso(Constantes.LIQUIDACION_NOMINA, periodo.getTime());
+		
+		if (proceso != null){
+			
+			throw new NominaException("La liquidacion de nómina para el período "+Utilidades.dateFormat(periodo.getTime())+" ya fué realizada");
+			
+		}
 
 		for (Empleado empleadoAux : allEmpleados) {
 
@@ -158,12 +174,23 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 
 			}
 
-				contenidoArchivo.append(empleadoAux.getEmpCedula()+";"+empleadoAux.getEmpNombre()+";"+empleadoAux.getEmpCuentaPago()+";"+calcularTotalDevengados(empleadoAux, periodo.getTime())+";"+calcularTotalDeducciones(empleadoAux.getEmpCedula(), periodo.getTime())+";"+calcularSalarioEmpleado(empleadoAux, periodo.getTime())+"\n");
+				contenidoArchivo.append(empleadoAux.getEmpCedula()+";"+empleadoAux.getEmpNombre()+";"+empleadoAux.getEmpCuentaPago()+";"+calcularTotalDevengados(empleadoAux, periodo.getTime())+";"+calcularTotalDeducciones(empleadoAux.getEmpCedula(), periodo.getTime())+";"+calcularSalarioEmpleado(empleadoAux, periodo.getTime())+"\r\n");
 		}
 		
 		generarArchivoPlano(contenidoArchivo, periodo.getTime());
 
-		//Insertar en la tabla proceso con Constantes.LIQUIDACION_NOMINA y el periodo.getTime()
+		//Insertar en proceso liquidacion
+		
+		procesoService.insertarProceso(Constantes.LIQUIDACION_NOMINA, periodo.getTime());
+		
+		//Actualizar periodo liquidacion
+		
+		proceso = procesoService.consultarProceso(Constantes.PERIODO_LIQUIDACION, periodo.getTime());
+		
+		periodo.add(Calendar.MONTH, 1);
+		proceso.setProPeriodo(periodo.getTime());
+		procesoService.saveProceso(proceso);
+		
 	};
 
 	public void procesarPrima(Empleado empleado, Calendar periodo) {
@@ -273,14 +300,6 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 
 		System.out.println("DEVENGADOS: "+calcularTotalDevengados(empleado, periodo)+" decucidos: "+calcularTotalDeducciones(empleado.getEmpCedula(), periodo)+" salario "+salario);
 		return salario;
-	}
-
-
-	public Integer recuperarAfiliacion(Integer cedulaEmpleado, String tipoEntidad) {
-
-		Integer entidad = 0;
-		// entidad = recuperar la entidad
-		return entidad;
 	}
 
 	public void liquidaEmpleado(Empleado empleado, Date periodo) {

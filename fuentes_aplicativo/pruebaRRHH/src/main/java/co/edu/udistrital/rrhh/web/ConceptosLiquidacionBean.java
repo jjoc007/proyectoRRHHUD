@@ -2,9 +2,11 @@ package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Concepto;
 import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.domain.Pago;
+import co.edu.udistrital.rrhh.domain.Proceso;
 import co.edu.udistrital.rrhh.service.ConceptoService;
 import co.edu.udistrital.rrhh.service.EmpleadoService;
 import co.edu.udistrital.rrhh.service.PagoService;
+import co.edu.udistrital.rrhh.service.ProcesoService;
 import co.edu.udistrital.rrhh.web.util.Constantes;
 import co.edu.udistrital.rrhh.web.util.Utilidades;
 
@@ -39,6 +41,9 @@ public class ConceptosLiquidacionBean implements Serializable  {
 	
 	@Autowired
 	PagoService pagoService; 
+	
+	@Autowired
+	ProcesoService procesoService; 
 	
 	private List<Empleado> allEmpleados;
 	private List<Empleado> allEmpleadosWithPagos;
@@ -84,8 +89,6 @@ public class ConceptosLiquidacionBean implements Serializable  {
 		
 		//Busca todos los conceptos que sean de tipo devengo y deducido		
 		conceptos = conceptoService.findAllConceptoLiq(Constantes.GENERAL_ESTADO_ACTIVO, conceptosCons, tipoPer);
-				
-		obtenerPeriodo();
 		
 		for (Empleado empleadoAux: allEmpleados){
 
@@ -106,6 +109,15 @@ public class ConceptosLiquidacionBean implements Serializable  {
 	
 	public void guardarPagos(){
 		
+		//Verificar proceso de conceptos liquidacion
+		/*Proceso proceso = new Proceso();
+		proceso = procesoService.consultarProceso(Constantes.CONCEPTOS_LIQUIDACION, periodo.getTime());
+		
+		if (proceso == null){
+			
+		}
+		*/
+				
 		for (Empleado empleadoaux : allEmpleadosWithPagos){
 			
 			for (Pago pagoaux : empleadoaux.getPagos()){

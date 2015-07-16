@@ -305,7 +305,7 @@ public class ConceptoBean implements Serializable {
             conceptoService.updateConcepto(concepto);
             message = "message_successfully_updated";
         } else {
-        	concepto.setConEliminar("N");
+        	concepto.setConEliminar("S");
             conceptoService.saveConcepto(concepto);
             message = "message_successfully_created";
         }

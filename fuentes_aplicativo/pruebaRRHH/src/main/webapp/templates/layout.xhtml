@@ -1,45 +1,39 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 <f:view locale="#{localeBean.locale}" contentType="text/html">
-	<h:head>
-		<f:facet name="first">
-			<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
-			<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
-			<meta http-equiv="Cache-Control" content="no-cache" />
-			<meta http-equiv="Pragma" content="no-cache" />
-			<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-		</f:facet>
-		<ui:insert name="header">
-			<ui:include src="header.xhtml" />
-		</ui:insert>
-	</h:head>
-	<h:body>
-	<div align="center">
-		<p:layout  style="width:1024px;">
-
-			<p:layoutUnit position="north" size="115" style="min-height:250px;"
-				 closable="false" >
-				<h:graphicImage library="images" name="ud_logo.png" styleClass="banner" alt="Nomina" />
-				
-			</p:layoutUnit>
-			
-			
-			<p:layoutUnit position="center" style="min-height:600px;">
-			<h:form id="menuForm">
-				<ui:insert name="menu">
-					<ui:include src="menu.xhtml" />
-				</ui:insert>
-			</h:form>
-				<ui:insert name="content"  />
-			</p:layoutUnit>
-			
-			
-		</p:layout>
-		</div>   
-     </h:body>
+  <h:head>
+    <ui:insert name="header">
+      <ui:include src="header.xhtml" />
+    </ui:insert>
+  </h:head>
+  <h:body>
+    <h:panelGrid cellspacing="0" cellpadding="0" styleClass="wrapper">
+      <h:panelGrid columns="2" columnClasses="menu,content">
+        <p:panel cellspacing="0" cellpadding="0" styleClass="menu">
+          <h:form id="menuForm">
+            <h:link outcome="main">
+              <h:graphicImage library="images" name="ud_logo.png" styleClass="banner" alt="Nomina" />
+            </h:link>
+            <ui:insert name="menu">
+              <ui:include src="menu.xhtml" />
+            </ui:insert>
+          </h:form>
+        </p:panel>
+        <h:panelGroup>
+          <h:panelGrid cellspacing="0" cellpadding="0" styleClass="content">
+            <ui:insert name="content" />
+          </h:panelGrid>
+          <ui:insert name="footer">
+            <ui:include src="footer.xhtml" />
+          </ui:insert>
+        </h:panelGroup>
+      </h:panelGrid>
+    </h:panelGrid>
+  </h:body>
 </f:view>
 </html>

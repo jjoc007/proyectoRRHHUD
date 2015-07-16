@@ -1,4 +1,6 @@
 package co.edu.udistrital.rrhh.domain;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,7 +22,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooToString
 @RooJpaEntity(versionField = "", sequenceName = "", table = "usuario")
 @RooDbManaged(automaticallyDelete = true)
-public class Usuario {
+public class Usuario implements Serializable{
 
 	
 	@ManyToOne

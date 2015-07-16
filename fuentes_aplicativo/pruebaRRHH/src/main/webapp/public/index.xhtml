@@ -1,43 +1,59 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
-<ui:composition template="../templates/layout.xhtml">
-  <ui:define name="content">
-    <p:panel id="mainPanel" toggleable="true" toggleSpeed="250">
-      <f:facet name="header">
-        <h:outputFormat value="#{messages.label_welcome_titlepane}">
-          <f:param value="#{applicationBean.appName}" />
-        </h:outputFormat>
-      </f:facet> 
-      <p />
-      <h:outputText id="welcomeText" value="#{messages.label_welcome_text}" />
-      <p />
-      <div id="media"></div>
-    </p:panel>
-    
-    <p:dialog id="loginDialog" header="Login" modal="true" widgetVar="createDialogWidget" dynamic="true" visible="true" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
-      <p:outputPanel id="createPanel">
-        <h:form id="loginForm" enctype="multipart/form-data">
-			<h:panelGrid id="createPanelGrid" columns="2" styleClass="dialog" columnClasses="col1,col2,col3">
-				<f:facet name="header">
-					<h:outputText value="Ingrese Al Sitio" />
-				</f:facet>
-				<h:outputLabel for="username" value="Usuario: " />
-				<h:inputText id="usuario" value="#{loginBean.usuario}" />
-				<h:outputLabel for="password" value="Password: " />
-				<h:inputSecret id="password" value="#{loginBean.password}" />
-				<f:facet name="footer">
-					<h:panelGroup style="display:block; text-align:center">
-						<h:commandButton id="submit" value="Entrar" action="#{loginBean.login}"/>
-					</h:panelGroup>
-				</f:facet>
-			</h:panelGrid>
-        </h:form>
-      </p:outputPanel>
-    </p:dialog>
-  </ui:define>
-</ui:composition>
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{localeBean.locale}" contentType="text/html">
+	<h:head>
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="EmulateIE8" />
+			<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
+			<meta http-equiv="Cache-Control" content="no-cache" />
+			<meta http-equiv="Pragma" content="no-cache" />
+			<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		</f:facet>
+		<ui:insert name="header">
+			<ui:include src="/templates/header.xhtml" />
+		</ui:insert>
+	</h:head>
+	<h:body>
+	<div align="center">
+		<p:layout  style="width:1024px;">
+
+			<p:layoutUnit position="north" size="115" style="min-height:250px;"
+				 closable="false" >
+				<h:graphicImage library="images" name="ud_logo.png" styleClass="banner" alt="Nomina" />
+				
+			</p:layoutUnit>
+			
+			
+			<p:layoutUnit position="center" style="min-height:600px;">
+					<p:outputPanel id="createPanel">
+						<h:form id="loginForm" enctype="multipart/form-data">
+							<h:panelGrid id="createPanelGrid" columns="2" styleClass="dialog"
+								columnClasses="col1,col2,col3">
+								<f:facet name="header">
+									<h:outputText value="Ingrese Al Sitio" />
+								</f:facet>
+								<h:outputLabel for="username" value="Usuario: " />
+								<h:inputText id="usuario" value="#{loginBean.usuario}" />
+								<h:outputLabel for="password" value="Password: " />
+								<h:inputSecret id="password" value="#{loginBean.password}" />
+								<f:facet name="footer">
+									<h:panelGroup style="display:block; text-align:center">
+										<h:commandButton id="submit" value="Entrar"
+											action="#{loginBean.login}" />
+									</h:panelGroup>
+								</f:facet>
+							</h:panelGrid>
+						</h:form>
+					</p:outputPanel>
+				</p:layoutUnit>
+			
+			
+		</p:layout>
+		</div>   
+     </h:body>
+</f:view>
 </html>

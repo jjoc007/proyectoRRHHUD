@@ -1,8 +1,6 @@
 package co.edu.udistrital.rrhh.repository;
-import java.util.List;
 
-import co.edu.udistrital.rrhh.domain.Cargo;
-import co.edu.udistrital.rrhh.domain.Usuario;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -11,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.roo.addon.layers.repository.jpa.RooJpaRepository;
 import org.springframework.stereotype.Repository;
 
+import co.edu.udistrital.rrhh.domain.Usuario;
+
 @Repository
 @RooJpaRepository(domainType = Usuario.class)
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>, JpaSpecificationExecutor<Usuario> {
@@ -18,7 +18,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>, JpaS
 	@Query(value ="SELECT u.* FROM  usuario u WHERE 1=1 "+
 	"AND u.usu_usuario = :user "+
 	"AND u.usu_clave = :pass ", nativeQuery = true)
-	public List<Object> findUsuarioByUserAndPassword(
+	public Usuario findUsuarioByUserAndPassword(
 			@Param("user") String usuario,
 			@Param("pass") String password);
 	

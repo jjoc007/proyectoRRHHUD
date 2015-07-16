@@ -33,13 +33,15 @@
     </filter-mapping>
     
     <filter>
-		<filter-name>LoginFilter</filter-name>
-		<filter-class>co.edu.udistrital.rrhh.web.filter.LoginFilter</filter-class>
+		<filter-name>PagesFilter</filter-name>
+		<filter-class>co.edu.udistrital.rrhh.web.filter.PagesFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>LoginFilter</filter-name>
-		<servlet-name>Faces Servlet</servlet-name>
+		<filter-name>PagesFilter</filter-name>
+		<!--<servlet-name>Faces Servlet</servlet-name>-->
 		<url-pattern>/pages/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher> 
+  		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
     
     <!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -62,6 +64,6 @@
         <session-timeout>10</session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>/public/index.jsf</welcome-file>
     </welcome-file-list>
 </web-app>

@@ -18,17 +18,9 @@ public class LoginServiceImpl implements LoginService, Serializable {
 	UsuarioRepository usuarioRepository;
 	
 	@Override
-	public boolean login(String nombre, String pass) {
-		List<Object> listaUsers = usuarioRepository.findUsuarioByUserAndPassword(nombre, pass);
-		return false;
+	public Usuario login(String nombre, String pass) {
+		Usuario userLogued = usuarioRepository.findUsuarioByUserAndPassword(nombre, pass);
+		return userLogued;
 	}
-
-	@Override
-	public Usuario logout(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
 	
 }

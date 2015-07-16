@@ -1,8 +1,17 @@
 package co.edu.udistrital.rrhh.web;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.event.CloseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +25,7 @@ import co.edu.udistrital.rrhh.service.LoginService;
 @ManagedBean(name = "loginBean")
 @SessionScoped
 @RooSerializable
-public class LoginBean implements Serializable {
+public class LoginBean extends BaseBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -34,8 +43,15 @@ public class LoginBean implements Serializable {
         password = "";
     }
 	
-	public void login(){
-		loginService.login(usuario, password);
+	public String login(){
+		
+		this.user = loginService.login(usuario, password);
+		if(this.user != null){
+			redirect("/pages/main.jsf");
+		}else{
+			redirect("/pages/index.jsf");
+		}
+		return null;
 	}
 	
 	public void handleDialogClose(CloseEvent event) {
@@ -57,6 +73,15 @@ public class LoginBean implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public Usuario getUser() {
+		return user;
+	}
+
+	public void setUser(Usuario user) {
+		this.user = user;
+	}
+	
 	
 	
 }

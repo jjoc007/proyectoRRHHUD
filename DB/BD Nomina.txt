@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `concepto` (
   `con_valor` double NOT NULL,
   `con_estado` varchar(1) NOT NULL,
   `con_valorEmpresa` double NOT NULL,
+  `con_eliminar` varchar(1) DEFAULT 'N',
   PRIMARY KEY (`con_codigo`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 

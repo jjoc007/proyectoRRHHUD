@@ -55,6 +55,7 @@ public class ConceptosLiquidacionBean implements Serializable  {
 
 	@PostConstruct
     public void init() {
+		obtenerPeriodo();
 		findAllEmpleadoes();
     }
 	
@@ -158,7 +159,6 @@ public class ConceptosLiquidacionBean implements Serializable  {
 
 	public String displayCreateDialog() {
         createDialogVisible = true;
-        obtenerPeriodo();
         return "conceptosLiquidacion";
     }
 

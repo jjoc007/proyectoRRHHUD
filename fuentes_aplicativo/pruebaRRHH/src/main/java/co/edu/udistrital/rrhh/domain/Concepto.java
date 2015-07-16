@@ -68,6 +68,19 @@ public class Concepto {
 	@Column(name = "con_estado", length = 1)
     @NotNull
     private String conEstado;
+	
+	@Column(name = "con_eliminar", length = 20)
+    private String conEliminar;// Posibilidad de eliminar
+	
+	
+
+	public String getConEliminar() {
+		return conEliminar;
+	}
+
+	public void setConEliminar(String conEliminar) {
+		this.conEliminar = conEliminar;
+	}
 
 	public String getConNombre() {
         return conNombre;

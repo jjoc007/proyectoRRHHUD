@@ -119,4 +119,12 @@ public class Cargo {
 	public void setCarDescripcion(String carDescripcion) {
 		this.carDescripcion = carDescripcion;
 	}
+	
+	public String getStringrmatedSalary(){
+		
+		if(this.carSalario!=null){
+			return Utilidades.doubleFormated(carSalario);
+		}
+		return "";
+	}
 	}

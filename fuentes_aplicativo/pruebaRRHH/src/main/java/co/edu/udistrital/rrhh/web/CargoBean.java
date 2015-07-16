@@ -68,7 +68,7 @@ public class CargoBean implements Serializable {
         columns = new ArrayList<CampoValor>();
         columns.add(new CampoValor("Nombre ", "carNombre"));
         columns.add(new CampoValor("Descripcion ", "carDescripcion"));
-        columns.add(new CampoValor("Salario", "carSalario"));
+        columns.add(new CampoValor("Salario", "stringrmatedSalary"));
     }
 
 	public String getName() {

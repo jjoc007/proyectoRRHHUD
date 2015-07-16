@@ -42,4 +42,7 @@ public interface LiquidacionService {
 	
 	
 	public List<Empleado> fillPagosEmpleado(List<Empleado> allEmpleados, Date periodo);
+	
+	
+	public Calendar periodoLiquidacion();
 }

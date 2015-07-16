@@ -69,6 +69,7 @@ public class ConceptosLiquidacionBean implements Serializable  {
 		
 		try {
 			
+			obtenerPeriodo();
 			liquidacionService.saveConceptosLiq(allEmpleadosWithPagos, periodo.getTime());
 			
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Proceso terminado con éxito."));
@@ -139,7 +140,7 @@ public class ConceptosLiquidacionBean implements Serializable  {
 	}
 	
 	public Calendar obtenerPeriodo() {
-		periodo = Utilidades.periodoLiquidacion();
+		periodo = liquidacionService.periodoLiquidacion();
 		return periodo;
 	}
 

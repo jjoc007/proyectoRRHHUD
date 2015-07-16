@@ -465,6 +465,17 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		return allEmpleadosWithPagos;
 	}
 	
-	
+	public Calendar periodoLiquidacion(){
+		
+		//Recuperar de la tabla proceso el periodo actual
+		Proceso proceso = new Proceso();
+		proceso = procesoService.consultarProcesobyName(Constantes.PERIODO_LIQUIDACION);
+		
+		Calendar periodoLiq =  Calendar.getInstance();
+		periodoLiq.setTime(proceso.getProPeriodo());
+		
+		return periodoLiq;
+	}
+
 
 }

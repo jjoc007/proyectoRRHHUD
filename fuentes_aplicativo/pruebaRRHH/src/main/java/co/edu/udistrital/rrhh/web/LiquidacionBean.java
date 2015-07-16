@@ -112,7 +112,7 @@ public class LiquidacionBean implements Serializable {
 	}
 
 	public Calendar obtenerPeriodo() {
-		periodo = Utilidades.periodoLiquidacion();
+		periodo = liquidacionService.periodoLiquidacion();
 		System.out.println("aqui en periodo :"+periodo.getTime());
 		return periodo;
 	}

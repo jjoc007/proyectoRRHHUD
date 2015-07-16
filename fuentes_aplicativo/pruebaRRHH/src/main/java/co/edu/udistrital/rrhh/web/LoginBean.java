@@ -1,17 +1,8 @@
 package co.edu.udistrital.rrhh.web;
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map.Entry;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.event.CloseEvent;
 import org.springframework.beans.factory.annotation.Autowired;

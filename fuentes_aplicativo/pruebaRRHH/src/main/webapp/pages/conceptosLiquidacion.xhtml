@@ -9,7 +9,7 @@
 <ui:composition template="../templates/layout.xhtml">
   <ui:define name="content">
     <h:form prependId="false" id="growlForm">
-      <p:growl id="growl" showDetail="true" autoUpdate="true" closable="true"/>
+      <p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
     </h:form>
     <h:form prependId="false" id="dataForm">
       <p:panel id="data">
@@ -66,7 +66,7 @@
      <p:confirmDialog global="true" id="confirmDialog" widgetVar="confirmDialogWidget" message="#{messages.label_confirmacion}" showEffect="fade" hideEffect="explode" header="#{messages.label_advertencia}" severity="alarm">
       <p:outputPanel id="confirmPanel">
         <h:form id="confirmForm">
-          <p:commandButton id="saveYesButton" value="#{messages.label_yes}" action="#{conceptosLiquidacionBean.guardarPagos}" oncomplete="confirmDialogWidget.hide()" />
+          <p:commandButton id="saveYesButton" value="#{messages.label_yes}" action="#{conceptosLiquidacionBean.saveConceptosLiq}" oncomplete="confirmDialogWidget.hide()" />
           <p:commandButton id="saveNoButton" value="#{messages.label_no}" onclick="confirmDialogWidget.hide()" type="button" />
         </h:form>
       </p:outputPanel>

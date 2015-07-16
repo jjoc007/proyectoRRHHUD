@@ -1,23 +1,20 @@
 package co.edu.udistrital.rrhh.web;
-import co.edu.udistrital.rrhh.domain.Concepto;
 import co.edu.udistrital.rrhh.domain.Empleado;
-import co.edu.udistrital.rrhh.domain.Pago;
-import co.edu.udistrital.rrhh.domain.Proceso;
-import co.edu.udistrital.rrhh.service.ConceptoService;
 import co.edu.udistrital.rrhh.service.EmpleadoService;
-import co.edu.udistrital.rrhh.service.PagoService;
-import co.edu.udistrital.rrhh.service.ProcesoService;
+import co.edu.udistrital.rrhh.service.LiquidacionService;
 import co.edu.udistrital.rrhh.web.util.Constantes;
+import co.edu.udistrital.rrhh.web.util.NominaException;
 import co.edu.udistrital.rrhh.web.util.Utilidades;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.event.CloseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +34,7 @@ public class ConceptosLiquidacionBean implements Serializable  {
     EmpleadoService empleadoService;
 	
 	@Autowired
-	ConceptoService conceptoService; 
-	
-	@Autowired
-	PagoService pagoService; 
-	
-	@Autowired
-	ProcesoService procesoService; 
+	LiquidacionService liquidacionService; 
 	
 	private List<Empleado> allEmpleados;
 	private List<Empleado> allEmpleadosWithPagos;
@@ -70,68 +61,27 @@ public class ConceptosLiquidacionBean implements Serializable  {
 
 	public void fillPagosEmpleado(){
 			
-		List<Concepto> conceptos =  new ArrayList<Concepto>();
-		allEmpleadosWithPagos = new ArrayList<Empleado>();
-		
-		List<Integer> conceptosCons =  new ArrayList<Integer>();
-		List<String> tipoPer =  new ArrayList<String>();
-		
-		conceptosCons.add(Constantes.CONCEPTO_TRANSPORTE);
-		conceptosCons.add(Constantes.CONCEPTO_SALUD);
-		conceptosCons.add(Constantes.CONCEPTO_PENSION);
-		conceptosCons.add(Constantes.CONCEPTO_CESANTIAS);
-		conceptosCons.add(Constantes.CONCEPTO_INTERESES_CESANTIAS);
-		conceptosCons.add(Constantes.CONCEPTO_PRIMA);
-		conceptosCons.add(Constantes.CONCEPTO_VACACIONES);
-		conceptosCons.add(Constantes.CONCEPTO_CAJA_COMPENSACION);
-		
-		tipoPer.add(Constantes.TIPO_CONCEPTO_DEVENGO);
-		tipoPer.add(Constantes.TIPO_CONCEPTO_DEDUCIDO);
-		
-		//Busca todos los conceptos que sean de tipo devengo y deducido		
-		conceptos = conceptoService.findAllConceptoLiq(Constantes.GENERAL_ESTADO_ACTIVO, conceptosCons, tipoPer);
-		
-		for (Empleado empleadoAux: allEmpleados){
-
-			List<Pago> pagosPorEmpleado =  new ArrayList<Pago>();
-			
-			for(Concepto conceptoAux: conceptos){
-
-				pagosPorEmpleado.add(new Pago(empleadoAux, conceptoAux, periodo.getTime(),	0.0D, Constantes.PAGO_ACTIVO, null));
-				
-			}
-			
-			empleadoAux.setPagos(pagosPorEmpleado);
-			allEmpleadosWithPagos.add(empleadoAux);
-
-		}
+		allEmpleadosWithPagos = liquidacionService.fillPagosEmpleado(allEmpleados, periodo.getTime());
 			
 	}
 	
-	public void guardarPagos(){
+	public void saveConceptosLiq(){
 		
-		//Verificar proceso de conceptos liquidacion
-		/*Proceso proceso = new Proceso();
-		proceso = procesoService.consultarProceso(Constantes.CONCEPTOS_LIQUIDACION, periodo.getTime());
-		
-		if (proceso == null){
+		try {
 			
-		}
-		*/
-				
-		for (Empleado empleadoaux : allEmpleadosWithPagos){
+			liquidacionService.saveConceptosLiq(allEmpleadosWithPagos, periodo.getTime());
 			
-			for (Pago pagoaux : empleadoaux.getPagos()){
-				
-				if (pagoaux.getPagValorPago() != 0.0){
-					pagoService.savePago(pagoaux);
-				}
-				
-			}	
-		}
-		//Insertar registro en la tabla proceso Constantes.CONCEPTOS_LIQUIDACION y periodo.getTime()
-		
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Proceso terminado con éxito."));
+			
+		} catch (NominaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", e.getMessage()));
+		}				
+	
 	}
+	
 	public boolean isDataVisible() {
         return dataVisible;
     }

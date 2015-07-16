@@ -22,6 +22,7 @@ import co.edu.udistrital.rrhh.web.util.Utilidades;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -68,17 +69,6 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		if (proceso == null){
 			
 			throw new NominaException("No se puede realizar el proceso de liquidación, NO existe liquidación de prestaciones para el período "+Utilidades.dateFormat(periodo.getTime()));
-			
-		}
-		
-		proceso = null;
-		
-		//Verificar proceso de liquidacion nomina
-		proceso = procesoService.consultarProceso(Constantes.LIQUIDACION_NOMINA, periodo.getTime());
-		
-		if (proceso != null){
-			
-			throw new NominaException("La liquidacion de nómina para el período "+Utilidades.dateFormat(periodo.getTime())+" ya fué realizada");
 			
 		}
 
@@ -402,5 +392,79 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		}
 
 	}
+	
+	public void saveConceptosLiq(List<Empleado> allEmpleadosWithPagos, Date periodo) throws NominaException{
+		
+		//Verificar proceso de conceptos liquidacion
+		Proceso proceso = new Proceso();
+		
+		proceso = procesoService.consultarProceso(Constantes.CONCEPTOS_LIQUIDACION, periodo);
+		
+		if (proceso != null){
+			
+			throw new NominaException("Ya existe proceso de conceptos liquidación para el período "+ Utilidades.dateFormat(periodo));
+			
+		}
+		
+		for (Empleado empleadoaux : allEmpleadosWithPagos){
+			
+			for (Pago pagoaux : empleadoaux.getPagos()){
+				
+				if (pagoaux.getPagValorPago() != 0.0){
+					pagoService.savePago(pagoaux);
+				}
+				
+			}	
+		}
+		
+		
+		//Insertar registro en la tabla proceso 
+		
+		procesoService.insertarProceso(Constantes.CONCEPTOS_LIQUIDACION, periodo);		
+		
+	}
+	
+	public List<Empleado> fillPagosEmpleado(List<Empleado> allEmpleados, Date periodo){
+		
+		List<Concepto> conceptos =  new ArrayList<Concepto>();
+		List<Empleado> allEmpleadosWithPagos = new ArrayList<Empleado>();
+		
+		List<Integer> conceptosCons =  new ArrayList<Integer>();
+		List<String> tipoPer =  new ArrayList<String>();
+		
+		conceptosCons.add(Constantes.CONCEPTO_TRANSPORTE);
+		conceptosCons.add(Constantes.CONCEPTO_SALUD);
+		conceptosCons.add(Constantes.CONCEPTO_PENSION);
+		conceptosCons.add(Constantes.CONCEPTO_CESANTIAS);
+		conceptosCons.add(Constantes.CONCEPTO_INTERESES_CESANTIAS);
+		conceptosCons.add(Constantes.CONCEPTO_PRIMA);
+		conceptosCons.add(Constantes.CONCEPTO_VACACIONES);
+		conceptosCons.add(Constantes.CONCEPTO_CAJA_COMPENSACION);
+		
+		tipoPer.add(Constantes.TIPO_CONCEPTO_DEVENGO);
+		tipoPer.add(Constantes.TIPO_CONCEPTO_DEDUCIDO);
+		
+		//Busca todos los conceptos que sean de tipo devengo y deducido		
+		conceptos = conceptoService.findAllConceptoLiq(Constantes.GENERAL_ESTADO_ACTIVO, conceptosCons, tipoPer);
+		
+		for (Empleado empleadoAux: allEmpleados){
+
+			List<Pago> pagosPorEmpleado =  new ArrayList<Pago>();
+			
+			for(Concepto conceptoAux: conceptos){
+
+				pagosPorEmpleado.add(new Pago(empleadoAux, conceptoAux, periodo,	0.0D, Constantes.PAGO_ACTIVO, null));
+				
+			}
+			
+			empleadoAux.setPagos(pagosPorEmpleado);
+			allEmpleadosWithPagos.add(empleadoAux);
+
+		}
+		
+		return allEmpleadosWithPagos;
+	}
+	
+	
 
 }

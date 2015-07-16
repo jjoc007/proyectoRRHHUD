@@ -3,14 +3,11 @@ package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.service.EmpleadoService;
 import co.edu.udistrital.rrhh.service.LiquidacionService;
-import co.edu.udistrital.rrhh.service.PagoService;
 import co.edu.udistrital.rrhh.web.util.Constantes;
-import co.edu.udistrital.rrhh.web.util.MessageFactory;
 import co.edu.udistrital.rrhh.web.util.NominaException;
 import co.edu.udistrital.rrhh.web.util.Utilidades;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -40,8 +37,6 @@ public class LiquidacionBean implements Serializable {
 	@Autowired
 	LiquidacionService liquidacionService;
 
-	@Autowired
-	PagoService pagoService;
 
 	private List<String> columns;
 	public Calendar periodo;
@@ -54,6 +49,7 @@ public class LiquidacionBean implements Serializable {
 		columns.add("empNombre");
 		columns.add("emp_vacaciones");
 		columns.add("emp_liquida");
+		obtenerPeriodo();
 	}
 
 	private List<Empleado> allEmpleados;
@@ -67,16 +63,12 @@ public class LiquidacionBean implements Serializable {
 	}
 
 	public String displayList() {
-		// createDialogVisible = false;
 		findAllEmpleados();
-		obtenerPeriodo();
 		return "liquidacion";
 	}
 
 	public String findAllEmpleados() {
-		allEmpleados = empleadoService
-				.findAllEmpleadosAct(Constantes.ESTADO_EMPL_ACTIVO);
-		// dataVisible = !allEmpleadoes.isEmpty();
+		allEmpleados = empleadoService.findAllEmpleadosAct(Constantes.ESTADO_EMPL_ACTIVO);
 		return null;
 	}
 
@@ -99,23 +91,29 @@ public class LiquidacionBean implements Serializable {
 	}
 
 	public void liquidar(){
+		
 		try {
+			
+			obtenerPeriodo();
+			 
 			System.out.println("calendario " + periodo.getTime());
 
 			liquidacionService.Liquidar(allEmpleados, periodo);
+			
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Proceso terminado con éxito."));
 
 		} catch (NominaException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
-			FacesMessage facesMessage = MessageFactory.getMessage(
-					e.getMessage(), "Cargo");
-			FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", e.getMessage()));
+			
 		}
 	}
 
 	public Calendar obtenerPeriodo() {
 		periodo = Utilidades.periodoLiquidacion();
+		System.out.println("aqui en periodo :"+periodo.getTime());
 		return periodo;
 	}
 

@@ -56,7 +56,7 @@ public class AporteServiceImpl implements AporteService {
 	@Override
 	public Double calcularAporteARP(Double sueldoEmpleado){
 		
-		Concepto aporteARP = conceptoRepository.findOne(Constantes.CONCEPTO_ARP);
+		Concepto aporteARP = conceptoRepository.findOne(Constantes.CONCEPTO_ARL);
 		
 		Double valorAporteARP = new Double(0);
 		

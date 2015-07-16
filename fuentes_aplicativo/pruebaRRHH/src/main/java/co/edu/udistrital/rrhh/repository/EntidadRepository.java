@@ -1,7 +1,6 @@
 package co.edu.udistrital.rrhh.repository;
 import java.util.List;
 
-import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.domain.Entidad;
 
 import org.springframework.data.jpa.repository.JpaRepository;

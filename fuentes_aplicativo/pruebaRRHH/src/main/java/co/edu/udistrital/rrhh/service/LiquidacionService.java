@@ -36,4 +36,10 @@ public interface LiquidacionService {
 	
 	
 	public void generarArchivoPlano(StringBuffer contenidoArchivo, Date periodo);
+	
+	
+	public void saveConceptosLiq(List<Empleado> allEmpleadosWithPagos, Date periodo) throws NominaException;
+	
+	
+	public List<Empleado> fillPagosEmpleado(List<Empleado> allEmpleados, Date periodo);
 }

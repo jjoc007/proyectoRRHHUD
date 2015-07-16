@@ -1,9 +1,7 @@
 package co.edu.udistrital.rrhh.repository;
 
 import java.util.Date;
-import java.util.List;
 
-import co.edu.udistrital.rrhh.domain.Pago;
 import co.edu.udistrital.rrhh.domain.Proceso;
 
 import org.springframework.data.jpa.repository.JpaRepository;

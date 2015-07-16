@@ -55,17 +55,18 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 	public Provision provision;
 	public Proceso proceso = new Proceso();
 
-	public void Liquidar(List<Empleado> allEmpleados, Calendar periodo) throws NominaException {
+	public StringBuffer Liquidar(List<Empleado> allEmpleados, Calendar periodo) throws NominaException {
 
 		Integer numProviVacaciones;
 		Integer mes;
 		List<Provision> provisionesRep;
 		
 		StringBuffer contenidoArchivo = new StringBuffer("CEDULA;NOMBRE;CUENTA;TOTAL DEVENGOS; TOTAL DEDUCIDOS;SALARIO \r\n");
+		StringBuffer alertasVacaciones = new StringBuffer();
 
 		//Verificar proceso de liquidacion de prestaciones
 		proceso = procesoService.consultarProceso(Constantes.LIQUIDACION_PRESTACIONES, periodo.getTime());
-		System.out.println(Constantes.LIQUIDACION_PRESTACIONES+" "+ periodo.getTime());
+		
 		if (proceso == null){
 			
 			throw new NominaException("No se puede realizar el proceso de liquidación, NO existe liquidación de prestaciones para el período "+Utilidades.dateFormat(periodo.getTime()));
@@ -85,8 +86,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 
 			if  (numProviVacaciones >= 12) {
 
-				throw new NominaException("Alerta el empleado "+empleadoAux.getEmpCedula()+" ya tiene "+numProviVacaciones+" meses acumulados sin tomar vacaciones");
-				//System.out.println("Alerta el empleado "+empleadoAux.getEmpCedula()+" ya tiene "+numProviVacaciones+" meses acumulados sin tomar vacaciones");
+				alertasVacaciones.append("Alerta el empleado "+empleadoAux.getEmpCedula()+" ya tiene "+numProviVacaciones+" meses acumulados sin tomar vacaciones");
 
 			}else if (numProviVacaciones > 24) {
 
@@ -180,6 +180,8 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		periodo.add(Calendar.MONTH, 1);
 		proceso.setProPeriodo(periodo.getTime());
 		procesoService.saveProceso(proceso);
+		
+		return alertasVacaciones;
 		
 	};
 

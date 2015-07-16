@@ -12,7 +12,7 @@ import org.springframework.roo.addon.layers.service.RooService;
 @RooService(domainTypes = { co.edu.udistrital.rrhh.domain.Empleado.class })
 public interface LiquidacionService {
 
-	public abstract void Liquidar(List<Empleado> allEmpleados, Calendar periodo) throws NominaException;
+	public StringBuffer Liquidar(List<Empleado> allEmpleados, Calendar periodo) throws NominaException;
 	
 	
 	public abstract void procesarPrima(Empleado empleado, Calendar periodo);

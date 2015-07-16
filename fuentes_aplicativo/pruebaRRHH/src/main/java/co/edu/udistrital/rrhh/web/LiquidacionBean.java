@@ -98,9 +98,15 @@ public class LiquidacionBean implements Serializable {
 			 
 			System.out.println("calendario " + periodo.getTime());
 
-			liquidacionService.Liquidar(allEmpleados, periodo);
+			StringBuffer alertasVacaciones = liquidacionService.Liquidar(allEmpleados, periodo);
 			
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Proceso terminado con éxito."));
+			
+			if (!alertasVacaciones.toString().equals("")){
+				
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "ALERTA VACACIONES", alertasVacaciones.toString()));
+			}
+	
 
 		} catch (NominaException e) {
 			// TODO Auto-generated catch block

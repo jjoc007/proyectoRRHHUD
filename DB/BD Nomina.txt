@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `empleado` (
   `emp_fechaSalida` datetime DEFAULT NULL,
   `emp_cuentaPago` int(11) NOT NULL,
   `emp_estado` varchar(1) NOT NULL,
-  `cargo` int(11) NOT NULL,
+  `emp_cargo` int(11) NOT NULL,
   `emp_ent_salud` int(11) NOT NULL,
   `emp_ent_pen` int(11) NOT NULL,
   `emp_ent_ces` int(11) NOT NULL,
@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `provision` (
 --
 
 CREATE TABLE IF NOT EXISTS `rol` (
-  `rol_id` int(11) NOT NULL,
+  `rol_id` int(11) NOT NULL AUTO_INCREMENT,
   `rol_nombre` varchar(50) NOT NULL,
   `rol_descripcion` text,
   `rol_estado` varchar(1) NOT NULL,

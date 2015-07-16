@@ -43,7 +43,7 @@ public class Empleado {
     }
 	
 	@ManyToOne
-	@JoinColumn(name = "cargo", referencedColumnName = "car_cogigo", nullable = false)
+	@JoinColumn(name = "emp_cargo", referencedColumnName = "car_cogigo", nullable = false)
     @NotNull
     private Cargo cargo;
 

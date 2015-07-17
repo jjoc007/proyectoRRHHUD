@@ -1,4 +1,5 @@
 package co.edu.udistrital.rrhh.service.impl;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import co.edu.udistrital.rrhh.domain.Concepto;
 import co.edu.udistrital.rrhh.repository.AporteRepository;
 import co.edu.udistrital.rrhh.repository.ConceptoRepository;
 import co.edu.udistrital.rrhh.service.AporteService;
+import co.edu.udistrital.rrhh.web.util.AporteQueryOneTO;
 import co.edu.udistrital.rrhh.web.util.Constantes;
 
 @Service
@@ -106,5 +108,26 @@ public class AporteServiceImpl implements AporteService {
 		aporte.setApoValorEmpresa(valorEmpresa);
 
 		aporteReprository.save(aporte);
+	}
+	
+	
+	//Lista de aportes -Valor
+	public  List<AporteQueryOneTO> findValorAporte(){
+		
+		List<Object[]> registros = aporteReprository.findAllAporte();
+		List<AporteQueryOneTO> aportes =  new ArrayList<AporteQueryOneTO>();
+		
+		for(Object[] registroAux : registros){
+			
+			aportes.add(new AporteQueryOneTO( Double.parseDouble(registroAux[0]!= null ? registroAux[0].toString():"0"),
+					registroAux[1].toString(), 
+					(Date) registroAux[2], 
+					Long.parseLong(registroAux[3]!= null?registroAux[3].toString():"0")));
+			
+		}
+		
+		return aportes;
+//		return aporteReprository.findAllAporte();
+		
 	}
 }

@@ -42,7 +42,7 @@
         </p:dataTable>
       </p:panel>
     </h:form>
-    <p:dialog id="createDialog" header="#{messages.label_create} Usuario" modal="false" widgetVar="createDialogWidget" dynamic="true" visible="#{usuarioBean.createDialogVisible}" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
+    <p:dialog appendTo="@(body)" id="createDialog" header="#{messages.label_create} Usuario" modal="true" widgetVar="createDialogWidget" dynamic="true" visible="#{usuarioBean.createDialogVisible}" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
       <p:ajax event="close" update=":dataForm:data" listener="#{usuarioBean.handleDialogClose}" />
       <p:outputPanel id="createPanel">
         <h:form id="createForm" enctype="multipart/form-data">

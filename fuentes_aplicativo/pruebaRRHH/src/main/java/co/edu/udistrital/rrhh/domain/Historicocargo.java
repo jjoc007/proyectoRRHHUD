@@ -104,9 +104,6 @@ public class Historicocargo implements Serializable{
         this.hisEstado = hisEstado;
     }
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
 
 	public String getFormatedFechaInicial(){
 		return Utilidades.dateFormated(hisFechaInicio);

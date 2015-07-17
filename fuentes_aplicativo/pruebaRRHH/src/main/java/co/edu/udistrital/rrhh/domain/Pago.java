@@ -18,6 +18,9 @@ import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.entity.RooJpaEntity;
 import org.springframework.roo.addon.tostring.RooToString;
 
+import co.edu.udistrital.rrhh.web.util.Constantes;
+import co.edu.udistrital.rrhh.web.util.Utilidades;
+
 @Entity
 @Table(name = "pago")
 @RooJavaBean
@@ -31,19 +34,19 @@ public class Pago {
 	private Empleado pagoEmpleado;
 
 	@ManyToOne
-    @JoinColumn(name = "pag_concepto", referencedColumnName = "con_codigo", nullable = false)
-    private Concepto pagConcepto;
+	@JoinColumn(name = "pag_concepto", referencedColumnName = "con_codigo", nullable = false)
+	private Concepto pagConcepto;
 
 	@Column(name = "pag_periodo")
-    private Date pagPeriodo;
-	
+	private Date pagPeriodo;
+
 	@Column(name = "pag_valorPago", precision = 22)
-    @NotNull
-    private Double pagValorPago;
+	@NotNull
+	private Double pagValorPago;
 
 	@Column(name = "pag_estado", length = 1)
-    @NotNull
-    private String pagEstado;
+	@NotNull
+	private String pagEstado;
 
 	public Concepto getPagConcepto() {
 		return pagConcepto;
@@ -78,37 +81,34 @@ public class Pago {
 	}
 
 	public Double getPagValorPago() {
-        return pagValorPago;
-    }
+		return pagValorPago;
+	}
 
 	public void setPagValorPago(Double pagValorPago) {
-        this.pagValorPago = pagValorPago;
-    }
+		this.pagValorPago = pagValorPago;
+	}
 
 	public String getPagEstado() {
-        return pagEstado;
-    }
+		return pagEstado;
+	}
 
 	public void setPagEstado(String pagEstado) {
-        this.pagEstado = pagEstado;
-    }
+		this.pagEstado = pagEstado;
+	}
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
 
 	@Id
-    @Column(name = "pag_codigo")
+	@Column(name = "pag_codigo")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer pagCodigo;
+	private Integer pagCodigo;
 
 	public Integer getPagCodigo() {
-        return this.pagCodigo;
-    }
+		return this.pagCodigo;
+	}
 
 	public void setPagCodigo(Integer id) {
-        this.pagCodigo = id;
-    }
+		this.pagCodigo = id;
+	}
 
 	public Empleado getPagoEmpleado() {
 		return pagoEmpleado;
@@ -117,7 +117,71 @@ public class Pago {
 	public void setPagoEmpleado(Empleado pagoEmpleado) {
 		this.pagoEmpleado = pagoEmpleado;
 	}
-	
 
-	
+
+	public String getNombreEmpleado(){
+
+		if(pagoEmpleado!= null){
+
+			return pagoEmpleado.getEmpNombre();
+
+		}
+
+		return "";
+
+	}
+
+	public String getNombreConcepto(){
+
+		if(pagConcepto!= null){
+
+			return pagConcepto.getConNombre();
+
+		}
+
+		return "";
+
+	}
+
+	public String getTipoConcepto(){
+
+		if(pagConcepto!= null){
+
+			if(pagConcepto.getConTipo().equals(Constantes.TIPO_CONCEPTO_DEVENGO)){
+
+				return "Devengo";
+			}else{
+				return "Deducido";
+			}
+		}
+
+		return "";
+
+	}
+
+	public String getFormatedValor(){
+
+		if(pagValorPago!= null){
+
+			return Utilidades.doubleFormated(pagValorPago);
+
+		}
+
+		return "";
+
+	}
+
+	public String getFormatedPeriodo(){
+
+		if(pagPeriodo!= null){
+
+			return Utilidades.dateFormat(pagPeriodo);
+
+		}
+
+		return "";
+
+	}
+
+
 }

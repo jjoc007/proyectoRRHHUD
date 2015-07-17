@@ -1,5 +1,7 @@
 package co.edu.udistrital.rrhh.service;
 import co.edu.udistrital.rrhh.domain.Aporte;
+import co.edu.udistrital.rrhh.domain.Empleado;
+import co.edu.udistrital.rrhh.web.util.AporteQueryOneTO;
 
 import java.util.Date;
 import java.util.List;
@@ -28,6 +30,9 @@ public interface AporteService {
 
 
 	public abstract Aporte updateAporte(Aporte aporte);
+	
+	//Lista de aportes-Valor
+	public abstract List<AporteQueryOneTO> findValorAporte();
 
 
 	Double calcularAporteSalud(Double sueldoEmpleado);
@@ -37,7 +42,6 @@ public interface AporteService {
 
 
 	Double calcularAporteARP(Double sueldoEmpleado);
-	
 	
 	public abstract void realizarAporte(Integer entidad, String tipo, Date periodo, Double valor, Double valorEmpresa);
 

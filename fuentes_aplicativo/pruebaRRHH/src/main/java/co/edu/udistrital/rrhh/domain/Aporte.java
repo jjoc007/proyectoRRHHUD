@@ -76,10 +76,6 @@ public class Aporte {
         this.apoValor = apoValor;
     }
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
 	@Id
     @Column(name = "apo_codigo")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

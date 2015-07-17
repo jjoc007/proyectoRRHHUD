@@ -19,34 +19,53 @@
         <h:outputFormat id="noRecordsFound" value="#{messages.label_no_records_found}" rendered="#{!aporteBean.dataVisible}">
           <f:param value="Aportes" />
         </h:outputFormat>
-        <p:dataTable id="list" value="#{aporteBean.allAportes}" var="aporte" rendered="#{aporteBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10">
-          <p:columns value="#{aporteBean.columns}" var="column" columnIndexVar="colIndex">
+       <p:dataTable id="list" value="#{aporteBean.allAportes}" var="aporte" rendered="#{aporteBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10"> 
+         
+         <!--  <p:dataTable id="list" value="#{aporteBean.findValorAporte}" var="aporte" rendered="#{aporteBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10">-->
+         
+          <p:column >
             <f:facet name="header">
-              <h:outputText value="#{applicationBean.getColumnName(column.nombreCampo)}" />
+              <h:outputText value="Entidad" />
             </f:facet>
-            <h:outputText value="#{aporte[column.nombreTabla]}" />
-          </p:columns>
-          <p:column styleClass="action-column">
-            <f:facet name="header">
-              <h:outputText value="Actions" />
-            </f:facet>
-            <p:commandButton id="viewButton" icon="ui-icon-zoomin" update=":viewForm:viewPanelGrid" oncomplete="viewDialogWidget.show()" title="#{messages.label_view}">
-              <f:setPropertyActionListener value="#{aporte}" target="#{aporteBean.aporte}" />
-            </p:commandButton>
-            <p:tooltip for="viewButton" value="#{messages.label_view}" showEffect="fade" hideEffect="fade" />
-            <p:commandButton id="editButton" icon="ui-icon-pencil" update=":editForm:editPanelGrid" action="#{aporteBean.onEdit}" oncomplete="editDialogWidget.show()" title="#{messages.label_edit}">
-              <f:setPropertyActionListener value="#{aporte}" target="#{aporteBean.aporte}" />
-            </p:commandButton>
-            <p:tooltip for="editButton" value="#{messages.label_edit}" showEffect="fade" hideEffect="fade" />
-            <p:commandButton id="deleteButton" icon="ui-icon-trash" oncomplete="deleteDialogWidget.show()" title="#{messages.label_delete}">
-              <f:setPropertyActionListener value="#{aporte}" target="#{aporteBean.aporte}" />
-            </p:commandButton>
-            <p:tooltip for="deleteButton" value="#{messages.label_delete}" showEffect="fade" hideEffect="fade" />
+          	
+          	<h:outputText value="#{aporte.entidad}" />
+          
           </p:column>
+         
+         
+          <p:column >
+            <f:facet name="header">
+              <h:outputText value="Cuenta" />
+            </f:facet>
+          	
+          	<h:outputText value="#{aporte.cuenta}" />
+          
+          </p:column>
+         
+         
+          <p:column >
+            <f:facet name="header">
+              <h:outputText value="Periodo" />
+            </f:facet>
+          	
+          	<h:outputText value="#{aporte.formatedPeriodo}" />
+          
+          </p:column>
+         
+         
+          <p:column >
+            <f:facet name="header">
+              <h:outputText value="Valor" />
+            </f:facet>
+          	
+          	<h:outputText value="#{aporte.formatedValor}" />
+          
+          </p:column>
+         
         </p:dataTable>
       </p:panel>
     </h:form>
-    <p:dialog id="createDialog" header="#{messages.label_create} Aporte" modal="false" widgetVar="createDialogWidget" dynamic="true" visible="#{aporteBean.createDialogVisible}" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
+    <p:dialog appendTo="@(body)" id="createDialog" header="#{messages.label_create} Aporte" modal="true" widgetVar="createDialogWidget" dynamic="true" visible="#{aporteBean.createDialogVisible}" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
       <p:ajax event="close" update=":dataForm:data" listener="#{aporteBean.handleDialogClose}" />
       <p:outputPanel id="createPanel">
         <h:form id="createForm" enctype="multipart/form-data">

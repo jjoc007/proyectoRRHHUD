@@ -38,9 +38,6 @@ public class Concepto {
         this.conCodigo = id;
     }
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
 
 	@Column(name = "con_nombre", length = 50)
     @NotNull

@@ -20,29 +20,43 @@
           <f:param value="Pagoes" />
         </h:outputFormat>
         <p:dataTable id="list" value="#{pagoBean.allPagoes}" var="pago" rendered="#{pagoBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10">
-          <p:columns value="#{pagoBean.columns}" var="column" columnIndexVar="colIndex">
+          
+          <p:column >
             <f:facet name="header">
-              <h:outputText value="#{applicationBean.getColumnName(column)}" />
+              <h:outputText value="Empleado" />
             </f:facet>
-            <h:outputText value="#{pago[column]}" />
-          </p:columns>
-          <p:column styleClass="action-column">
-            <f:facet name="header">
-              <h:outputText value="Actions" />
-            </f:facet>
-            <p:commandButton id="viewButton" icon="ui-icon-zoomin" update=":viewForm:viewPanelGrid" oncomplete="viewDialogWidget.show()" title="#{messages.label_view}">
-              <f:setPropertyActionListener value="#{pago}" target="#{pagoBean.pago}" />
-            </p:commandButton>
-            <p:tooltip for="viewButton" value="#{messages.label_view}" showEffect="fade" hideEffect="fade" />
-            <p:commandButton id="editButton" icon="ui-icon-pencil" update=":editForm:editPanelGrid" action="#{pagoBean.onEdit}" oncomplete="editDialogWidget.show()" title="#{messages.label_edit}">
-              <f:setPropertyActionListener value="#{pago}" target="#{pagoBean.pago}" />
-            </p:commandButton>
-            <p:tooltip for="editButton" value="#{messages.label_edit}" showEffect="fade" hideEffect="fade" />
-            <p:commandButton id="deleteButton" icon="ui-icon-trash" oncomplete="deleteDialogWidget.show()" title="#{messages.label_delete}">
-              <f:setPropertyActionListener value="#{pago}" target="#{pagoBean.pago}" />
-            </p:commandButton>
-            <p:tooltip for="deleteButton" value="#{messages.label_delete}" showEffect="fade" hideEffect="fade" />
+          	<h:outputText value="#{pago.nombreEmpleado}" />
           </p:column>
+
+          <p:column >
+            <f:facet name="header">
+              <h:outputText value="Concepto" />
+            </f:facet>
+          	<h:outputText value="#{pago.nombreConcepto}" />
+          </p:column>
+          
+          <p:column >
+            <f:facet name="header">
+              <h:outputText value="Tipo" />
+            </f:facet>
+          	<h:outputText value="#{pago.tipoConcepto}" />
+          </p:column>          
+          
+          <p:column >
+            <f:facet name="header">
+              <h:outputText value="Valor Pago" />
+            </f:facet>
+          	<h:outputText value="#{pago.formatedValor}" />
+          </p:column>
+          
+          <p:column >
+            <f:facet name="header">
+              <h:outputText value="Periodo" />
+            </f:facet>
+          	<h:outputText value="#{pago.formatedPeriodo}" />
+          </p:column>
+          
+          
         </p:dataTable>
       </p:panel>
     </h:form>

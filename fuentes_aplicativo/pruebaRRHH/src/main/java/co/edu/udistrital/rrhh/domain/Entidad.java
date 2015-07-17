@@ -78,9 +78,6 @@ public class Entidad {
         this.entEstado = entEstado;
     }
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
 
 	public String getEntTipo() {
 		return entTipo;

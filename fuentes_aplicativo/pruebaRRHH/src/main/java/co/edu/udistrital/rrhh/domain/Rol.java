@@ -25,10 +25,6 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooDbManaged(automaticallyDelete = true)
 public class Rol {
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
 	@Column(name = "rol_nombre", length = 50)
     @NotNull
     private String rolNombre;

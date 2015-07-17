@@ -1,6 +1,7 @@
 package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Aporte;
 import co.edu.udistrital.rrhh.service.AporteService;
+import co.edu.udistrital.rrhh.web.util.AporteQueryOneTO;
 import co.edu.udistrital.rrhh.web.util.CampoValor;
 import co.edu.udistrital.rrhh.web.util.MessageFactory;
 
@@ -46,7 +47,7 @@ public class AporteBean implements Serializable {
 
 	private Aporte aporte;
 
-	private List<Aporte> allAportes;
+	private List<AporteQueryOneTO> allAportes;
 
 	private boolean dataVisible = false;
 
@@ -63,7 +64,8 @@ public class AporteBean implements Serializable {
 	@PostConstruct
     public void init() {
 		columns = new ArrayList<CampoValor>();
-        columns.add(new CampoValor("Entidad", "apoEntidad"));
+       
+		columns.add(new CampoValor("Entidad", "apoEntidad"));
         columns.add(new CampoValor("Tipo", "apoTipo"));
         columns.add(new CampoValor("Periodo", "apoPeriodo"));
         columns.add(new CampoValor("Valor", "apoValor"));
@@ -78,19 +80,27 @@ public class AporteBean implements Serializable {
         return columns;
     }
 
-	public List<Aporte> getAllAportes() {
+	public List<AporteQueryOneTO> getAllAportes() {
         return allAportes;
     }
 
-	public void setAllAportes(List<Aporte> allAportes) {
+	public void setAllAportes(List<AporteQueryOneTO> allAportes) {
         this.allAportes = allAportes;
     }
 
 	public String findAllAportes() {
-        allAportes = aporteService.findAllAportes();
+        allAportes = aporteService.findValorAporte();
         dataVisible = !allAportes.isEmpty();
         return null;
     }
+	
+	//Lista de aportes -Valor
+	public String findValorAporte() {
+        allAportes = aporteService.findValorAporte();
+        dataVisible = !allAportes.isEmpty();
+        return null;
+    }
+	
 
 	public boolean isDataVisible() {
         return dataVisible;

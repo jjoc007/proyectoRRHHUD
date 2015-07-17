@@ -30,9 +30,6 @@ import co.edu.udistrital.rrhh.web.util.Utilidades;
 @RooDbManaged(automaticallyDelete = true)
 public class Empleado {
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
 
 	@Id
     @Column(name = "emp_cedula")

@@ -42,7 +42,7 @@
         </p:dataTable>
       </p:panel>
     </h:form>
-    <p:dialog id="createDialog" header="#{messages.label_create} Concepto" modal="false" widgetVar="createDialogWidget" dynamic="true" visible="#{conceptoBean.createDialogVisible}" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
+    <p:dialog appendTo="@(body)" id="createDialog" header="#{messages.label_create} Concepto" modal="true" widgetVar="createDialogWidget" dynamic="true" visible="#{conceptoBean.createDialogVisible}" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
       <p:ajax event="close" update=":dataForm:data" listener="#{conceptoBean.handleDialogClose}" />
       <p:outputPanel id="createPanel">
         <h:form id="createForm" enctype="multipart/form-data">

@@ -73,10 +73,6 @@ public class Cargo {
         this.carEstado = carEstado;
     }
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
-
 	@Id
     @Column(name = "car_cogigo")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

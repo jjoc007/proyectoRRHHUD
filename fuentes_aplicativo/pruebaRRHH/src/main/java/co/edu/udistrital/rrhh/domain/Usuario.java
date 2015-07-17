@@ -85,9 +85,6 @@ public class Usuario implements Serializable{
         this.usuCorreo = usuCorreo;
     }
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
 
 	@Id
     @Column(name = "usu_usuario", length = 100)

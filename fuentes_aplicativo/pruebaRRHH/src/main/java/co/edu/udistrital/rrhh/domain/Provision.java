@@ -82,9 +82,6 @@ public class Provision {
         this.proEstado = proEstado;
     }
 
-	public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE);
-    }
 
 	@Id
     @Column(name = "pro_codigo")

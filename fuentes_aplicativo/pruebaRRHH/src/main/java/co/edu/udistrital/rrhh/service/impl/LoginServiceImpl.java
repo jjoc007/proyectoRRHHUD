@@ -4,7 +4,6 @@ import co.edu.udistrital.rrhh.repository.UsuarioRepository;
 import co.edu.udistrital.rrhh.service.LoginService;
 
 import java.io.Serializable;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

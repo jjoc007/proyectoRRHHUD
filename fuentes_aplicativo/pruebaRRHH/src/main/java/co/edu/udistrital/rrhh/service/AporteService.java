@@ -1,6 +1,5 @@
 package co.edu.udistrital.rrhh.service;
 import co.edu.udistrital.rrhh.domain.Aporte;
-import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.web.util.AporteQueryOneTO;
 
 import java.util.Date;

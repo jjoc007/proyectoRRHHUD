@@ -33,5 +33,5 @@ public interface ConceptoService {
 	public abstract Concepto updateConcepto(Concepto concepto);
 	
 	
-	public List<Concepto> findAllConceptoLiq(String estado, List<Integer> conceptos, List<String> tipoPer);
+	public List<Concepto> findAllConceptoLiq(String estado, List<String> tipoPer);
 }

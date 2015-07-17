@@ -18,10 +18,9 @@ public interface ConceptoRepository extends JpaRepository<Concepto, Integer>, Jp
 	public List<Concepto> findAllConceptoAct(
 			@Param("estado") String estado);
 	
-	@Query(value ="SELECT c FROM Concepto c WHERE c.conEstado = :estado AND c.conCodigo NOT IN (:conceptos) AND conTipoPercepcion IN (:tipoPer)")
+	@Query(value ="SELECT c FROM Concepto c WHERE c.conEstado = :estado AND c.conEliminar <> 'N' AND conTipoPercepcion IN (:tipoPer)")
 	public List<Concepto> findAllConceptoLiq(
 			@Param("estado") String estado,
-			@Param("conceptos") List<Integer> conceptos,
 			@Param("tipoPer") List<String> tipoPer);
 	
 }

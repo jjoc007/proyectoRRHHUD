@@ -373,23 +373,13 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		List<Concepto> conceptos =  new ArrayList<Concepto>();
 		List<Empleado> allEmpleadosWithPagos = new ArrayList<Empleado>();
 		
-		List<Integer> conceptosCons =  new ArrayList<Integer>();
 		List<String> tipoPer =  new ArrayList<String>();
-		
-		conceptosCons.add(Constantes.CONCEPTO_TRANSPORTE);
-		conceptosCons.add(Constantes.CONCEPTO_SALUD);
-		conceptosCons.add(Constantes.CONCEPTO_PENSION);
-		conceptosCons.add(Constantes.CONCEPTO_CESANTIAS);
-		conceptosCons.add(Constantes.CONCEPTO_INTERESES_CESANTIAS);
-		conceptosCons.add(Constantes.CONCEPTO_PRIMA);
-		conceptosCons.add(Constantes.CONCEPTO_VACACIONES);
-		conceptosCons.add(Constantes.CONCEPTO_CAJA_COMPENSACION);
-		
+				
 		tipoPer.add(Constantes.TIPO_CONCEPTO_DEVENGO);
 		tipoPer.add(Constantes.TIPO_CONCEPTO_DEDUCIDO);
 		
 		//Busca todos los conceptos que sean de tipo devengo y deducido		
-		conceptos = conceptoService.findAllConceptoLiq(Constantes.GENERAL_ESTADO_ACTIVO, conceptosCons, tipoPer);
+		conceptos = conceptoService.findAllConceptoLiq(Constantes.GENERAL_ESTADO_ACTIVO, tipoPer);
 		
 		for (Empleado empleadoAux: allEmpleados){
 

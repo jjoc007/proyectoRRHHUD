@@ -56,7 +56,7 @@ public class ConceptoServiceImpl implements ConceptoService {
         return conceptoReprository.save(concepto);
     }
 
-	public List<Concepto> findAllConceptoLiq(String estado, List<Integer> conceptos, List<String> tipoPer){
-		return conceptoReprository.findAllConceptoLiq(estado, conceptos, tipoPer);
+	public List<Concepto> findAllConceptoLiq(String estado, List<String> tipoPer){
+		return conceptoReprository.findAllConceptoLiq(estado, tipoPer);
 	}
 }

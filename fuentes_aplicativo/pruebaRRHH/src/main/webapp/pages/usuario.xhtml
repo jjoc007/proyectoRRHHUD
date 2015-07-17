@@ -42,7 +42,7 @@
         </p:dataTable>
       </p:panel>
     </h:form>
-    <p:dialog appendTo="@(body)" id="createDialog" header="#{messages.label_create} Usuario" modal="true" widgetVar="createDialogWidget" dynamic="true" visible="#{usuarioBean.createDialogVisible}" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
+    <p:dialog appendToBody="true" id="createDialog" header="#{messages.label_create} Usuario" modal="true" widgetVar="createDialogWidget" dynamic="true" visible="#{usuarioBean.createDialogVisible}" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
       <p:ajax event="close" update=":dataForm:data" listener="#{usuarioBean.handleDialogClose}" />
       <p:outputPanel id="createPanel">
         <h:form id="createForm" enctype="multipart/form-data">
@@ -52,7 +52,7 @@
         </h:form>
       </p:outputPanel>
     </p:dialog>
-    <p:dialog id="editDialog" header="#{messages.label_edit} Usuario" modal="true" widgetVar="editDialogWidget" dynamic="true" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
+    <p:dialog appendToBody="true" id="editDialog" header="#{messages.label_edit} Usuario" modal="true" widgetVar="editDialogWidget" dynamic="true" resizable="true" maximizable="true" showEffect="fade" hideEffect="explode">
       <p:ajax event="close" update=":dataForm:data" listener="#{usuarioBean.handleDialogClose}" />
       <p:outputPanel id="editPanel">
         <h:form id="editForm" enctype="multipart/form-data">
@@ -70,7 +70,7 @@
         </h:form>
       </p:outputPanel>
     </p:dialog>
-    <p:confirmDialog global="true" id="deleteDialog" widgetVar="deleteDialogWidget" message="#{messages.label_delete_record}" showEffect="fade" hideEffect="explode" header="#{messages.label_confirm_deletion}" severity="alarm">
+    <p:confirmDialog appendToBody="true" id="deleteDialog" widgetVar="deleteDialogWidget" message="#{messages.label_delete_record}" showEffect="fade" hideEffect="explode" header="#{messages.label_confirm_deletion}" severity="alarm">
       <p:outputPanel id="deletePanel">
         <h:form id="deleteForm">
           <p:commandButton id="deleteYesButton" value="#{messages.label_yes}" action="#{usuarioBean.delete}" update=":dataForm:data :growlForm:growl" oncomplete="deleteDialogWidget.hide()" />

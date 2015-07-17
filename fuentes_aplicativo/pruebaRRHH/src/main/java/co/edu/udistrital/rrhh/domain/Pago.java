@@ -147,7 +147,7 @@ public class Pago {
 
 		if(pagConcepto!= null){
 
-			if(pagConcepto.getConTipo().equals(Constantes.TIPO_CONCEPTO_DEVENGO)){
+			if(pagConcepto.getConTipoPercepcion().equals(Constantes.TIPO_CONCEPTO_DEVENGO)){
 
 				return "Devengo";
 			}else{

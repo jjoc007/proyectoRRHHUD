@@ -64,6 +64,7 @@ public class LiquidacionBean implements Serializable {
 
 	public String displayList() {
 		findAllEmpleados();
+		obtenerPeriodo();
 		return "liquidacion";
 	}
 

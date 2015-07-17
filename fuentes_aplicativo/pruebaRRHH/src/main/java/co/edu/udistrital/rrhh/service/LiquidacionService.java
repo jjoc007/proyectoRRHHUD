@@ -29,20 +29,23 @@ public interface LiquidacionService {
 			Date periodo);
 
 	
-	public Double calcularSalarioEmpleado(Empleado empleado, Date periodo);
+	public abstract Double calcularSalarioEmpleado(Empleado empleado, Date periodo);
 
 	
-	public void liquidaEmpleado(Empleado empleado, Date periodo);
+	public abstract void liquidaEmpleado(Empleado empleado, Date periodo);
 	
 	
-	public void generarArchivoPlano(StringBuffer contenidoArchivo, Date periodo);
+	public abstract void generarArchivoPlano(StringBuffer contenidoArchivo, Date periodo);
 	
 	
-	public void saveConceptosLiq(List<Empleado> allEmpleadosWithPagos, Date periodo) throws NominaException;
+	public abstract void saveConceptosLiq(List<Empleado> allEmpleadosWithPagos, Date periodo) throws NominaException;
 	
 	
-	public List<Empleado> fillPagosEmpleado(List<Empleado> allEmpleados, Date periodo);
+	public abstract List<Empleado> fillPagosEmpleado(List<Empleado> allEmpleados, Date periodo);
 	
 	
-	public Calendar periodoLiquidacion();
+	public abstract Calendar periodoLiquidacion();
+	
+	
+	public abstract Double procesarProvisiones(Integer cedulaEmpleado, Integer concepto, String newEstado);
 }

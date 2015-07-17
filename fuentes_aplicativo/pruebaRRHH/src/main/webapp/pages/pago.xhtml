@@ -12,7 +12,7 @@
       <p:growl id="growl" showDetail="false" />
     </h:form>
     <h:form prependId="false" id="dataForm">
-      <p:panel id="data" toggleable="true" toggleSpeed="250">
+      <p:panel id="data">
         <f:facet name="header">
           <h:outputText value="#{pagoBean.name}" />
         </f:facet>
@@ -88,7 +88,7 @@
         </h:form>
       </p:outputPanel>
     </p:dialog>
-    <p:confirmDialog global="true" id="deleteDialog" widgetVar="deleteDialogWidget" message="#{messages.label_delete_record}" showEffect="fade" hideEffect="explode" header="#{messages.label_confirm_deletion}" severity="alarm">
+    <p:confirmDialog appendToBody="true" id="deleteDialog" widgetVar="deleteDialogWidget" message="#{messages.label_delete_record}" showEffect="fade" hideEffect="explode" header="#{messages.label_confirm_deletion}" severity="alarm">
       <p:outputPanel id="deletePanel">
         <h:form id="deleteForm">
           <p:commandButton id="deleteYesButton" value="#{messages.label_yes}" action="#{pagoBean.delete}" update=":dataForm:data :growlForm:growl" oncomplete="deleteDialogWidget.hide()" />

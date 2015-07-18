@@ -1,5 +1,6 @@
 package co.edu.udistrital.rrhh.web;
 import java.io.Serializable;
+import java.util.HashMap;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -40,7 +41,7 @@ public class LoginBean extends BaseBean implements Serializable {
 		if(this.user != null){
 			redirect("/pages/main.jsf");
 		}else{
-			redirect("/pages/index.jsf");
+			redirect("/public/index.jsf");
 		}
 		return null;
 	}
@@ -72,7 +73,11 @@ public class LoginBean extends BaseBean implements Serializable {
 	public void setUser(Usuario user) {
 		this.user = user;
 	}
-	
+	//cerrar session
+	public void cerrarSession(){
+		this.user = null;
+		redirect("/public/index.jsf");
+	}
 	
 	
 }

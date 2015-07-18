@@ -273,6 +273,30 @@ public class ApplicationBean {
         item.setUpdate(":dataForm:data");
         submenu.getChildren().add(item);
         menuModel.addSubmenu(submenu);
+        
+        
+        
+      //salir
+        submenu = new Submenu();
+        submenu.setId("CerrarSesionSubmenu");
+        submenu.setLabel("Cerrar Sesion");
+
+        item = new MenuItem();
+        item.setId("CerrarSesionMenuItem");
+        item.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{messages.label_close}", String.class));
+        item.setActionExpression(expressionFactory.createMethodExpression(elContext, "#{loginBean.cerrarSession}", String.class, new Class[0]));
+        item.setIcon("ui-icon ui-icon-folder-open");
+        item.setAjax(false);
+        item.setAsync(false);
+        item.setUpdate(":dataForm:data");
+        submenu.getChildren().add(item);
+        menuModel.addSubmenu(submenu);
+        
+   
+        
+        
+        
+        
     }
 
 	public MenuModel getMenuModel() {

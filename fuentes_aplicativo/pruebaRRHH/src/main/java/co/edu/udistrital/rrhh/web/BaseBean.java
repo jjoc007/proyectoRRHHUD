@@ -28,7 +28,7 @@ public class BaseBean {
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 		HttpServletRequest request = (HttpServletRequest) ec.getRequest();
 		HttpServletResponse response = (HttpServletResponse) ec.getResponse();
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/public/index.jsf");
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		for (Entry<String, Object> elemento : atributos.entrySet()) {
 			request.setAttribute(elemento.getKey(), elemento.getValue());
 		}

@@ -34,10 +34,21 @@
               <f:setPropertyActionListener value="#{concepto}" target="#{conceptoBean.concepto}" />
             </p:commandButton>
             <p:tooltip for="editButton" value="#{messages.label_edit}" showEffect="fade" hideEffect="fade" />
-            <p:commandButton id="deleteButton" icon="ui-icon-trash" oncomplete="deleteDialogWidget.show()" title="#{messages.label_delete}">
-              <f:setPropertyActionListener value="#{concepto}" target="#{conceptoBean.concepto}" />
-            </p:commandButton>
-            <p:tooltip for="deleteButton" value="#{messages.label_delete}" showEffect="fade" hideEffect="fade" />
+            
+            
+          
+	           <h:outputText value="#{conceto.conEstado}"></h:outputText>
+	           <p:commandButton id="deleteButton" rendered="#{concepto.conEliminar eq 'S'}" icon="ui-icon-trash" oncomplete="deleteDialogWidget.show()" title="#{messages.label_delete}">
+	              <f:setPropertyActionListener value="#{concepto}" target="#{conceptoBean.concepto}" />
+	            </p:commandButton>
+	             <p:tooltip for="deleteButton" value="#{messages.label_delete}" showEffect="fade" hideEffect="fade" />
+	          
+	            		
+		
+             
+           
+            
+           
           </p:column>
         </p:dataTable>
       </p:panel>

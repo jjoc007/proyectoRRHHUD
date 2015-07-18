@@ -3,6 +3,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -125,7 +126,7 @@ public class Concepto {
         this.conEstado = conEstado;
     }
 	
-	@OneToMany(mappedBy = "pagConcepto")
+	@OneToMany(mappedBy = "pagConcepto", fetch = FetchType.EAGER)
     private Set<Pago> pagos;
 
 	public Set<Pago> getPagos() {

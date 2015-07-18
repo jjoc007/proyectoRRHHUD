@@ -64,8 +64,10 @@ public class ConceptoBean implements Serializable {
         columns = new ArrayList<CampoValor>();
         columns.add(new CampoValor("Nombre", "conNombre"));
         columns.add(new CampoValor("Descripcion", "conDescripcion"));
-        columns.add(new CampoValor("valor","conValor"));
+        columns.add(new CampoValor("valor empleado","conValor"));
         columns.add(new CampoValor("valor empresa","conValorEmpresa"));
+       columns.add(new CampoValor("Tipo","conTipo"));
+        columns.add(new CampoValor("Tipo percepcion","conTipoPercepcion"));
     }
 
 	public String getName() {

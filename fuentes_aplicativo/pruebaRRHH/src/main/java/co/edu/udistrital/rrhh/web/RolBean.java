@@ -1,5 +1,6 @@
 package co.edu.udistrital.rrhh.web;
 import co.edu.udistrital.rrhh.domain.Rol;
+import co.edu.udistrital.rrhh.domain.Usuario;
 import co.edu.udistrital.rrhh.service.RolService;
 import co.edu.udistrital.rrhh.web.util.CampoValor;
 import co.edu.udistrital.rrhh.web.util.Constantes;
@@ -239,8 +240,32 @@ public class RolBean implements Serializable {
     }
 
 	public String delete() {
-        rolService.deleteRol(rol);
-        FacesMessage facesMessage = MessageFactory.getMessage("message_successfully_deleted", "Rol");
+		
+		String mensaje = "";
+		boolean error = false;
+		
+		if(rol.getUsuarios()!= null && rol.getUsuarios().size()>0){
+			
+			for(Usuario usuAux : rol.getUsuarios()){
+				
+				if(usuAux.getUsuEstado().equals(Constantes.GENERAL_ESTADO_ACTIVO)){
+					
+					error= true;
+					mensaje = "Este rol tiene usuarios activos asignados";
+					break;
+				}
+				
+			}
+			
+			
+		}
+		
+		if(!error){
+			rolService.deleteRol(rol);
+			mensaje ="message_successfully_deleted";
+		}
+        
+        FacesMessage facesMessage = MessageFactory.getMessage(mensaje, "Rol");
         FacesContext.getCurrentInstance().addMessage(null, facesMessage);
         reset();
         return findAllRols();

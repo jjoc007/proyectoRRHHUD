@@ -84,6 +84,7 @@ public class EmpleadoBean implements Serializable{
         columns.add(new CampoValor("Cargo", "cargoNombre"));
         columns.add(new CampoValor("Nro. Cuenta", "empCuentaPago"));
         
+        
     }
 
 	public String getName() {
@@ -383,6 +384,25 @@ public class EmpleadoBean implements Serializable{
 
 	public void setAutocompleteCaja(AutoComplete autocompleteCaja) {
 		this.autocompleteCaja = autocompleteCaja;
+	}
+
+
+
+
+	public boolean isInsertAction() {
+		return insertAction;
+	}
+
+	public void setInsertAction(boolean insertAction) {
+		this.insertAction = insertAction;
+	}
+
+	public boolean isUpdateAction() {
+		return updateAction;
+	}
+
+	public void setUpdateAction(boolean updateAction) {
+		this.updateAction = updateAction;
 	}
 
 

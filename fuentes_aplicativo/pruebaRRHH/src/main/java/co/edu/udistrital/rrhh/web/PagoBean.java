@@ -58,6 +58,7 @@ public class PagoBean implements Serializable  {
 	@PostConstruct
     public void init() {
         columns = new ArrayList<String>();
+        
         columns.add("pagoEmpleado");
         columns.add("pagValorPago");
         columns.add("conConcepto");

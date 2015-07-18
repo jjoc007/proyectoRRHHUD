@@ -40,7 +40,7 @@ public class PagoServiceImpl implements PagoService {
     }
 
 	public List<Pago> findAllPagoes() {
-        return pagoReprository.findAll();
+        return pagoReprository.findAllPagosOrder();
     }
 
 	public List<Pago> findPagoEntries(int firstResult, int maxResults) {

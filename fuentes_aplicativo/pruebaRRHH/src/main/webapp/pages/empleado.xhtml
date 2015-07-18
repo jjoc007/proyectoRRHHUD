@@ -55,7 +55,7 @@
           <h:panelGrid id="createPanelGrid" columns="2" styleClass="dialog" columnClasses="col1,col2,col3" >
          
          	 <h:outputText value="Cedula " />
-         	 <p:inputText value="#{empleadoBean.empleado.empCedula}" />
+         	 <p:inputText value="#{empleadoBean.empleado.empCedula}" disabled="#{!empleadoBean.insertAction}" />
          	 
          	  <h:outputText value="Nombre" />
          	  <p:inputText value="#{empleadoBean.empleado.empNombre}" />

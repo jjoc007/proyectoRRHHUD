@@ -18,6 +18,9 @@ public interface EntidadRepository extends JpaSpecificationExecutor<Entidad>, Jp
 	public List<Entidad> findAllEntidadesByTipo(
 			@Param("tipoParam") String tipoParam);
 	
+	@Query(value ="SELECT e FROM Entidad e WHERE e.entEstado = 'A'")
+	public List<Entidad> findAllEntidadesActivas();
+	
 	
 	
 }

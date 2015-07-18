@@ -30,4 +30,7 @@ public interface PagoRepository extends JpaSpecificationExecutor<Pago>, JpaRepos
 			@Param("concepto") Integer concepto,
 			@Param("periodo") Date periodo);
 	
+	@Query(value ="SELECT p FROM Pago p order by p.pagPeriodo desc")
+	public  List<Pago> findAllPagosOrder();
+	
 }

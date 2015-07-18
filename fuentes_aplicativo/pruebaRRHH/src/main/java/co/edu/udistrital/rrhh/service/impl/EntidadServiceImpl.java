@@ -2,6 +2,7 @@ package co.edu.udistrital.rrhh.service.impl;
 import co.edu.udistrital.rrhh.domain.Entidad;
 import co.edu.udistrital.rrhh.repository.EntidadRepository;
 import co.edu.udistrital.rrhh.service.EntidadService;
+import co.edu.udistrital.rrhh.web.util.Constantes;
 
 import java.util.List;
 
@@ -21,7 +22,8 @@ public class EntidadServiceImpl implements EntidadService {
     }
 
 	public void deleteEntidad(Entidad entidad) {
-        entidadReprository.delete(entidad);
+		entidad.setEntEstado(Constantes.GENERAL_ESTADO_INACTIVO);
+        entidadReprository.save(entidad);
     }
 
 	public Entidad findEntidad(Integer id) {
@@ -29,7 +31,7 @@ public class EntidadServiceImpl implements EntidadService {
     }
 
 	public List<Entidad> findAllEntidads() {
-        return entidadReprository.findAll();
+        return entidadReprository.findAllEntidadesActivas();
     }
 
 	public List<Entidad> findEntidadEntries(int firstResult, int maxResults) {

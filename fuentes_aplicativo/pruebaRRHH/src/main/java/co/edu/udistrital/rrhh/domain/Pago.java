@@ -128,6 +128,18 @@ public class Pago {
 		return "";
 
 	}
+	
+	public Integer getCedulaEmpleado(){
+
+		if(pagoEmpleado!= null){
+
+			return pagoEmpleado.getEmpCedula();
+
+		}
+
+		return 0;
+
+	}
 
 	public String getNombreConcepto(){
 

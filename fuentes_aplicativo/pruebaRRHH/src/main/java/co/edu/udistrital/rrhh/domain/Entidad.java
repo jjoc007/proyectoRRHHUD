@@ -3,6 +3,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,8 @@ import org.springframework.roo.addon.dbre.RooDbManaged;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.entity.RooJpaEntity;
 import org.springframework.roo.addon.tostring.RooToString;
+
+import co.edu.udistrital.rrhh.web.util.Constantes;
 
 @Entity
 @Table(name = "entidad")
@@ -85,19 +88,19 @@ public class Entidad {
 		this.entTipo = entTipo;
 	}
 	
-	@OneToMany(mappedBy = "entidadSalud")
+	@OneToMany(mappedBy = "entidadSalud", fetch=FetchType.EAGER)
     private List<Empleado> empleadosSalud;
 	
-	@OneToMany(mappedBy = "entidadPension")
+	@OneToMany(mappedBy = "entidadPension", fetch=FetchType.EAGER)
     private List<Empleado> empleadosPension;
 	
-	@OneToMany(mappedBy = "entidadCesantias")
+	@OneToMany(mappedBy = "entidadCesantias", fetch=FetchType.EAGER)
     private List<Empleado> empleadosCesantias;
 	
-	@OneToMany(mappedBy = "entidadArp")
+	@OneToMany(mappedBy = "entidadArp", fetch=FetchType.EAGER)
     private List<Empleado> empleadosArp;
 	
-	@OneToMany(mappedBy = "entidadCajaCompensacion")
+	@OneToMany(mappedBy = "entidadCajaCompensacion", fetch=FetchType.EAGER)
     private List<Empleado> empleadosCajaComp;
 
 	public List<Empleado> getEmpleadosSalud() {
@@ -141,7 +144,33 @@ public class Entidad {
 	}
 	
 	
-	
+	public String getNombreTipoEntidad(){
+		
+		if(this.entTipo != null){
+			if(this.entTipo.equals(Constantes.TIPO_ENTIDAD_ARL)){
+				
+				return "ARL";
+				
+			}else if (this.entTipo.equals(Constantes.TIPO_ENTIDAD_CAJA_COMPENSACION)){
+				return "CAJA DE COMPESACION";
+				
+			}else if (this.entTipo.equals(Constantes.TIPO_ENTIDAD_CESANTIAS)){
+				return "CESANTIAS";
+				
+			}else if (this.entTipo.equals(Constantes.TIPO_ENTIDAD_PENSION)){
+				return "PENSION";
+				
+			}else if (this.entTipo.equals(Constantes.TIPO_ENTIDAD_SALUD)){
+				return "SALUD";
+				
+			}
+				return "";
+			
+		}
+		
+		return "";
+		
+	}
 	
 	
 	

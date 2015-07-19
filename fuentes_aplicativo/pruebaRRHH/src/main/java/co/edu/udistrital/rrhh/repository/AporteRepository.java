@@ -24,7 +24,8 @@ public interface AporteRepository extends JpaSpecificationExecutor<Aporte>, JpaR
 			+ " where valor.cod   = valor_emp.cod "
 			+ " and valor_emp.cod = e.ent_codigo "
 			+ " and valor.periodo = valor_emp.periodo "
-			+ " group by e.ent_codigo, valor.periodo ",nativeQuery=true)
+			+ " group by e.ent_codigo, valor.periodo "
+			+ " order by valor.periodo desc",nativeQuery=true)
 	public List<Object[]> findAllAporte();
 	}
 

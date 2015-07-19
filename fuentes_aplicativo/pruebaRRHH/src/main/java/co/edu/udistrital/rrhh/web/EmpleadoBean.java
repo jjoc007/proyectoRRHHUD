@@ -235,7 +235,7 @@ public class EmpleadoBean implements Serializable{
 
             historicocargoService.saveHistoricocargo(historialCargo);
             
-            message = "message_successfully_updated";
+            message = "message_successfully_created";
         } else {
         	//actualiza
         	empleado.setEmpEstado(Constantes.GENERAL_ESTADO_ACTIVO);
@@ -262,7 +262,7 @@ public class EmpleadoBean implements Serializable{
             	}
             }
             
-            message = "message_successfully_created";
+            message = "message_successfully_updated";
         }
         RequestContext context = RequestContext.getCurrentInstance();
         context.execute("createDialogWidget.hide()");

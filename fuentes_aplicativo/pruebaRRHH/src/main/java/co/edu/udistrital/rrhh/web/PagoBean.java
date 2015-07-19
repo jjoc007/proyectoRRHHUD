@@ -37,7 +37,7 @@ public class PagoBean implements Serializable  {
 	@Autowired
     PagoService pagoService;
 
-	private String name = "Pagoes";
+	private String name = "Pago";
 
 	private Pago pago;
 

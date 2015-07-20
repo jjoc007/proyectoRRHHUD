@@ -21,23 +21,23 @@
         </h:outputFormat>
         <p:dataTable id="list" value="#{historicocargoBean.allHistoricocargoes}" var="historicocargo" rendered="#{historicocargoBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10">
            
-           <p:column headerText="empleado">
+           <p:column headerText="Empleado">
            	<h:outputText value="#{historicocargo.hisEmpleado.empCedula}" />
            </p:column> 
            
-           <p:column headerText="cargo">
+           <p:column headerText="Cargo">
            	<h:outputText value="#{historicocargo.hisCargo.carNombre}" />
            </p:column> 
            
-                      <p:column headerText="fecha Inicio">
+                      <p:column headerText="Fecha Inicial">
            	<h:outputText value="#{historicocargo.formatedFechaInicial}" />
            </p:column> 
            
-                      <p:column headerText="fecha Final">
+                      <p:column headerText="Fecha Final">
            	<h:outputText value="#{historicocargo.formatedFechaFinal}" />
            </p:column> 
            
-                      <p:column headerText="Sueldo">
+                      <p:column headerText="Salario">
            	<h:outputText value="#{historicocargo.hisCargo.formatedSalario}" />
            </p:column> 
           

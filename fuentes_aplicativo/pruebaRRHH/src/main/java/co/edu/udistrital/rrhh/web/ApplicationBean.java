@@ -100,7 +100,7 @@ public class ApplicationBean {
         
         submenu = new Submenu();
         submenu.setId("conceptoLiqSubmenu");
-        submenu.setLabel("ConceptoLiquidacion");
+        submenu.setLabel("Concepto Liquidación");
         item = new MenuItem();
         item.setId("createConceptoLiqMenuItem");
         item.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{messages.label_create}", String.class));
@@ -186,7 +186,7 @@ public class ApplicationBean {
         
         submenu = new Submenu();
         submenu.setId("historicocargoSubmenu");
-        submenu.setLabel("Historicocargo");
+        submenu.setLabel("Histórico Cargo");
         
         item = new MenuItem();
         item.setId("listHistoricocargoMenuItem");
@@ -279,7 +279,7 @@ public class ApplicationBean {
       //salir
         submenu = new Submenu();
         submenu.setId("CerrarSesionSubmenu");
-        submenu.setLabel("Cerrar Sesion");
+        submenu.setLabel("Cerrar Sesión");
 
         item = new MenuItem();
         item.setId("CerrarSesionMenuItem");

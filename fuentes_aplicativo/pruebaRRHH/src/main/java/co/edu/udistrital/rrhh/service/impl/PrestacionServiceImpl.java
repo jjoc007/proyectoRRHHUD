@@ -64,13 +64,6 @@ public class PrestacionServiceImpl implements PrestacionService {
 		//Verificar proceso de liquidacion de prestaciones
 		proceso = procesoService.consultarProceso(Constantes.LIQUIDACION_PRESTACIONES, periodo.getTime());
 		
-		if (proceso == null){
-			throw new NominaException("No se puede realizar el proceso de liquidación, NO existe liquidación de prestaciones para el período "+Utilidades.dateFormat(periodo.getTime()));
-		}
-
-		//Verificar proceso de liquidacion de prestaciones
-		proceso = procesoService.consultarProceso(Constantes.LIQUIDACION_PRESTACIONES, periodo.getTime());
-		
 		if (proceso != null){
 			
 			throw new NominaException("No se puede realizar el proceso de liquidación de prestaciones, YA existe liquidación de prestaciones para el período "+Utilidades.dateFormat(periodo.getTime()));

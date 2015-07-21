@@ -400,7 +400,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 			
 			for(Concepto conceptoAux: conceptos){
 
-				pagosPorEmpleado.add(new Pago(empleadoAux, conceptoAux, periodo,	0.0D, Constantes.PAGO_ACTIVO, null));
+				pagosPorEmpleado.add(new Pago(empleadoAux, conceptoAux, periodo,	0.0D, Constantes.PAGO_ACTIVO));
 				
 			}
 			

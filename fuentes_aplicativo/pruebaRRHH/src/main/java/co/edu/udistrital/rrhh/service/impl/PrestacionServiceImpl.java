@@ -5,24 +5,26 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import co.edu.udistrital.rrhh.domain.Aporte;
 import co.edu.udistrital.rrhh.domain.Concepto;
 import co.edu.udistrital.rrhh.domain.Empleado;
 import co.edu.udistrital.rrhh.domain.Pago;
 import co.edu.udistrital.rrhh.domain.Proceso;
 import co.edu.udistrital.rrhh.domain.Provision;
+import co.edu.udistrital.rrhh.repository.AporteRepository;
 import co.edu.udistrital.rrhh.repository.ConceptoRepository;
+import co.edu.udistrital.rrhh.repository.PagoRepository;
+import co.edu.udistrital.rrhh.repository.ProvisionRepository;
 import co.edu.udistrital.rrhh.service.ConceptoService;
 import co.edu.udistrital.rrhh.service.PrestacionService;
 import co.edu.udistrital.rrhh.service.ProcesoService;
 import co.edu.udistrital.rrhh.web.util.Constantes;
 import co.edu.udistrital.rrhh.web.util.NominaException;
 import co.edu.udistrital.rrhh.web.util.Utilidades;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jca.cci.CciOperationNotSupportedException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -32,16 +34,28 @@ public class PrestacionServiceImpl implements PrestacionService {
     ConceptoRepository conceptoRepository;
 	
 	@Autowired
+	AporteRepository aporteRepository;
+	
+	@Autowired
+	PagoRepository pagoRepository;
+	
+	@Autowired
+	ProvisionRepository provisionRepository;
+	
+	@Autowired
     ProcesoService procesoService;
 	
 	@Autowired
 	ConceptoService conceptoService;
 	
+	public static final int EMPLEADO = 0;
+	public static final int EMPRESA = 1;
+	
 	public Pago pago;
 	public Aporte aporte;
 	public Provision provision;
 	public Proceso proceso = new Proceso();
-
+	
 	@Override
 	public StringBuffer liquidarPrestaciones(List<Empleado> allEmpleados, Calendar periodo) throws NominaException {
 
@@ -68,60 +82,84 @@ public class PrestacionServiceImpl implements PrestacionService {
 		List<Concepto> listaConceptosAporte = getAllConceptosAporte(listaAllConceptos);
 		
 		HashMap<Integer, List<Provision>> mapProvisionesPorEmpleado = new HashMap<Integer, List<Provision>>();
+		List<Provision> provisionesEmpleado = null;
+		List<Aporte> aportesEmpleado = null;
+		List<Pago> pagosEmpleado = null;
+		
 		Provision provisionEmpleado = null;
 		Aporte aporteEmpleado = null;
-		List<Provision> provisionesEmpleado = null;
-		Double valorConcepto = 0D; 
+		Pago pagoEmpleado = null;
+		
+		int entidad = 0;
+		String tipoAporte = null;
+		Double[] valorConcepto = null;
 		for (Empleado empleadoAux : allEmpleados) {
+			
+			valorConcepto = new Double[]{0D, 0D};
 			provisionesEmpleado = new ArrayList<Provision>(); 
 			
 			for (Concepto concepto : listaConceptosProvisionables) {
 				
-				switch (concepto.getConCodigo()) {
-					case Constantes.CONCEPTO_PRIMA:{
-						valorConcepto = calcularPrima(empleadoAux.getCargo().getCarSalario());
-					}break;
-					
-					case Constantes.CONCEPTO_VACACIONES:{
-						valorConcepto = calcularVacaciones(empleadoAux.getCargo().getCarSalario());
-					}break;
-					
-					case Constantes.CONCEPTO_CESANTIAS:{
-						valorConcepto = calcularCesantias(empleadoAux.getCargo().getCarSalario());
-					}break;
-					
-					case Constantes.CONCEPTO_INTERESES_CESANTIAS:{
-						valorConcepto = calcularInteresesCesantias(empleadoAux.getCargo().getCarSalario());
-					}break;
-	
-					default:{
-						valorConcepto = 0D;
-					}break;
-				}
-				
+				valorConcepto = calcularConcepto(empleadoAux.getCargo().getCarSalario(),concepto);
 				provisionEmpleado = new  Provision(
 							empleadoAux.getEmpCedula(),
 							concepto.getConCodigo(),
 							periodo.getTime(),
-							valorConcepto,//Valor
+							valorConcepto[EMPLEADO],
 							Constantes.PROV_ACTIVA,
 							null);//Código (Autogenerado)
 				provisionesEmpleado.add(provisionEmpleado);
 			}
 			
+			aportesEmpleado = new ArrayList<Aporte>();
+			pagosEmpleado = new ArrayList<Pago>();
+			
 			for (Concepto concepto : listaConceptosAporte) {
-				/*aporteEmpleado = new Aporte(
-						empleadoAux.get
-						);*/
-				provisionEmpleado = new  Provision(
-							empleadoAux.getEmpCedula(),
-							concepto.getConCodigo(),
-							periodo.getTime(),
-							null,//Valor
-							Constantes.PROV_ACTIVA,
-							null);//Código
-				provisionesEmpleado.add(provisionEmpleado);
+				
+				valorConcepto = calcularConcepto(empleadoAux.getCargo().getCarSalario(),concepto);
+				switch (concepto.getConCodigo()) {
+					case Constantes.CONCEPTO_ARL:{
+						entidad = empleadoAux.getEntidadArp().getEntCodigo();
+						tipoAporte = Constantes.APORTE_ARL;
+					}break;
+	
+					case Constantes.CONCEPTO_SALUD:{
+						entidad = empleadoAux.getEntidadSalud().getEntCodigo();
+						tipoAporte = Constantes.APORTE_SALUD;
+					}break;
+	
+					case Constantes.CONCEPTO_PENSION:{
+						entidad = empleadoAux.getEntidadPension().getEntCodigo();
+						tipoAporte = Constantes.APORTE_PENSION;
+					}break;
+	
+					default:{
+						entidad = 0;
+						tipoAporte = "";
+					}break;
+				}
+				
+				if(concepto.getConCodigo() != Constantes.CONCEPTO_ARL){
+					pagoEmpleado = new Pago(empleadoAux, 
+							concepto, 
+							periodo.getTime(), 
+							valorConcepto[EMPLEADO],
+							Constantes.PAGO_ACTIVO);
+					pagosEmpleado.add(pagoEmpleado);
+				}
+				
+				
+				aporteEmpleado = new Aporte(entidad, 
+						tipoAporte, 
+						periodo.getTime(), 
+						valorConcepto[EMPLEADO], 
+						valorConcepto[EMPRESA]);
+				aportesEmpleado.add(aporteEmpleado);
+				
 			}
+			aporteRepository.save(aportesEmpleado);
+			provisionRepository.save(provisionesEmpleado);
+			pagoRepository.save(pagosEmpleado);
 			mapProvisionesPorEmpleado.put(empleadoAux.getEmpCedula(), provisionesEmpleado);
 		}
 		return alertasVacaciones;
@@ -129,65 +167,27 @@ public class PrestacionServiceImpl implements PrestacionService {
 	}
 	
 	@Override
-	public Double calcularCesantias(Double sueldoEmpleado){
+	public Double[] calcularConcepto(Double sueldoEmpleado, Concepto concepto){
 		
-		Concepto cesantias = conceptoRepository.findOne(Constantes.CONCEPTO_CESANTIAS);
-		
-		Double valorCesantias = new Double(0);
-		
-		if(cesantias.getConTipo().equalsIgnoreCase(Constantes.TIPO_CONCEPTO_PORCENTAJE)){
-			valorCesantias = sueldoEmpleado * (cesantias.getConValor()/100);
-		}else if(cesantias.getConTipo().equalsIgnoreCase(Constantes.TIPO_CONCEPTO_VALOR)){
-			valorCesantias = cesantias.getConValor();
+		if(concepto == null){
+			concepto = conceptoRepository.findOne(Constantes.CONCEPTO_SALUD);
 		}
-		return valorCesantias;
+		
+		Double[] valorConcepto = new Double[2];
+		
+		if(concepto.getConTipo().equalsIgnoreCase(Constantes.TIPO_CONCEPTO_PORCENTAJE)){
+			valorConcepto[EMPLEADO] = sueldoEmpleado * (concepto.getConValor()/100);
+			valorConcepto[EMPRESA] = sueldoEmpleado * (concepto.getConValorEmpresa()/100);
+		}else if(concepto.getConTipo().equalsIgnoreCase(Constantes.TIPO_CONCEPTO_VALOR)){
+			valorConcepto[EMPLEADO] = concepto.getConValor();
+			valorConcepto[EMPRESA] = concepto.getConValorEmpresa();
+		}else {
+			valorConcepto = new Double[]{0D, 0D};
+		}
+		return valorConcepto;
 	}
 	
 	@Override
-	public Double calcularInteresesCesantias(Double valorCesantias){
-		
-		Concepto interesesCesantias = conceptoRepository.findOne(Constantes.CONCEPTO_INTERESES_CESANTIAS);
-		
-		Double valorInteresesCesantias = new Double(0);
-		
-		if(interesesCesantias.getConTipo().equalsIgnoreCase(Constantes.TIPO_CONCEPTO_PORCENTAJE)){
-			valorInteresesCesantias = valorCesantias * (interesesCesantias.getConValor()/100);
-		}else if(interesesCesantias.getConTipo().equalsIgnoreCase(Constantes.TIPO_CONCEPTO_VALOR)){
-			valorInteresesCesantias = interesesCesantias.getConValor();
-		}
-		return valorInteresesCesantias;
-	}
-	
-	@Override
-	public Double calcularPrima(Double sueldoEmpleado){
-		
-		Concepto prima = conceptoRepository.findOne(Constantes.CONCEPTO_INTERESES_CESANTIAS);
-		
-		Double valorPrima = new Double(0);
-		
-		if(prima.getConTipo().equalsIgnoreCase(Constantes.TIPO_CONCEPTO_PORCENTAJE)){
-			valorPrima = sueldoEmpleado * (prima.getConValor()/100);
-		}else if(prima.getConTipo().equalsIgnoreCase(Constantes.TIPO_CONCEPTO_VALOR)){
-			valorPrima = prima.getConValor();
-		}
-		return valorPrima;
-	}
-	
-	@Override
-	public Double calcularVacaciones(Double sueldoEmpleado){
-		
-		Concepto prima = conceptoRepository.findOne(Constantes.CONCEPTO_INTERESES_CESANTIAS);
-		
-		Double valorPrima = new Double(0);
-		
-		if(prima.getConTipo().equalsIgnoreCase(Constantes.TIPO_CONCEPTO_PORCENTAJE)){
-			valorPrima = sueldoEmpleado * (prima.getConValor()/100);
-		}else if(prima.getConTipo().equalsIgnoreCase(Constantes.TIPO_CONCEPTO_VALOR)){
-			valorPrima = prima.getConValor();
-		}
-		return valorPrima;
-	}
-	
 	public List<Concepto> getAllConceptosProvisionables(List<Concepto> listaConceptosProvisionables){
 		Iterator<Concepto> iteratorConcepto = listaConceptosProvisionables.iterator();
 		Concepto concepto = null;
@@ -203,6 +203,7 @@ public class PrestacionServiceImpl implements PrestacionService {
 		return listaConceptosProvisionables;
 	}
 	
+	@Override
 	public List<Concepto> getAllConceptosAporte(List<Concepto> listaConceptosAporte){
 		Iterator<Concepto> iteratorConcepto = listaConceptosAporte.iterator();
 		Concepto concepto = null;
@@ -216,18 +217,5 @@ public class PrestacionServiceImpl implements PrestacionService {
 		}
 		return listaConceptosAporte;
 	}
-		
-	/*calcularVacaciones
-	{
-	obtenerParametro(id_VACACIONES) retorna objeto de tipo concepto
-	Si el tipo de concepto es porcentaje haga
-	{
-	multiplicar p_Sueldo por el valor del parametro/100
-	} Sino haga
-	{
-	retornar el valor del parametro
-	}
-	}*/
-
 	
 }

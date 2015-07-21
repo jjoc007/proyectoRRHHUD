@@ -59,15 +59,13 @@ public class Pago {
 	}
 
 	public Pago(Empleado pagoEmpleado, Concepto pagConcepto, Date pagPeriodo,
-			Double pagValorPago, String pagEstado, Integer pagCodigo) {
+			Double pagValorPago, String pagEstado) {
 		super();
 		this.pagoEmpleado = pagoEmpleado;
 		this.pagConcepto = pagConcepto;
 		this.pagPeriodo = pagPeriodo;
 		this.pagValorPago = pagValorPago;
 		this.pagEstado = pagEstado;
-		this.pagCodigo = pagCodigo;
-
 	}
 
 	public Date getPagPeriodo() {

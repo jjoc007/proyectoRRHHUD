@@ -11,14 +11,12 @@ import org.springframework.roo.addon.layers.service.RooService;
 @RooService(domainTypes = { Concepto.class })
 public interface PrestacionService {
 
-	Double calcularCesantias(Double sueldoEmpleado);
-
-	Double calcularInteresesCesantias(Double valorCesantias);
-
-	Double calcularPrima(Double sueldoEmpleado);
-	
-	Double calcularVacaciones(Double sueldoEmpleado);
-
 	StringBuffer liquidarPrestaciones(List<Empleado> allEmpleados,Calendar periodo) throws NominaException;
+	
+	Double[] calcularConcepto(Double sueldoEmpleado, Concepto concepto);
+
+	List<Concepto> getAllConceptosProvisionables(List<Concepto> listaConceptosProvisionables);
+
+	List<Concepto> getAllConceptosAporte(List<Concepto> listaConceptosAporte);
 	
 }

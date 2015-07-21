@@ -99,8 +99,7 @@ public class PrestacionServiceImpl implements PrestacionService {
 							concepto.getConCodigo(),
 							periodo.getTime(),
 							valorConcepto[EMPLEADO],
-							Constantes.PROV_ACTIVA,
-							null);//Código (Autogenerado)
+							Constantes.PROV_ACTIVA);
 				provisionesEmpleado.add(provisionEmpleado);
 			}
 			

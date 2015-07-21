@@ -27,14 +27,13 @@ public class Provision {
 	}
 	
 	public Provision(Integer proEmpleado, Integer proConcepto, Date proPeriodo,
-			Double proValor, String proEstado, Integer proCodigo) {
+			Double proValor, String proEstado) {
 		super();
 		this.proEmpleado = proEmpleado;
 		this.proConcepto = proConcepto;
 		this.proPeriodo = proPeriodo;
 		this.proValor = proValor;
 		this.proEstado = proEstado;
-		this.proCodigo = proCodigo;
 	}
 
 

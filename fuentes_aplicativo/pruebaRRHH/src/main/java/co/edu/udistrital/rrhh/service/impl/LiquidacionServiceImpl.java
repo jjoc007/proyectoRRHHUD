@@ -77,37 +77,16 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 
 		for (Empleado empleadoAux : allEmpleados) {
 
-			provisionesRep = provisionService.findProvisiones(
-					empleadoAux.getEmpCedula(), Constantes.CONCEPTO_VACACIONES,
-					Constantes.PROV_ACTIVA);
-
-			if (provisionesRep != null)
-				numProviVacaciones = provisionesRep.size();
-			else
-				numProviVacaciones = 0;
-
-			if  (numProviVacaciones >= 12) {
-
-				alertasVacaciones.append("Alerta el empleado "+empleadoAux.getEmpCedula()+" ya tiene "+numProviVacaciones+" meses acumulados sin tomar vacaciones");
-
-			}else if (numProviVacaciones > 24) {
-
-				int cont = 0;
-
-				for (Provision provisionAux : provisionesRep) {
-
-					if (cont < 12) {
-
-						cont += 1;
-						provisionAux.setProEstado(Constantes.PROV_NO_APLICA);
-						provisionService.saveProvision(provisionAux);
-
-					}
-				}
-
-			} 
-
 			if (empleadoAux.isEmp_vacaciones()) {
+				
+				provisionesRep = provisionService.findProvisiones(
+						empleadoAux.getEmpCedula(), Constantes.CONCEPTO_VACACIONES,
+						Constantes.PROV_ACTIVA);
+
+				if (provisionesRep != null)
+					numProviVacaciones = provisionesRep.size();
+				else
+					numProviVacaciones = 0;
 
 				if (numProviVacaciones <= 12) {
 
@@ -131,6 +110,38 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 				}
 
 			}
+			
+			provisionesRep = null;
+			
+			provisionesRep = provisionService.findProvisiones(
+					empleadoAux.getEmpCedula(), Constantes.CONCEPTO_VACACIONES,
+					Constantes.PROV_ACTIVA);
+
+			if (provisionesRep != null)
+				numProviVacaciones = provisionesRep.size();
+			else
+				numProviVacaciones = 0;
+			
+			if  (numProviVacaciones >= 12) {
+
+				alertasVacaciones.append("Alerta el empleado "+empleadoAux.getEmpCedula()+" ya tiene "+numProviVacaciones+" meses acumulados sin tomar vacaciones");
+
+			}else if (numProviVacaciones > 24) {
+
+				int cont = 0;
+
+				for (Provision provisionAux : provisionesRep) {
+
+					if (cont < 12) {
+
+						cont += 1;
+						provisionAux.setProEstado(Constantes.PROV_NO_APLICA);
+						provisionService.saveProvision(provisionAux);
+
+					}
+				}
+
+			} 
 
 			if (empleadoAux.isEmp_liquida()) {
 

@@ -32,8 +32,8 @@ public class ConceptoServiceImpl implements ConceptoService {
     }
 	
 	// Buscar cargos Activos
-	public List<Concepto> findAllConceptoAct(String estado) {    
-        return conceptoReprository.findAllConceptoAct(Constantes.GENERAL_ESTADO_ACTIVO);
+	public List<Concepto> findAllConceptosByEstado(String estado) {    
+        return conceptoReprository.findAllConceptosByEstado(estado);
     }
 
 	public Concepto findConcepto(Integer id) {

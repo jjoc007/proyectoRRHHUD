@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 public interface ConceptoRepository extends JpaRepository<Concepto, Integer>, JpaSpecificationExecutor<Concepto> {
 		
 	@Query(value ="SELECT c FROM Concepto c WHERE c.conEstado = :estado")
-	public List<Concepto> findAllConceptoAct(
+	public List<Concepto> findAllConceptosByEstado(
 			@Param("estado") String estado);
 	
 	@Query(value ="SELECT c FROM Concepto c WHERE c.conEstado = :estado AND c.conEliminar <> 'N' AND conTipoPercepcion IN (:tipoPer)")

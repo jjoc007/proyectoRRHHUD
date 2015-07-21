@@ -3,6 +3,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -19,6 +21,22 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJpaEntity(versionField = "", sequenceName = "", table = "provision")
 @RooDbManaged(automaticallyDelete = true)
 public class Provision {
+	
+	public Provision(){
+		super();
+	}
+	
+	public Provision(Integer proEmpleado, Integer proConcepto, Date proPeriodo,
+			Double proValor, String proEstado, Integer proCodigo) {
+		super();
+		this.proEmpleado = proEmpleado;
+		this.proConcepto = proConcepto;
+		this.proPeriodo = proPeriodo;
+		this.proValor = proValor;
+		this.proEstado = proEstado;
+		this.proCodigo = proCodigo;
+	}
+
 
 	@Column(name = "pro_empleado")
     @NotNull
@@ -83,7 +101,8 @@ public class Provision {
 
 	@Id
     @Column(name = "pro_codigo")
-    private Integer proCodigo;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer proCodigo;
 
 	public Integer getProCodigo() {
         return this.proCodigo;

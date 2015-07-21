@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -183,8 +185,8 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		
 		return alertasVacaciones;
 		
-	};
-
+	}
+	
 	public void procesarPrima(Empleado empleado, Calendar periodo) {
 
 		Double prima = 0.0;
@@ -430,5 +432,4 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		return valor;
 	}
 	
-
 }

@@ -21,6 +21,22 @@ import org.springframework.roo.addon.tostring.RooToString;
 @RooJpaEntity(versionField = "", sequenceName = "", table = "aporte")
 @RooDbManaged(automaticallyDelete = true)
 public class Aporte {
+	
+	
+	
+	public Aporte() {
+		super();
+	}
+
+	public Aporte(Integer apoEntidad, String apoTipo, Date apoPeriodo,
+			Double apoValor, Double apoValorEmpresa) {
+		super();
+		this.apoEntidad = apoEntidad;
+		this.apoTipo = apoTipo;
+		this.apoPeriodo = apoPeriodo;
+		this.apoValor = apoValor;
+		this.apoValorEmpresa = apoValorEmpresa;
+	}
 
 	@Column(name = "apo_entidad")
     @NotNull

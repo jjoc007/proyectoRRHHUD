@@ -274,6 +274,21 @@ public class ApplicationBean {
         submenu.getChildren().add(item);
         menuModel.addSubmenu(submenu);
         
+        //liquidación prestaciones
+        submenu = new Submenu();
+        submenu.setId("liquidacionPrestacionesSubmenu");
+        submenu.setLabel("Liquidación De Prestaciones");
+        item = new MenuItem();
+        item.setId("listLiquidacionPrestacionesMenuItem");
+        item.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{messages.label_list}", String.class));
+        item.setActionExpression(expressionFactory.createMethodExpression(elContext, "#{liquidacionPrestacionesBean.displayList}", String.class, new Class[0]));
+        item.setIcon("ui-icon ui-icon-folder-open");
+        item.setAjax(false);
+        item.setAsync(false);
+        item.setUpdate(":dataForm:data");
+        submenu.getChildren().add(item);
+        menuModel.addSubmenu(submenu);
+        
         
         
       //salir
@@ -291,11 +306,6 @@ public class ApplicationBean {
         item.setUpdate(":dataForm:data");
         submenu.getChildren().add(item);
         menuModel.addSubmenu(submenu);
-        
-   
-        
-        
-        
         
     }
 

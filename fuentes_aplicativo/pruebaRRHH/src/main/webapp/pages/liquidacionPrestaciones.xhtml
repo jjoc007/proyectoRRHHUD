@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="../templates/layout.xhtml">
+  <ui:define name="content">
+    <h:form prependId="false" id="growlForm">
+      <p:messages id="growl" showDetail="true" autoUpdate="true" closable="true" />
+    </h:form>
+		<h:form prependId="false" id="dataForm">
+			<p:panel id="data">
+
+				<f:facet name="header">
+					<h:outputText
+						value="Período a Liquidar #{liquidacionPrestacionesBean.periodoLiquidar}" />
+				</f:facet>
+
+				<p:dataTable id="list"
+					value="#{liquidacionPrestacionesBean.allEmpleados}" var="empleado"
+					resizableColumns="false" paginator="true"
+					paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,25,50" rows="10">
+					<p:column headerText="Empleado">
+						<h:outputText value="#{empleado.empCedula}" />
+					</p:column>
+					<p:column headerText="Nombre">
+						<h:outputText value="#{empleado.empNombre}" />
+					</p:column>
+					<p:column headerText="Seguridad Social">
+						<ul>
+							<li>Salud</li>
+							<li>Pension</li>
+							<li>ARL</li>
+						</ul>
+					</p:column>
+					<p:column headerText="Prestaciones Sociales">
+						<ul>
+							<li>Prima</li>
+							<li>Vacaciones</li>
+							<li>Cesantias</li>
+							<li>Intereses de Cesantias</li>
+						</ul>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton id="procesarLiquid" value="Liquidar"
+					oncomplete="confirmDialogWidget.show()" />
+			</p:panel>
+		</h:form>
+
+
+		<p:confirmDialog appendToBody="true" id="confirmDialog" widgetVar="confirmDialogWidget" message="#{messages.label_confirm_liq}" showEffect="fade" hideEffect="explode" header="#{messages.label_advertencia}" severity="alarm">
+      <p:outputPanel id="confirmPanel">
+        <h:form id="confirmForm">
+          <p:commandButton id="YesButton" value="#{messages.label_yes}" action="#{liquidacionPrestacionesBean.liquidar}" oncomplete="confirmDialogWidget.hide()" />
+          <p:commandButton id="NoButton" value="#{messages.label_no}" onclick="confirmDialogWidget.hide()" type="button" />
+        </h:form>
+      </p:outputPanel>
+    </p:confirmDialog>
+  </ui:define>
+</ui:composition>
+</html>

@@ -39,6 +39,11 @@ public class ProvisionServiceImpl implements ProvisionService {
 	public void saveProvision(Provision provision) {
         provisionReprository.save(provision);
     }
+	
+	public List<Provision> saveProvisiones(List<Provision> listaProvisiones) {
+		List<Provision> listaProvisionesSaved = provisionReprository.save(listaProvisiones);
+		return listaProvisionesSaved;
+    }
 
 	public Provision updateProvision(Provision provision) {
         return provisionReprository.save(provision);

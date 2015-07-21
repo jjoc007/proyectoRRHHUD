@@ -18,7 +18,7 @@ public interface ConceptoService {
 	
 	public abstract void  ActEstadoConcepto(Concepto concepto); // Cambio de Estado de Concepto
 	
-	public List<Concepto> findAllConceptoAct (String estado);// Buscar Concepto Activos
+	public List<Concepto> findAllConceptosByEstado (String estado);// Buscar Concepto Activos
 
 
 	public abstract List<Concepto> findAllConceptoes();

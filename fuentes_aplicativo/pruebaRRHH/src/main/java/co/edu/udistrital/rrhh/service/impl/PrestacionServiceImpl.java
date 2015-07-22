@@ -59,8 +59,6 @@ public class PrestacionServiceImpl implements PrestacionService {
 	@Override
 	public StringBuffer liquidarPrestaciones(List<Empleado> allEmpleados, Calendar periodo) throws NominaException {
 
-		StringBuffer alertasVacaciones = new StringBuffer();
-
 		//Verificar proceso de liquidacion de prestaciones
 		proceso = procesoService.consultarProceso(Constantes.LIQUIDACION_PRESTACIONES, periodo.getTime());
 		
@@ -154,7 +152,11 @@ public class PrestacionServiceImpl implements PrestacionService {
 			pagoRepository.save(pagosEmpleado);
 			mapProvisionesPorEmpleado.put(empleadoAux.getEmpCedula(), provisionesEmpleado);
 		}
-		return alertasVacaciones;
+		//Insertar en proceso liquidacion
+		
+		procesoService.insertarProceso(Constantes.LIQUIDACION_PRESTACIONES, periodo.getTime());
+				
+		return new StringBuffer();
 		
 	}
 	
@@ -182,32 +184,34 @@ public class PrestacionServiceImpl implements PrestacionService {
 	@Override
 	public List<Concepto> getAllConceptosProvisionables(List<Concepto> listaConceptosProvisionables){
 		Iterator<Concepto> iteratorConcepto = listaConceptosProvisionables.iterator();
+		List<Concepto> listaConceptosProvisionablesAux = new ArrayList<Concepto>();
 		Concepto concepto = null;
 		while (iteratorConcepto.hasNext()) {
 			concepto = iteratorConcepto.next();
-			if(concepto.getConCodigo() != Constantes.CONCEPTO_PRIMA &&
-				concepto.getConCodigo() != Constantes.CONCEPTO_VACACIONES &&
-				concepto.getConCodigo() != Constantes.CONCEPTO_CESANTIAS &&
-				concepto.getConCodigo() != Constantes.CONCEPTO_INTERESES_CESANTIAS){
-				iteratorConcepto.remove();
+			if(concepto.getConCodigo() == Constantes.CONCEPTO_PRIMA ||
+				concepto.getConCodigo() == Constantes.CONCEPTO_VACACIONES ||
+				concepto.getConCodigo() == Constantes.CONCEPTO_CESANTIAS ||
+				concepto.getConCodigo() == Constantes.CONCEPTO_INTERESES_CESANTIAS){
+				listaConceptosProvisionablesAux.add(concepto);
 			}
 		}
-		return listaConceptosProvisionables;
+		return listaConceptosProvisionablesAux;
 	}
 	
 	@Override
 	public List<Concepto> getAllConceptosAporte(List<Concepto> listaConceptosAporte){
 		Iterator<Concepto> iteratorConcepto = listaConceptosAporte.iterator();
+		List<Concepto> listaConceptosAporteAux = new ArrayList<Concepto>();
 		Concepto concepto = null;
 		while (iteratorConcepto.hasNext()) {
 			concepto = iteratorConcepto.next();
-			if(concepto.getConCodigo() != Constantes.CONCEPTO_SALUD &&
-				concepto.getConCodigo() != Constantes.CONCEPTO_PENSION &&
-				concepto.getConCodigo() != Constantes.CONCEPTO_ARL){
-				iteratorConcepto.remove();
+			if(concepto.getConCodigo() == Constantes.CONCEPTO_SALUD ||
+				concepto.getConCodigo() == Constantes.CONCEPTO_PENSION ||
+				concepto.getConCodigo() == Constantes.CONCEPTO_ARL){
+				listaConceptosAporteAux.add(concepto);
 			}
 		}
-		return listaConceptosAporte;
+		return listaConceptosAporteAux;
 	}
 	
 }

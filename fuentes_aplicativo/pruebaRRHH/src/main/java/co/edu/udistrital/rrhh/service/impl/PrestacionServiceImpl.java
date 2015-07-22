@@ -123,6 +123,11 @@ public class PrestacionServiceImpl implements PrestacionService {
 						tipoAporte = Constantes.APORTE_PENSION;
 					}break;
 	
+					case Constantes.CONCEPTO_CAJA_COMPENSACION:{
+						entidad = empleadoAux.getEntidadCajaCompensacion().getEntCodigo();
+						tipoAporte = Constantes.APORTE_CAJA_COMPENSACION;
+					}break;
+	
 					default:{
 						entidad = 0;
 						tipoAporte = "";
@@ -207,7 +212,8 @@ public class PrestacionServiceImpl implements PrestacionService {
 			concepto = iteratorConcepto.next();
 			if(concepto.getConCodigo() == Constantes.CONCEPTO_SALUD ||
 				concepto.getConCodigo() == Constantes.CONCEPTO_PENSION ||
-				concepto.getConCodigo() == Constantes.CONCEPTO_ARL){
+				concepto.getConCodigo() == Constantes.CONCEPTO_ARL ||
+				concepto.getConCodigo() == Constantes.CONCEPTO_CAJA_COMPENSACION){
 				listaConceptosAporteAux.add(concepto);
 			}
 		}

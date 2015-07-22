@@ -27,6 +27,7 @@ public class Constantes {
 	public static final String APORTE_SALUD = "SALUD";
 	public static final String APORTE_PENSION= "PENSION";
 	public static final String APORTE_ARL = "ARL";
+	public static final String APORTE_CAJA_COMPENSACION = "CCF";
 	
 	public static final String ESTADO_EMPL_ACTIVO = "A";
 	public static final String ESTADO_EMPL_INACTIVO = "I";

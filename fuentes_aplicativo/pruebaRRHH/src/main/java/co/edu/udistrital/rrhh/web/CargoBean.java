@@ -202,7 +202,7 @@ public class CargoBean implements Serializable {
         htmlPanelGrid.getChildren().add(carSalarioCreateInputMessage);
         
         // Estado del cargo 
-        OutputLabel carEstadoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
+        /*OutputLabel carEstadoCreateOutput = (OutputLabel) application.createComponent(OutputLabel.COMPONENT_TYPE);
         carEstadoCreateOutput.setFor("carEstadoCreateInput");
         carEstadoCreateOutput.setId("carEstadoCreateOutput");
         carEstadoCreateOutput.setValue("Estado:");
@@ -214,7 +214,7 @@ public class CargoBean implements Serializable {
         carEstadoCreateInputMessage.setId("carEstadoCreateInputMessage");
         carEstadoCreateInputMessage.setFor("carEstadoCreateInput");
         carEstadoCreateInputMessage.setDisplay("icon");
-        htmlPanelGrid.getChildren().add(carEstadoCreateInputMessage);
+        htmlPanelGrid.getChildren().add(carEstadoCreateInputMessage);*/
         //
         
         return htmlPanelGrid;
@@ -262,6 +262,7 @@ public class CargoBean implements Serializable {
 	public String persist() {
 		String message = "";
 		try {
+			cargo.setCarEstado("A");
 			if (cargo.getCarCogigo() != null) {
 
 				cargoService.saveCargo(cargo);

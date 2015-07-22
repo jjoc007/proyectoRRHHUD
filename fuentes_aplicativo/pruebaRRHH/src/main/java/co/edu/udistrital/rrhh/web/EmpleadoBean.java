@@ -231,7 +231,7 @@ public class EmpleadoBean implements Serializable{
             historialCargo.setHisCargo(empleado.getCargo());
             historialCargo.setHisEmpleado(empleado);
             historialCargo.setHisEstado(Constantes.GENERAL_ESTADO_ACTIVO);
-            historialCargo.setHisFechaInicio(new Date());
+            historialCargo.setHisFechaInicio(((Date)fechaIngreso.getAttributes().get("value")));
 
             historicocargoService.saveHistoricocargo(historialCargo);
             
@@ -255,7 +255,7 @@ public class EmpleadoBean implements Serializable{
                         historialCargo.setHisCargo(empleado.getCargo());
                         historialCargo.setHisEmpleado(empleado);
                         historialCargo.setHisEstado(Constantes.GENERAL_ESTADO_ACTIVO);
-                        historialCargo.setHisFechaInicio(new Date());
+                        historialCargo.setHisFechaInicio(((Date)fechaIngreso.getAttributes().get("value")));
             			
                         historicocargoService.saveHistoricocargo(historialCargo);
             		}

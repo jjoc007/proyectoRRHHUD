@@ -72,7 +72,21 @@ public class PrestacionServiceImpl implements PrestacionService {
 		List<Concepto> listaConceptosProvisionables = getAllConceptosProvisionables(listaAllConceptos);
 		List<Concepto> listaConceptosAporte = getAllConceptosAporte(listaAllConceptos);
 		
-		HashMap<Integer, List<Provision>> mapProvisionesPorEmpleado = new HashMap<Integer, List<Provision>>();
+		Concepto conceptoAuxilioTransporte = null;
+		Concepto conceptoSMLV = null;
+		
+		for (Concepto concepto : listaAllConceptos) {
+			if (concepto.getConCodigo() == Constantes.CONCEPTO_SMLV){
+				conceptoSMLV = concepto;
+			}
+			if (concepto.getConCodigo() == Constantes.CONCEPTO_TRANSPORTE){
+				conceptoAuxilioTransporte = concepto;
+			}
+			if(conceptoSMLV != null && conceptoAuxilioTransporte != null){
+				break;
+			}
+		}
+		
 		List<Provision> provisionesEmpleado = null;
 		List<Aporte> aportesEmpleado = null;
 		List<Pago> pagosEmpleado = null;
@@ -141,8 +155,7 @@ public class PrestacionServiceImpl implements PrestacionService {
 							valorConcepto[EMPLEADO],
 							Constantes.PAGO_ACTIVO);
 					pagosEmpleado.add(pagoEmpleado);
-				}
-				
+				}				
 				
 				aporteEmpleado = new Aporte(entidad, 
 						tipoAporte, 
@@ -152,10 +165,19 @@ public class PrestacionServiceImpl implements PrestacionService {
 				aportesEmpleado.add(aporteEmpleado);
 				
 			}
+			
+			if(empleadoAux.getCargo().getCarSalario() <= (Constantes.CANTIDAD_SMLV_TRANSPORTE * conceptoSMLV.getConValor())){
+				valorConcepto = calcularConcepto(empleadoAux.getCargo().getCarSalario(),conceptoAuxilioTransporte);
+				pagosEmpleado.add(new Pago(empleadoAux, 
+						conceptoAuxilioTransporte, 
+						periodo.getTime(), 
+						valorConcepto[EMPLEADO],
+						Constantes.PAGO_ACTIVO));
+			}
+			
 			aporteRepository.save(aportesEmpleado);
 			provisionRepository.save(provisionesEmpleado);
 			pagoRepository.save(pagosEmpleado);
-			mapProvisionesPorEmpleado.put(empleadoAux.getEmpCedula(), provisionesEmpleado);
 		}
 		//Insertar en proceso liquidacion
 		
@@ -198,6 +220,7 @@ public class PrestacionServiceImpl implements PrestacionService {
 				concepto.getConCodigo() == Constantes.CONCEPTO_CESANTIAS ||
 				concepto.getConCodigo() == Constantes.CONCEPTO_INTERESES_CESANTIAS){
 				listaConceptosProvisionablesAux.add(concepto);
+				iteratorConcepto.remove();
 			}
 		}
 		return listaConceptosProvisionablesAux;
@@ -215,6 +238,7 @@ public class PrestacionServiceImpl implements PrestacionService {
 				concepto.getConCodigo() == Constantes.CONCEPTO_ARL ||
 				concepto.getConCodigo() == Constantes.CONCEPTO_CAJA_COMPENSACION){
 				listaConceptosAporteAux.add(concepto);
+				iteratorConcepto.remove();
 			}
 		}
 		return listaConceptosAporteAux;

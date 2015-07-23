@@ -45,7 +45,7 @@ public class Constantes {
 	
 	public static final String GENERAL_ESTADO_ACTIVO = "A";
 	public static final String GENERAL_ESTADO_INACTIVO = "I";
-	
+	public static final String GENERAL_ESTADO_TEMPORAL = "T";
 	
 	public static final String 	TIPO_ENTIDAD_SALUD = "S";
 	public static final String 	TIPO_ENTIDAD_PENSION = "P";

@@ -63,6 +63,9 @@ public class UsuarioBean implements Serializable {
 	private HtmlPanelGrid viewPanelGrid;
 	InputText usuUserCreateInput;
 
+	Password usuClaveCreateInput;
+	
+	
 	private boolean createDialogVisible = false;
 
 	@PostConstruct
@@ -120,6 +123,13 @@ public class UsuarioBean implements Serializable {
 		usuUserCreateInput.setRequired(true);
 		usuUserCreateInput.setDisabled(false);
 
+		usuClaveCreateInput = (Password) application.createComponent(Password.COMPONENT_TYPE);
+		usuClaveCreateInput.setId("usuClaveCreateInput");
+		usuClaveCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuClave}", String.class));
+		LengthValidator usuClaveCreateInputValidator = new LengthValidator();
+		usuClaveCreateInputValidator.setMaximum(50);
+		usuClaveCreateInput.addValidator(usuClaveCreateInputValidator);
+		usuClaveCreateInput.setRequired(true);
 
 		if (createPanelGrid == null) {
 			createPanelGrid = populateCreatePanel();
@@ -144,6 +154,15 @@ public class UsuarioBean implements Serializable {
 		usuUserCreateInput.addValidator(usuUserCreateInputValidator);
 		usuUserCreateInput.setRequired(true);
 		usuUserCreateInput.setDisabled(true);
+		
+		usuClaveCreateInput = (Password) application.createComponent(Password.COMPONENT_TYPE);
+		usuClaveCreateInput.setId("usuClaveCreateInput");
+		usuClaveCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuClave}", String.class));
+		LengthValidator usuClaveCreateInputValidator = new LengthValidator();
+		usuClaveCreateInputValidator.setMaximum(50);
+		usuClaveCreateInput.addValidator(usuClaveCreateInputValidator);
+		//usuClaveCreateInput.setRequired(true);
+		
 		if (editPanelGrid == null) {
 			editPanelGrid = populateCreatePanel();
 		}
@@ -212,14 +231,7 @@ public class UsuarioBean implements Serializable {
 		usuClaveCreateOutput.setValue("Clave:");
 		htmlPanelGrid.getChildren().add(usuClaveCreateOutput);
 
-		Password usuClaveCreateInput = (Password) application.createComponent(Password.COMPONENT_TYPE);
-		usuClaveCreateInput.setId("usuClaveCreateInput");
-		usuClaveCreateInput.setValueExpression("value", expressionFactory.createValueExpression(elContext, "#{usuarioBean.usuario.usuClave}", String.class));
-		LengthValidator usuClaveCreateInputValidator = new LengthValidator();
-		usuClaveCreateInputValidator.setMaximum(50);
 
-		usuClaveCreateInput.addValidator(usuClaveCreateInputValidator);
-		usuClaveCreateInput.setRequired(true);
 		htmlPanelGrid.getChildren().add(usuClaveCreateInput);
 
 		Message usuClaveCreateInputMessage = (Message) application.createComponent(Message.COMPONENT_TYPE);
@@ -347,4 +359,22 @@ public class UsuarioBean implements Serializable {
 	public void handleDialogClose(CloseEvent event) {
 		reset();
 	}
+
+	public InputText getUsuUserCreateInput() {
+		return usuUserCreateInput;
+	}
+
+	public void setUsuUserCreateInput(InputText usuUserCreateInput) {
+		this.usuUserCreateInput = usuUserCreateInput;
+	}
+
+	public Password getUsuClaveCreateInput() {
+		return usuClaveCreateInput;
+	}
+
+	public void setUsuClaveCreateInput(Password usuClaveCreateInput) {
+		this.usuClaveCreateInput = usuClaveCreateInput;
+	}
+	
+	
 }

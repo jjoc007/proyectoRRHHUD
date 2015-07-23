@@ -351,7 +351,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 
 	}
 	
-	public void saveConceptosLiq(List<Empleado> allEmpleadosWithPagos, Date periodo) throws NominaException{
+	public void saveConceptosLiq(List<Empleado> allEmpleadosWithPagos, Date periodo, String estado) throws NominaException{
 		
 		//Verificar proceso de conceptos liquidacion
 		Proceso proceso = new Proceso();
@@ -369,6 +369,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 			for (Pago pagoaux : empleadoaux.getPagos()){
 				
 				if (pagoaux.getPagValorPago() != 0.0){
+					pagoaux.setPagEstado(estado);
 					pagoService.savePago(pagoaux);
 				}
 				
@@ -376,8 +377,8 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 		}
 		
 		//Insertar registro en la tabla proceso 
-		
-		procesoService.insertarProceso(Constantes.CONCEPTOS_LIQUIDACION, periodo);		
+		if(estado.equals(Constantes.GENERAL_ESTADO_ACTIVO))
+			procesoService.insertarProceso(Constantes.CONCEPTOS_LIQUIDACION, periodo);		
 		
 	}
 	
@@ -400,7 +401,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 			
 			for(Concepto conceptoAux: conceptos){
 
-				pagosPorEmpleado.add(new Pago(empleadoAux, conceptoAux, periodo,	0.0D, Constantes.PAGO_ACTIVO));
+				pagosPorEmpleado.add(new Pago(empleadoAux, conceptoAux, periodo,	0.0D, Constantes.GENERAL_ESTADO_INACTIVO));
 				
 			}
 			

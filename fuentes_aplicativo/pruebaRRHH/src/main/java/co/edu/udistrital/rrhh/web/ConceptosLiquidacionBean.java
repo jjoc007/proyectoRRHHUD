@@ -7,22 +7,25 @@ import co.edu.udistrital.rrhh.web.util.NominaException;
 import co.edu.udistrital.rrhh.web.util.Utilidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.CloseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.roo.addon.serializable.RooSerializable;
 
 @ManagedBean(name = "conceptosLiquidacionBean")
-@ViewScoped
+@SessionScoped
 @Configurable
 @RooSerializable
 public class ConceptosLiquidacionBean implements Serializable  {
@@ -70,7 +73,9 @@ public class ConceptosLiquidacionBean implements Serializable  {
 		try {
 			
 			obtenerPeriodo();
-			liquidacionService.saveConceptosLiq(allEmpleadosWithPagos, periodo.getTime());
+			liquidacionService.saveConceptosLiq(allEmpleadosWithPagos, periodo.getTime(),Constantes.GENERAL_ESTADO_ACTIVO);
+			reset();
+			
 			
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Proceso terminado con éxito."));
 			
@@ -114,7 +119,9 @@ public class ConceptosLiquidacionBean implements Serializable  {
     }
 
 	public void reset() {
-        createDialogVisible = false;
+		
+		allEmpleadosWithPagos= new ArrayList<Empleado>();
+        fillPagosEmpleado();
     }
 
 	public void handleDialogClose(CloseEvent event) {
@@ -155,4 +162,23 @@ public class ConceptosLiquidacionBean implements Serializable  {
 	}
 
 	private static final long serialVersionUID = 1L;
+	
+	public void onCellEdit(CellEditEvent event){
+		
+		//guardar parcialmente los registros
+
+		try {
+			
+			obtenerPeriodo();
+			liquidacionService.saveConceptosLiq(allEmpleadosWithPagos, periodo.getTime(),Constantes.GENERAL_ESTADO_TEMPORAL);
+						
+		} catch (NominaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", e.getMessage()));
+		}
+		
+	}
+	
 }

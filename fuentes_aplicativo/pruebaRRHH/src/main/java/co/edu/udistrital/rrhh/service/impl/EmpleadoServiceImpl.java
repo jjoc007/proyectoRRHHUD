@@ -56,6 +56,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     }
 	
 	public Empleado findEmpleado(Integer id) {
+		
         return empleadoReprository.findOne(id);
     }
 

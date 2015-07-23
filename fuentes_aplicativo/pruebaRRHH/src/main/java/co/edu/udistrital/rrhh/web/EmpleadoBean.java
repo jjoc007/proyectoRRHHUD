@@ -222,7 +222,6 @@ public class EmpleadoBean implements Serializable{
         //acatualizacionhistorico cargo
         
         if (insertAction) {
-<<<<<<< HEAD
 
         	if(empleadoService.findEmpleado(empleado.getEmpCedula())!= null){
 
@@ -245,7 +244,6 @@ public class EmpleadoBean implements Serializable{
 
         		message = "message_successfully_created";
         	}
-=======
         	//inserta
         	empleado.setEmpEstado(Constantes.GENERAL_ESTADO_ACTIVO);
             empleadoService.saveEmpleado(empleado);
@@ -260,7 +258,6 @@ public class EmpleadoBean implements Serializable{
             historicocargoService.saveHistoricocargo(historialCargo);
             
             message = "message_successfully_created";
->>>>>>> origin/master
         } else {
         	//actualiza
         	empleado.setEmpEstado(Constantes.GENERAL_ESTADO_ACTIVO);

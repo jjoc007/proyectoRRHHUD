@@ -41,7 +41,7 @@ public class ConceptoBean implements Serializable {
 	@Autowired
     ConceptoService conceptoService;
 
-	private String name = "Conceptoes";
+	private String name = "Conceptos";
 
 	private Concepto concepto;
 

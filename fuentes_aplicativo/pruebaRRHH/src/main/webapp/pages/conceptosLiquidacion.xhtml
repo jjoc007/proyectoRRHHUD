@@ -17,7 +17,7 @@
           <h:outputText value="Conceptos Liquidación Período #{conceptosLiquidacionBean.periodoLiquidar}"/>
         </f:facet>
         
-         <p:dataTable id="list" value="#{conceptosLiquidacionBean.allEmpleadosWithPagos}" var="empleado" rendered="#{conceptosLiquidacionBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10" editable="true" editMode="cell">
+         <p:dataTable id="listParent" value="#{conceptosLiquidacionBean.allEmpleadosWithPagos}" var="empleado" rendered="#{conceptosLiquidacionBean.dataVisible}" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10" editable="true" editMode="cell">
          
  		  <p:column rowspan="1" headerText="Cédula" >
           	<h:outputText value="#{empleado.empCedula}" />
@@ -30,7 +30,10 @@
          <p:column rowspan="1" headerText="Conceptos" >
          	
          	<p:dataTable id="list" value="#{empleado.pagos}" var="pago" rendered="#{conceptosLiquidacionBean.dataVisible}"   rows="10" editable="true" editMode="cell">
-         		 <p:column headerText="Concepto">
+         		
+         		<p:ajax event="cellEdit" listener="#{conceptosLiquidacionBean.onCellEdit}" update="@all" ajax="true" />
+         		
+         		<p:column headerText="Concepto">
            
                 <p:cellEditor>
                   <f:facet name="output"><h:outputText value="#{pago.pagConcepto.conNombre}" /></f:facet>
@@ -58,7 +61,7 @@
             
                 
         </p:dataTable>
-        <p:commandButton id="guardarPagos" value="Guardar" oncomplete="confirmDialogWidget.show()"/>
+        <p:commandButton id="guardarPagos" value="Guardar" oncomplete="confirmDialogWidget.show()"  />
         
       </p:panel>
     </h:form>
@@ -66,7 +69,7 @@
      <p:confirmDialog appendToBody="true" id="confirmDialog" widgetVar="confirmDialogWidget" message="#{messages.label_confirmacion}" showEffect="fade" hideEffect="explode" header="#{messages.label_advertencia}" severity="alarm">
       <p:outputPanel id="confirmPanel">
         <h:form id="confirmForm">
-          <p:commandButton id="saveYesButton" value="#{messages.label_yes}" action="#{conceptosLiquidacionBean.saveConceptosLiq}" oncomplete="confirmDialogWidget.hide()" />
+          <p:commandButton id="saveYesButton" value="#{messages.label_yes}" action="#{conceptosLiquidacionBean.saveConceptosLiq}" oncomplete="confirmDialogWidget.hide()" update="@all" />
           <p:commandButton id="saveNoButton" value="#{messages.label_no}" onclick="confirmDialogWidget.hide()" type="button" />
         </h:form>
       </p:outputPanel>

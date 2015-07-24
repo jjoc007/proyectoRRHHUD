@@ -88,7 +88,7 @@ public class ConceptoBean implements Serializable {
 
 	public String findAllConceptoes() {
        // allConceptoes = conceptoService.findAllConceptoes();
-		allConceptoes = conceptoService.findAllConceptosByEstado(Constantes.GENERAL_ESTADO_INACTIVO);
+		allConceptoes = conceptoService.findAllConceptosByEstado(Constantes.GENERAL_ESTADO_ACTIVO);
         dataVisible = !allConceptoes.isEmpty();
         return null;
     }

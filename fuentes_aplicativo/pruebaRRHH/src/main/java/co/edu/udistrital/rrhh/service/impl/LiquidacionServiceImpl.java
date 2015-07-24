@@ -88,7 +88,7 @@ public class LiquidacionServiceImpl implements LiquidacionService {
 				else
 					numProviVacaciones = 0;
 
-				if (numProviVacaciones <= 12) {
+				if (numProviVacaciones < 12) {
 
 					throw new NominaException("El empleado: "+ empleadoAux.getEmpCedula()
 							+ " NO puede tomar vacaciones no cumple con los periodos necesarios");

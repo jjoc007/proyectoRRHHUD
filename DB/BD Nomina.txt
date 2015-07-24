@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `proceso` (
 --
 
 CREATE TABLE IF NOT EXISTS `provision` (
-  `pro_codigo` int(11) NOT NULL,
+  `pro_codigo` int(11) NOT NULL AUTO_INCREMENT,
   `pro_empleado` int(11) NOT NULL,
   `pro_concepto` int(11) NOT NULL,
   `pro_periodo` datetime NOT NULL,

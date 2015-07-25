@@ -9,12 +9,13 @@
 <ui:composition template="../templates/layout.xhtml">
   <ui:define name="content">
     <h:form prependId="false" id="growlForm">
-      <p:growl id="growl" showDetail="false" />
+      <p:messages id="growl" showDetail="true" autoUpdate="true" closable="true"/>
     </h:form>
     <h:form prependId="false" id="dataForm">
       <p:panel id="data" toggleable="true" toggleSpeed="250">
-        <h:outputFormat id="noRecordsFound" value="#{messages.label_no_records_found}" >
-        </h:outputFormat>
+       <f:facet name="header">
+  <h:outputText value="Período a Liquidar #{liquidacionBean.periodoLiquidar}" />
+</f:facet>
         <p:dataTable id="list" value="#{liquidacionBean.allEmpleados}" var="empleado" resizableColumns="false" paginator="true" paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,25,50" rows="10">
        <p:column headerText="Empleado">
         <h:outputText value="#{empleado.empCedula}" />
@@ -29,9 +30,18 @@
         <p:selectBooleanCheckbox value="#{empleado.emp_liquida}" />
     </p:column>
         </p:dataTable>
-        <p:commandButton id="procesarLiquid" value="Liquidar" action="#{liquidacionBean.liquidar}"/>
+        <p:commandButton id="procesarLiquid" value="Liquidar" oncomplete="confirmDialogWidget.show()"/>
       </p:panel>
     </h:form>
+    
+<p:confirmDialog appendToBody="true" id="confirmDialog" widgetVar="confirmDialogWidget" message="#{messages.label_confirm_liq}" showEffect="fade" hideEffect="explode" header="#{messages.label_advertencia}" severity="alarm">
+      <p:outputPanel id="confirmPanel">
+        <h:form id="confirmForm">
+          <p:commandButton id="YesButton" value="#{messages.label_yes}" action="#{liquidacionBean.liquidar}" oncomplete="confirmDialogWidget.hide()" />
+          <p:commandButton id="NoButton" value="#{messages.label_no}" onclick="confirmDialogWidget.hide()" type="button" />
+        </h:form>
+      </p:outputPanel>
+</p:confirmDialog>
 
   </ui:define>
 </ui:composition>

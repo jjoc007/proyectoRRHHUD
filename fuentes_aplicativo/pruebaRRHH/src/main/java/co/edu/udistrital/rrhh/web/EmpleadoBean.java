@@ -248,14 +248,14 @@ public class EmpleadoBean implements Serializable{
         	empleado.setEmpEstado(Constantes.GENERAL_ESTADO_ACTIVO);
             empleadoService.saveEmpleado(empleado);
             
-            /*inserta regiustro de historial cargo
+            // inserta regiustro de historial cargo
             Historicocargo historialCargo=  new Historicocargo();
             historialCargo.setHisCargo(empleado.getCargo());
             historialCargo.setHisEmpleado(empleado);
             historialCargo.setHisEstado(Constantes.GENERAL_ESTADO_ACTIVO);
             historialCargo.setHisFechaInicio(((Date)fechaIngreso.getAttributes().get("value")));
 
-            historicocargoService.saveHistoricocargo(historialCargo);*/
+            historicocargoService.saveHistoricocargo(historialCargo);
             
             message = "message_successfully_created";
         } else {

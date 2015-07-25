@@ -148,16 +148,17 @@ public class PrestacionServiceImpl implements PrestacionService {
 					}break;
 				}
 				
-				if(concepto.getConCodigo() != Constantes.CONCEPTO_ARL){
+				if(concepto.getConCodigo() != Constantes.CONCEPTO_ARL && 
+						concepto.getConCodigo() != Constantes.CONCEPTO_CAJA_COMPENSACION){
 					pagoEmpleado = new Pago(empleadoAux, 
 							concepto, 
-							periodo.getTime(), 
+							periodo.getTime(),
 							valorConcepto[EMPLEADO],
 							Constantes.PAGO_ACTIVO);
 					pagosEmpleado.add(pagoEmpleado);
-				}				
+				}
 				
-				aporteEmpleado = new Aporte(entidad, 
+				aporteEmpleado = new Aporte(entidad,
 						tipoAporte, 
 						periodo.getTime(), 
 						valorConcepto[EMPLEADO], 
